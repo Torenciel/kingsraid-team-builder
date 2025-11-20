@@ -1,0 +1,1023 @@
+[
+    {
+        "name": "Solenis' Engraving",
+        "description": "Increase All DEF by (0) and Max HP by (1) for all allies every 10 sec. This effect can be stacked up to max 12 times and is irremovable. This effect does not stack with other similar effects cast by allies.",
+        "value": {
+            "0": "2%, 2.4%, 2.8%, 3.4%, 4.2%, 5%",
+            "1": "1%, 1.2%, 1.4%, 1.7%, 2.1%, 2.5%"
+        },
+        "thumbnail": "artifacts/Solenis' Engraving.png",
+        "story": "A miniature version of the engraving on Solenis' shield. It is said that the engraving was made by a master craftsman, and it is imbued with powerful magic.",
+        "aliases": null
+    },
+    {
+        "name": "Golem's Fuel",
+        "description": "Increase DMG dealt to Non-Hero enemies by (0) and reduces DMG taken by (1). If target is [Holy Golem], the effect is multiplied by 3.",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%",
+            "1": "5%, 6%, 7%, 8%, 10%, 12%"
+        },
+        "thumbnail": "artifacts/Golem's Fuel.png",
+        "story": "A miniature version of the fuel cell that powers the Holy Golem. It contains a large amount of magical energy, which can be used to enhance the power of the owner.",
+        "aliases": null
+    },
+    {
+        "name": "Earth Storm",
+        "description": "When inflicted by CC, recovers Mana by (0) and gains [Earth Storm] for 10 sec, increasing All DMG nearby enemies take by (1) every sec. If activated in the Arena, [Earth Storm] deals P.DMG equal to 3% of the target's max HP to neaby enemies every sec. This effect will not inflict a Crit Hit. The effect of [Earth Storm] has a Cooldown of 20 sec.",
+        "value": {
+            "0": "600, 700, 800, 1000, 1200, 1500",
+            "1": "12%, 14%, 17%, 21%, 25%, 30%"
+        },
+        "thumbnail": "artifacts/Earth Storm.png",
+        "story": "A miniature version of one of the 'faces' of the Mountain Fortress. This lively and flamboyant face feels sentimental and looks beautiful.",
+        "aliases": null
+    },
+    {
+        "name": "Earth Protection",
+        "description": "At the beginning of battle, gain CC immunity and a 50% boost to P. and M. DEF stats for (0) sec.",
+        "value": {
+            "0": "8, 10, 12, 14, 17, 20"
+        },
+        "thumbnail": "artifacts/Earth Protection.png",
+        "story": "A miniature version of one of the 'faces' of the Mountain Fortress. A keen intellect can be felt from this taciturn face.",
+        "aliases": null
+    },
+    {
+        "name": "Blessing of Earth",
+        "description": "When there is 1 enemy, ATK is boosted by (0).",
+        "value": {
+            "0": "40%, 48%, 58%, 69%, 83%, 100%"
+        },
+        "thumbnail": "artifacts/Blessing of Earth.png",
+        "story": "A miniature version of one of the 'faces' of the Mountain Fortress. The rage and bellicose nature of this angry face can be felt.",
+        "aliases": ["boe"]
+    },
+    {
+        "name": "Earth Core",
+        "description": "ATK, HP and all DEF rises by (1).",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 20%, 25%"
+        },
+        "thumbnail": "artifacts/Earth Core.png",
+        "story": "A miniature version of the core of the Mountain Fortress. As a source of infinite energy, it boosts the power of the owner.",
+        "aliases": null
+    },
+    {
+        "name": "Earth Fortress",
+        "description": "When there is 1 enemy, reduces the targets's Heal Rate by (0) and increases own DMG dealt to Bosses by (0). This effect does not stack with effects from other allies.",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%",
+            "1": "10%, 12%, 14%, 17%, 21%, 25%"
+        },
+        "thumbnail": "artifacts/Earth Fortress.png",
+        "story": "A miniaturized version of the 'shoulder' part of the Mountain Fortress. It is made by combining stone and wood using technomagic, harnessing natural yet artificial power of great strength.",
+        "aliases": null
+    },
+    {
+        "name": "Nail Ornament of the Deep",
+        "description": "At the beginning of each battle, fixes self's DEF to 0 and increases DMG dealt to bosses by (0) for 200 sec. This effect is irremovable.",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%"
+        },
+        "thumbnail": "artifacts/Nail Ornament of the Deep.png",
+        "story": "A miniature version of the fingernail ornament that Protianus was wearing. A highly expensive magical artifact made from enchanted Gold.",
+        "aliases": ["nod", "nootd", "nail deep"]
+    },
+    {
+        "name": "Belt Ornament of the Deep",
+        "description": "At the beginning of first battle, and every 30 sec, reduces DMG all allies take from enemies by (0) for 3 sec. This effect is irremovable and does not stack with effects from other allies. Each time the effect expires, dispels negative effects from all allies.",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%"
+        },
+        "thumbnail": "artifacts/Belt Ornament of the Deep.png",
+        "story": "A miniaturized version of the waist ornament of Protianus. Once can feel the strong yet silent energy of the flow that resembles the current of the deep sea.",
+        "aliases": ["bod", "bootd", "belt deep"]
+    },
+    {
+        "name": "Trident of the Deep",
+        "description": "Dealing DMG to enemies 100 times increases ATK by (0) and Crit Chance by (1) for 15 sec. This effect cannot be dispelled.",
+        "value": {
+            "0": "30%, 36%, 44%, 53, 63%, 75%",
+            "1": "200, 240, 290, 350, 420, 500"
+        },
+        "thumbnail": "artifacts/Trident of the Deep.png",
+        "story": "A mystical weapon designed after the trident of Protianus. It bears the power of water like a tsunami.",
+        "aliases": ["tod", "totd", "trident deep"]
+    },
+    {
+        "name": "Ring of Spirit Morph",
+        "description": "At the beginning of every battle, HP does not fall below 10% for (0) seconds. If HP falls below 15% for the duration of Skill, DMG dealt to Heroes will be reduced by 70% for 5 sec. All effects are irremovable.",
+        "value": {
+            "0": "4, 5, 6, 7, 8, 9"
+        },
+        "thumbnail": "artifacts/Ring of Spirit Morph.png",
+        "story": "An ominous ring inhabited by evil spirits from your worst nightmare. When enchanted by this ring, you lose control over your body while your soul becomes trapped within an endless dream.",
+        "aliases": ["rosm", "rsm"]
+    },
+    {
+        "name": "Spellbound Ring of the Deep",
+        "description": "Upon the start of a battle for (0) sec, limit 1 enemy's ATK Spd to 1000 and reduce ATK by (1).",
+        "value": {
+            "0": "8, 10, 12, 14, 17, 20",
+            "1": "20%, 24%, 29%, 35%, 42%, 50%"
+        },
+        "thumbnail": "artifacts/Spellbound Ring of the Deep.png",
+        "story": "A miniature version of the ring that Protianus was wearing. It is enchanted with a spell that curses and neutralizes foes.",
+        "aliases": ["spd", "srotd", "ring deep"]
+    },
+    {
+        "name": "Guardian Crystal of the Deep",
+        "description": "When there is 1 enemy, all DEF is increased by (0).",
+        "value": {
+            "0": "50%, 60%, 72%, 86%, 103%, 125%"
+        },
+        "thumbnail": "artifacts/Guardian Crystal of the Deep.png",
+        "story": "A blue gem that was once set on the crown of Protianus. A clear gem that represents protection.",
+        "aliases": ["gcd", "gcotd", "crystal deep", "guardian deep"]
+    },
+    {
+        "name": "Abyssal Breath",
+        "description": "Increases DMG dealt to Non-Hero enemies of 2 allies with the highest ATK excluding self by (0) and heals HP of all allies equal to 2.5% of Max HP every (1) sec. When there is 1 enemy, increases Heal Rate by x2. This effect does not stack with effects from other allies.",
+        "value": {
+            "0": "5%, 6%, 7.2%, 8.6%, 10.4%, 12.5%",
+            "1": "10, 9, 8, 7, 6, 5"
+        },
+        "thumbnail": "artifacts/Abyssal Breath.png",
+        "story": "A miniaturized version of the waist ornament of Protianus. Once can feel the strong yet silent energy of the flow that resembles the current of the deep sea.",
+        "aliases": null
+    },
+    {
+        "name": "Abyssal Crown",
+        "description": "30 sec after the battle starts, increases ATK of the ally with the highest ATK by (0). This effect cannot be dispelled, and it does not stack with other effects for allies.",
+        "value": {
+            "0": "30%, 36%, 43%, 52%, 63%, 75%"
+        },
+        "thumbnail": "artifacts/Abyssal Crown.png",
+        "story": "Hair accessory of Abyssal Goddess Xanadus. The serpent-shaped crown gives off a deadly scent.",
+        "aliases": null
+    },
+    {
+        "name": "Abyssal Eye",
+        "description": "Upon taking damage, deals M.DMG of (0) own ATK to the target and reduces ATK Spd of the target by (1) for 1.5 sec. After the ATK Spd Reduction Effect expires, the target is petrified for (2) sec. This effect will be activated only once every 30 sec.",
+        "value": {
+            "0": "50%, 60%, 72%, 86%, 105%, 125%",
+            "1": "400, 480, 580, 700, 840, 1000",
+            "3": "2, 2.4, 2.9, 3.5, 4.2, 5"
+        },
+        "thumbnail": "artifacts/Abyssal Eye.png",
+        "story": "The Power source of Abyssal Goddess Xanadus. It looks like the its pupil moves, even though it's been severed from its body.",
+        "aliases": null
+    },
+    {
+        "name": "Abyssal Nail Ornament",
+        "description": "Upon attack, deals P.DMG equal to (0) of ATK that ignores DEF to the enemy every 0.5 sec for 10 sec. This effect will be activated once in 20 sec.",
+        "value": {
+            "0": "4%, 4.8%, 5.8%, 7%, 8.4%, 10%"
+        },
+        "thumbnail": "artifacts/Abyssal Nail Ornament.png",
+        "story": "Nail ornament of the Abyssal Goddess Xanadus. It is made from an alloy of unknown but special metals.",
+        "aliases": ["abyss nail"]
+    },
+    {
+        "name": "Heart of the Abyss",
+        "description": "At the beginning of every battle, increases ATK of the ally with the highest ATK by (0) and reduces ATK of the enemy with the highest ATK by 15% for 100 sec. The ATK Boost effect can be stacked up to max 5 times, and all effects are irremovable.",
+        "value": {
+            "0": "8%, 10%, 12%, 14%, 17%, 20%"
+        },
+        "thumbnail": "artifacts/Heart of the Abyss.png",
+        "story": "The Core of the power source that the Abyssal Goddess Xanadus summons. This mass of magical energy glows with a dazzling light, luring victims to their death.",
+        "aliases": null
+    },
+    {
+        "name": "Infernal Bond",
+        "description": "At the start of every battle, increases all skill cooldown by (0) sec of 1 random enemy.",
+        "value": {
+            "0": "2.5, 3, 3.5, 4, 5, 6"
+        },
+        "thumbnail": "artifacts/Infernal Bond.png",
+        "story": "A blazing bond of Velkazar, the Hellspawn Torturer. It's enchanted with Black Magic to control the overflowing power.",
+        "aliases": null
+    },
+    {
+        "name": "Otherworldly Sword",
+        "description": "Consumes (0) of self's current HP every sec and disable Lifesteal, but increases DMG dealt per sec by 0.5% and Crit DMG by 0.5%. DMG and Crit DMG Boost effect can be stacked up to max (1) times. This effect automatically deactivates when HP falls below 25%.",
+        "value": {
+            "0": "4%, 4.8%, 5.7%, 6.9%, 8.3%, 10%",
+            "1": "50, 60, 70, 80, 90, 100"
+        },
+        "thumbnail": "artifacts/Otherworldly Sword.png",
+        "story": "A fragment of darkness carried by Shakmeh. It shifts its size depending on the user, making it available for petite people to use it whith ease. The dark feelings of Shakmeh swirling inside the sword pains the body and spirit of anyone who wields it, but great power can be guaranteed to anyone who endures that pain.",
+        "aliases": ["shakmeh sword"]
+    },
+    {
+        "name": "Infernal Greatsword",
+        "description": "Own heal rate decreases by 30%, while Penetration increases by (0) and Crit DMG increases by (1).",
+        "value": {
+            "0": "300, 360, 430, 520, 630, 750",
+            "1": "30%, 36%, 43%, 52%, 63%, 70%"
+        },
+        "thumbnail": "artifacts/Infernal Greatsword.png",
+        "story": "A blazing greatsword of Velkazar, the Hellspawn Torturer. Its flame seems powerful enough to engulf anything.",
+        "aliases": ["vel sword"]
+    },
+    {
+        "name": "Infernal Whip",
+        "description": "Every 8 sec, attacks all enemies and deals (0) of ATK as M.DMG. Targets take (1) increased DMG for the next 5 sec. DMG boost effect increases by (2) with every activation, and can be stacked max 25 times. DMG boost effect cannot be used simultaneously with same effects of other allies.",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%",
+            "1": "10%, 12%, 14%, 17%, 21%, 25%",
+            "3": "0.4%, 0.5%, 0.6%, 0.7%, 0.8%, 1%"
+        },
+        "thumbnail": "artifacts/Infernal Whip.png",
+        "story": "A blazing tail of Velkazar, the Hellspawn Torturer. It looks like a serpent shrouded in flame.",
+        "aliases": null
+    },
+    {
+        "name": "Infernal Gate",
+        "description": "Increases All DEF by (0), DMG dealt to enemies by (1) and DMG dealt to Non-Hero enemies by (2).",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%",
+            "1": "6%, 7.2%, 8.6%, 10.5%, 12.5%, 15%",
+            "2": "6%, 7.2%, 8.6%, 10.5%, 12.5%, 15%"
+        },
+        "thumbnail": "artifacts/Infernal Gate.png",
+        "story": "One of the blazing horns of Velkazar, the Hellspawn Torturer. It works as a channel to release the power of soul.",
+        "aliases": null
+    },
+    {
+        "name": "Heart Cotton Candy",
+        "description": "When the battle starts, increases ATK of self and the ally with the highest ATK by (0) for 20 sec. This effect will not stack with other similar effects cast by allies.",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%"
+        },
+        "thumbnail": "artifacts/Heart Cotton Candy.png",
+        "story": "Heart Cotton Candy, a must-have item for outings! It melts in your mouth in no time!",
+        "aliases": null
+    },
+    {
+        "name": "Cross Pumpkin Head",
+        "description": "Max HP is increased by (0) and deal P.DMG worth 2% of Max HP to all nearby enemies within a small range. (Effect is based on your hero's max HP, triggered every sec, and does not crit. Radius of the effect is 3000.)",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%"
+        },
+        "thumbnail": "artifacts/Cross Pumpkin Head.png",
+        "story": "A mysterious object shaped like a sad pumpkin. It is said to make an eerie noise while hovering near the owner.",
+        "aliases": ["sad pumpkin"]
+    },
+    {
+        "name": "Angry Pumpkin Head",
+        "description": "All DMG taken is reduced by (0) and deal (1) more DMG to enemies.",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 20%, 25%",
+            "1": "10%, 12%, 14%, 17%, 20%, 25%"
+        },
+        "thumbnail": "artifacts/Angry Pumpkin Head.png",
+        "story": "A mysterious object shaped like a mad pumpkin. It huffs angrily while hovering near the owner.",
+        "aliases": null
+    },
+    {
+        "name": "Happy Pumpkin Head",
+        "description": "Every 7 sec, increases Heal Rate by (0) and heals HP by (1) of own ATK. Heal rate increase can be stacked up to max 15 times and cannot be removed.",
+        "value": {
+            "0": "2%, 2.4%, 2.8%, 3.4%, 4.2%, 5%",
+            "1": "100%, 120%, 140%, 170%, 210%, 250%"
+        },
+        "thumbnail": "artifacts/Happy Pumpkin Head.png",
+        "story": "A mysterious item shaped like a happy-looking pumpkin. It boosts the energy of the owner.",
+        "aliases": null
+    },
+    {
+        "name": "Surprised Pumpkin Head",
+        "description": "When inflicted by CC, immediately recovers Mana by (0) and increases ATK Spd by (1) for 5 sec. This effect activates once every 30 sec.",
+        "value": {
+            "0": "12%, 14%, 17%, 21%, 25%, 30%",
+            "1": "200, 240, 290, 350, 420"
+        },
+        "thumbnail": "artifacts/Surprised Pumpkin Head.png",
+        "story": "A peculiar item shaped like a pumpkin with a surprised look. Its eerie ambiance startles those who look at it too.",
+        "aliases": null
+    },
+    {
+        "name": "Pumpkin-Stuck Evil Spirit",
+        "description": "Increases own Max HP by (0). When there is 1 enemy, increases ATK of all allies by (0). This effect will not stack with other similar effects cast by allies.",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%"
+        },
+        "thumbnail": "artifacts/Pumpkin-Stuck Evil Spirit.png",
+        "story": "Lavril, who had decided to follow Lewisia, wandered around the shopping district of Orvel with Lewisia to enjoy the Halloween carnival event. After all, to live among humans, one must take matters into their own hands and find a large crowd to blend in. While Lavril was absent-mindedly warching the people enjoy the carnival, their gaze was caught upon a cute doll that resembled them on a selling stand. Lavril stood still and looked at the doll for a long time. They were eventually swept by the crowd, and Lavril lost the sight of the doll. But Lewisia noticed Lavril's interest and managed to purchase it. After buying the doll, Lewisia cast a protection spell on it, so that it will hide the presence of the holder to protect the Little Darkness from danger. She then gave the doll to Lavril.",
+        "aliases": null
+    },
+    {
+        "name": "Frost Giant Mask",
+        "description": "ATK upon Frost Giants increase by (0), and DMG resistance against Frost Giants increase by (1).",
+        "value": {
+            "0": "40%, 48%, 57%, 69%, 83%, 100%",
+            "1": "20%, 24%, 28%, 34%, 41%, 50%"
+        },
+        "thumbnail": "artifacts/Frost Giant Mask.png",
+        "story": "A mask modeled after the face of a Frost Giant. The power of a snow mountain can be felt from it.",
+        "aliases": null
+    },
+    {
+        "name": "Golden Mask of Ancient King",
+        "description": "Upon taking a hit, there is a 5% chance to gain invulnerability to all DMG for (0) sec. Has a cooldown of 5 secs.",
+        "value": {
+            "0": "3, 3.5, 4, 5, 6, 7.5"
+        },
+        "thumbnail": "artifacts/Golden Mask of Ancient King.png",
+        "story": "A golden mask once worn by God King of the desert. It is enchanted with the spell of absolute authority to protect its owner.",
+        "aliases": null
+    },
+    {
+        "name": "Mask of Dark Elf",
+        "description": "ATK upon Dark Elves increase by (0), and DMG resistance against Dark Elves increases by (1).",
+        "value": {
+            "0": "40%, 48%, 57%, 60%, 83%, 100%",
+            "1": "20%, 24%, 28%, 34%, 41%, 50%"
+        },
+        "thumbnail": "artifacts/Mask of Dark Elf.png",
+        "story": "A mask modeled after the face of a Dark Elf. It gives off an aura of the soft moonlight.",
+        "aliases": null
+    },
+    {
+        "name": "Mask of Draconic",
+        "description": "ATK upon Draconics increase by (0), and DMG resistance against Draconics increase by (1).",
+        "value": {
+            "0": "40%, 48%, 57%, 69%, 83%, 100%",
+            "1": "20%, 24%, 28%, 34%, 41%, 50%"
+        },
+        "thumbnail": "artifacts/Mask of Draconic.png",
+        "story": "A mask modeled after the face of a Draconic. It resonates with the roar of smoldering evil.",
+        "aliases": null
+    },
+    {
+        "name": "Mask of Goblin",
+        "description": "ATK upon Goblins increase by (0), and DMG resistance against Goblins increases by (1).",
+        "value": {
+            "0": "40%, 48%, 57%, 69%, 83%, 100%",
+            "1": "20%, 24%, 28%, 34%, 41%, 50%"
+        },
+        "thumbnail": "artifacts/Mask of Goblin.png",
+        "story": "A mask modeled after the face of a Goblin. It's actually kind of cute.",
+        "aliases": null
+    },
+    {
+        "name": "Mask of Harpy",
+        "description": "ATK upon Harpies increase by (0), and DMG resistance against Harpies increases by (1).",
+        "value": {
+            "0": "40%, 48%, 57%, 69%, 83%, 100%",
+            "1": "20%, 24%, 28%, 34%, 41%, 50%"
+        },
+        "thumbnail": "artifacts/Mask of Harpy.png",
+        "story": "A mask modeled after the face of a Harpy. The sound of a brisk wind can be heard.",
+        "aliases": null
+    },
+    {
+        "name": "Mask of Lizardman",
+        "description": "ATK upon Lizardmen increase by (0), and DMG resistance against Lizardmen increase by (1).",
+        "value": {
+            "0": "40%, 48%, 57%, 69%, 83%, 100%",
+            "1": "20%, 24%, 28%, 34%, 41%, 50%"
+        },
+        "thumbnail": "artifacts/Mask of Lizardman.png",
+        "story": "A mask modeled after the face of a Lizardman. The aura of a sage can be felt from it.",
+        "aliases": null
+    },
+    {
+        "name": "Mask of Orc",
+        "description": "ATK upon Orcs increase by (0), and DMG resistance against Orcs increases by (1).",
+        "value": {
+            "0": "40%, 48%, 57%, 69%, 83%, 100%",
+            "1": "20%, 24%, 28%, 34%, 41%, 50%"
+        },
+        "thumbnail": "artifacts/Mask of Orc.png",
+        "story": "A mask modeled after the face of an Orc. It inspires a brutish desire for combat.",
+        "aliases": null
+    },
+    {
+        "name": "Undead Mask",
+        "description": "Increases DMG to Undead by (0) and Resistance against Undead by (1).",
+        "value": {
+            "0": "40%, 48%, 57%, 69%, 83%, 100%",
+            "1": "20%, 24%, 28%, 34%, 42%, 50%"
+        },
+        "thumbnail": "artifacts/Undead Mask.png",
+        "story": "A mask modeled after the face of a Skeleton. It smells like death.",
+        "aliases": null
+    },
+    {
+        "name": "Assassin's Veil",
+        "description": "Increases P.Dodge by (0). Each successful dodge increases ATK by (1) , stacking up to max 20 times.",
+        "value": {
+            "0": "100, 120, 140, 170, 210, 250",
+            "1": "1%, 1.2%, 1.4%, 1.7%, 2.1%, 2.5%"
+        },
+        "thumbnail": "artifacts/Assassin's Veil.png",
+        "story": "A veil that may seem too eccentric and florid to be used by an assassin, but is, in fact, a magic tool that dulls the target's senses.",
+        "aliases": null
+    },
+    {
+        "name": "Book of the Mad",
+        "description": "Every second, own Mana is reduced by (0), but own DMG to enemies is increased by (1).",
+        "value": {
+            "0": "100, 120, 140, 170, 210, 250",
+            "1": "14%, 17%, 21%, 25%, 30%, 35%"
+        },
+        "thumbnail": "artifacts/Book of the Mad.png",
+        "story": "Book of a mad wizard who wandered about the wilderness. The cursed book created from human blood and skin. It consumes mana to grant berserk status to the owner without compromising their sanity. However, it continues to consume mana, ultimately bringing destruction to its owner as it depletes their mana.",
+        "aliases": ["bom", "botm"]
+    },
+    {
+        "name": "Burning Brazier of Elf",
+        "description": "Upon attacking an enemy, there is a (0) chance to recover 1 MP.",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%"
+        },
+        "thumbnail": "artifacts/Burning Brazier of Elf.png",
+        "story": "A mysterious brazier crafted by ancient Elves to honor the mother nature. It is the pinnacle of their magic, capable of producing an infinite amount of mana.",
+        "aliases": null
+    },
+    {
+        "name": "Christmas Star Ornament",
+        "description": "At the beginning of each battle, for 5 sec, increase Mana Recovery per sec by (0). Also, Crit Resistance is increased by (1) . This effect cannot be dispelled.",
+        "value": {
+            "0": "260%, 310%, 370%, 450%, 540%, 650%",
+            "1": "100, 120, 140, 170, 210, 250"
+        },
+        "thumbnail": "artifacts/Christmas Star Ornament.png",
+        "story": "A star ornament that blesses the sacred nights. It rises up to the sky and shines.",
+        "aliases": null
+    },
+    {
+        "name": "Warm Turkey Dish",
+        "description": "Increases own Max HP by (0) and ALl Block Chance by (1).",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%",
+            "1": "100, 120, 140, 170, 210, 250"
+        },
+        "thumbnail": "artifacts/Warm Turkey Dish.png",
+        "story": "It is the must-try food for Thanksgiving. The freshly roasted turkey dish goes well with Hero's Inn special gravy sauce.",
+        "aliases": null
+    },
+    {
+        "name": "Well-Done Turkey Roast",
+        "description": "Every 15 sec, recover HP equal to (0) of Max HP for 3 secs.",
+        "value": {
+            "0": "1%, 1.2%, 1.4%, 1.7%, 2%, 2.5%"
+        },
+        "thumbnail": "artifacts/Well-Done Turkey Roast.png",
+        "story": "An exotic specialty that comes from a faraway land across the sea. It is said to be eaten during the celebration of harvest.",
+        "aliases": null
+    },
+    {
+        "name": "Christmas Tree of Holy Night",
+        "description": "Crit DMG is increased by (0).",
+        "value": {
+            "0": "50%, 60%, 72%, 87%, 105%, 125%"
+        },
+        "thumbnail": "artifacts/Christmas Tree of Holy Night.png",
+        "story": "A miniature of the legendary Christmas tree. It does not grant wishes anymore, but it still has the finest quality that makes the holy night beautiful.",
+        "aliases": null
+    },
+    {
+        "name": "Cooling Delicacy in the Summer",
+        "description": "When the battle begins, reduces DMG from non-Hero enemies by (0) for 30 seconds, and recovers (1) MP every 2 sec.",
+        "value": {
+            "0": "20%, 24%, 28%, 34%, 42%, 50%",
+            "1": "100, 120, 140, 170, 210, 250"
+        },
+        "thumbnail": "artifacts/Cooling Delicacy in the Summer.png",
+        "story": "This delicacy of Orvel is a must for anyone who can't stand the blazing summer heat. One sip of it brings down the heat, another makes the heat go away.",
+        "aliases": null
+    },
+    {
+        "name": "Crystal Music Box",
+        "description": "Increases DMG to Heroes by (0) but takes (1) increased DMG.",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%",
+            "1": "10%, 12%, 14%, 17%, 21%, 25%"
+        },
+        "thumbnail": "artifacts/Crystal Music Box.png",
+        "story": "Crystal Music Box found in the ruins of Republic of Galluah. It has a beautiful yet sad melody.",
+        "aliases": ["cmb"]
+    },
+    {
+        "name": "Dice of Magical Letters",
+        "description": "Upon attacking an enemy, deal (0) M.DMG for a 3% chance.",
+        "value": {
+            "0": "400%, 480%, 570%, 690%, 830%, 1000%"
+        },
+        "thumbnail": "artifacts/Dice of Magical Letters.png",
+        "story": "A die used in an ancient civilization for divination. Each face is engraved with mysterious illegible letters.",
+        "aliases": null
+    },
+    {
+        "name": "Drinking Horn of Ancient Cow",
+        "description": "Upon auto attacking, there is a 10% chance that ATK rises by (0) and ATK Spd riese by (1).",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%",
+            "1": "100, 120, 140, 170, 210, 250"
+        },
+        "thumbnail": "artifacts/Drinking Horn of Ancient Cow.png",
+        "story": "A glass made from the horn of a sacred bull that roams the sky. It is a magical drinking horn that embodies the essence of abundance.",
+        "aliases": null
+    },
+    {
+        "name": "Fancy Traditional Pendant",
+        "description": "Crit Chance is increased by (0) and Crit DMG is increased by (1).",
+        "value": {
+            "0": "100, 120, 140, 170, 210, 250",
+            "1": "20%, 24%, 29%, 35%, 42%, 50%"
+        },
+        "thumbnail": "artifacts/Fancy Traditional Pendant.png",
+        "story": "A mystical charm said to get rid of bad luck and bring good luck. It's created by a famous foreign designer of magical goods.",
+        "aliases": null
+    },
+    {
+        "name": "Fantastic Hybrid Animals",
+        "description": "When the battle starts, increases DMG to Non-Hero enemies by (0) and takes (1) reduced DMG for 200 sec.",
+        "value": {
+            "0": "12%, 14%, 17%, 21%, 25%, 30%",
+            "1": "12%, 14%, 17%, 21%, 25%, 30%"
+        },
+        "thumbnail": "artifacts/Fantastic Hybrid Animals.png",
+        "story": "Encyclopedia for Hybrid Animals in Orvelia Continent. As a limited edition copy, it has a silhouette of Hybrid Animals embroidered with golden thread.",
+        "aliases": ["fha"]
+    },
+    {
+        "name": "Feather of Sacrifice",
+        "description": "For 120 sec after the battle starts, takes (0) extra DMG and increases all DMG taken by the enemy boss by (1). This effect cannot be dispelled, and it does not stack with other effects for allies.",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%",
+            "1": "10%, 12%, 14%, 17%, 21%, 25%"
+        },
+        "thumbnail": "artifacts/Feather of Sacrifice.png",
+        "story": "A feather containing an alchemy equation of the exchange of equivalents. The equation will activate when the enemy's name is engraved on the user's body, weakening the enemy and its owner for a short period of time.",
+        "aliases": null
+    },
+    {
+        "name": "Golden Apple of a Goddess",
+        "description": "When the hero's HP falls below 25%, recover (0) of max HP and dispel all debuffs. Activates 1 time only.",
+        "value": {
+            "0": "30%, 36%, 43%, 51%, 62%, 75%"
+        },
+        "thumbnail": "artifacts/Golden Apple of a Goddess.png",
+        "story": "It's said to be one of the sacred artifacts bestowed by the goddess. A miraculous remedy said to heal any injury.",
+        "aliases": null
+    },
+    {
+        "name": "Golden Cat Statue",
+        "description": "Every Battle, Spd increases by (0) for the first 15 secs.",
+        "value": {
+            "0": "400, 480, 570, 680, 820, 1000"
+        },
+        "thumbnail": "artifacts/Golden Cat Statue.png",
+        "story": "A curious golden statue in the shape of a golden cat, the symbol of good fortune. Sometimes it seems as if the cat is waving its paw.",
+        "aliases": null
+    },
+    {
+        "name": "Insignia of Iron Conviction",
+        "description": "Every 50 times this character takes M.DMG, dispel all harmful effects and gain a shield worth (0) of ATK for 5 sec. While this shield is in effect, gain immunity to CC and DMG Stacking effects.",
+        "value": {
+            "0": "480%, 580%, 690^, 830%, 1000%, 1200%"
+        },
+        "thumbnail": "artifacts/Insignia of Iron Conviction.png",
+        "story": "The crest used by the Guardian Knights of Orvelia prior to the Demon War. The stalwart resolve of the knights can be felt from it.",
+        "aliases": null
+    },
+    {
+        "name": "Judgment of Light Bracelet",
+        "description": "ACC and CC ACC rise by (0).",
+        "value": {
+            "0": "300, 360, 430, 510, 620, 750"
+        },
+        "thumbnail": "artifacts/Judgment of Light Bracelet.png",
+        "story": "A blessed bracelet once created by the Holy Knights of the Church of Lua. It's an antique magic tool, and only a few like this remain today.",
+        "aliases": null
+    },
+    {
+        "name": "Kiddy Chick",
+        "description": "ATK Spd is increased by (0).",
+        "value": {
+            "0": "80, 96, 115, 138, 165, 200"
+        },
+        "thumbnail": "artifacts/Kiddy Chick.png",
+        "story": "A small chick figure toy that represents the innocence of children.",
+        "aliases": null
+    },
+    {
+        "name": "Lion of Protection",
+        "description": "Increases own P.DEF by (0), and P.Block (1).",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%",
+            "1": "100, 120, 140, 170, 210, 250"
+        },
+        "thumbnail": "artifacts/Lion of Protection.png",
+        "story": "Lion made from silver. It is the symbol of Orvel Royal family, and its eyes are made from blue sapphire. It is imbued with the longing to safeguard the kingdom, protecting the owner from evil.",
+        "aliases": null
+    },
+    {
+        "name": "LuLu's Necklace",
+        "description": "When the battle starts, increases DMG to Non-Hero enemies by (0) for 30 sec, and recovers Mana by (1) every 5 sec.",
+        "value": {
+            "0": "20%, 24%, 28%, 34%, 42%, 50%",
+            "1": "200, 240, 280, 340, 420, 500"
+        },
+        "thumbnail": "artifacts/LuLu's Necklace.png",
+        "story": "A brilliant necklace befitting Moon Rabbit LuLu. It is made from the refined fragments of a full moon. The magical power of the full moon seeps into the wearer's entire body the moment it is worn.",
+        "aliases": null
+    },
+    {
+        "name": "Juno's Special Dessert",
+        "description": "Upon taking ahit, there is a 20% chance to increase All DMG the target takes by (0) for 5 sec. This effect cannot be used with other similar effect cast by allies.",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%"
+        },
+        "thumbnail": "artifacts/Juno's Special Dessert.png",
+        "story": "A dessert made by using the gelatin of a Slime. Mixed with the juice of fruit, sugar, and other sweeteners, all it takes to finish it is to heat the mixture and cool it down. Juno did not want the dessert to be named after her since it was made of monsters, but Yanne has secretly added Juno's name on the menu... Beware- this dessert may turn back to a slime if left unattended.",
+        "aliases": null
+    },
+    {
+        "name": "Juno's Special Vitality Stew",
+        "description": "Upon normal attack, deals P.DMG equal to (0) of ATK over time for 5 sec. This effect cannot be used with other similar effects cast by allies.",
+        "value": {
+            "0": "200%, 240%, 350%, 420%, 500%"
+        },
+        "thumbnail": "artifacts/Juno's Special Vitality Stew.png",
+        "story": "A healthy stew made with the healthy ingredients all over from Orbis. Having full of minerals and other nutrients, it is a powerful dish that can restore the vitality of anyone who eats it. The price is not too expensive, which makes it available for everyone. This is Juno's specialty dish full of love and her pride for the weary ones visiting the Hero's Inn.",
+        "aliases": null
+    },
+    {
+        "name": "Madame's Bronze Mirrors",
+        "description": "Raises own M.Block Chance by (0) and M.DMG Reduction is increased by (1).",
+        "value": {
+            "0": "300, 360, 420, 510, 630, 750",
+            "1": "100, 120, 140, 170, 210, 250"
+        },
+        "thumbnail": "artifacts/Madame's Bronze Mirrors.png",
+        "story": "A bronze mirror of an Ancient Technomagic Kingdom that a genius wizard gifted to his wife. It is inscribed with a rune for protecting a loved one.",
+        "aliases": null
+    },
+    {
+        "name": "Magical Flute",
+        "description": "Every 8 sec, increases ATK Spd of 2 random allies and the caster by (0) for 4 sec.",
+        "value": {
+            "0": "100, 120, 140, 170, 210, 250"
+        },
+        "thumbnail": "artifacts/Magical Flute.png",
+        "story": "Ancient flute made from the bones of Orox, the guardian beast of snow mountains. It contains the charm of gales, which boosts the morale of warriors. Warriors may experience a slight increase in their speed when they hear its sound.",
+        "aliases": null
+    },
+    {
+        "name": "New Year's Fireworks",
+        "description": "ATK is increased by (0) for 60 sec at the start of each battle.",
+        "value": {
+            "0": "5%, 6%, 7.2%, 8.6%, 10.4%, 12.5%"
+        },
+        "thumbnail": "artifacts/New Year's Fireworks.png",
+        "story": "An item to blow away the worries of 2017 for a fresh new start in 2018.",
+        "aliases": null
+    },
+    {
+        "name": "New Year's Fanfare",
+        "description": "Increases ATK of 4 allies by (0) for 20 sec at the beginning of every battle. This effect will not stack with other similar effects cast by allies.",
+        "value": {
+            "0": "5%, 6%, 7.2%, 8.6%, 10.4%, 12.5%"
+        },
+        "thumbnail": "artifacts/New Year's Fanfare.png",
+        "story": "This uplifting fanfare of trumpets spreads the blessing of the newly rising sun.",
+        "aliases": null
+    },
+    {
+        "name": "New-Type Thruster",
+        "description": "When inflicted by CC, reduces self's Cooldown of all Skills by (0) sec and recovers (1) Mana every sec for 3 sec. Has a Cooldown of 20 sec.",
+        "value": {
+            "0": "5, 6, 7, 8, 9, 10",
+            "1": "500, 600, 700, 800, 900, 1000"
+        },
+        "thumbnail": "artifacts/New-Type Thruster.png",
+        "story": "The latest model of the thrusters that the Selva Company provided to the empire. It's designed as the special Christmas Edition. It looks like a regular sleigh, but it is capable of extreme speed. If the durability issue is fixed, it coud become a great invention.",
+        "aliases": null
+    },
+    {
+        "name": "Orbs of Contract",
+        "description": "Every 7 sec, increase M.DEF by (0) of ATK. This effect stacks up to 6 times.",
+        "value": {
+            "0": "1%, 1.2%, 1.4%, 1.7%, 2%, 2.5%"
+        },
+        "thumbnail": "artifacts/Orbs of Contract.png",
+        "story": "Orbs shared between two lovers. They represent the eternal companionship of two souls even when they are apart.",
+        "aliases": null
+    },
+    {
+        "name": "Perfume of the Queen",
+        "description": "When inflicted by CC 3 times, removes own Negative Effects, and increases ATK Spd by 500 and gains immunity to CC for (0) sec. Refreshes after activation.",
+        "value": {
+            "0": "4, 4.8, 5.8, 7, 8.4, 10"
+        },
+        "thumbnail": "artifacts/Perfume of the Queen.png",
+        "story": "Perfume used by legendary Golden Queen. It is the legendary perfume which can tempt anyone who smells the scent.",
+        "aliases": null
+    },
+    {
+        "name": "Pocket Watch of Ancient Civilization",
+        "description": "Every 10 sec, reduce all cooldowns by (0) sec and increase ATK Spd by (1) for 5 sec.",
+        "value": {
+            "0": "1, 1.2, 1.4, 1.7, 2, 2.5",
+            "1": "80, 96, 115, 138, 165, 200"
+        },
+        "thumbnail": "artifacts/Pocket Watch of Ancient Civilization.png",
+        "story": "A pocket watch that can fast-forward time slightly to provide a quick glimpse of one's destiny. Excessive use may prove to be quite dangerous.",
+        "aliases": null
+    },
+    {
+        "name": "Primer for the Heroes",
+        "description": "When HP falls below 20%, ATK rises by (0) while Speed and all DMG Reduction is increased by (1).",
+        "value": {
+            "0": "30%, 36%, 43%, 51%, 62%, 75%",
+            "1": "300, 360, 430, 510, 620, 750"
+        },
+        "thumbnail": "artifacts/Primer for the Heroes.png",
+        "story": "This primer, which chronicles the stories of past heroes, is considered a bible for any new hero. It's written in ancient letters.",
+        "aliases": null
+    },
+    {
+        "name": "Roaring Tiger Statue",
+        "description": "When Hero health falls below 35%, deal DMG equal to 100% of ATK to nearby enemies and knock them down. Targeted enemies lose (0) ATK and (1) ATK Speed for 10 sec. Has a cooldown of 30 sec.",
+        "value": {
+            "0": "14%, 16%, 20%, 24%, 29%, 35%",
+            "1": "140, 160, 200, 240, 290, 350"
+        },
+        "thumbnail": "artifacts/Roaring Tiger Statue.png",
+        "story": "An eerie gold statue designed after a roaring tiger. Under the right conditions, the tiger wakes up and makes everything around it tremble in fear.",
+        "aliases": null
+    },
+    {
+        "name": "Sealed Chain of Ancient God",
+        "description": "Every (0) sec, cast Silence to a random enemy for (1) sec and remove positive effects.",
+        "value": {
+            "0": "20, 19, 18, 17, 16, 15",
+            "1": "3, 3.5, 4, 4.5, 5, 6"
+        },
+        "thumbnail": "artifacts/Sealed Chain of Ancient God.png",
+        "story": "A chain said to be once used by the God King of the desert to fetter his slaves. Those who are restrained by this chain cannot resist at all.",
+        "aliases": null
+    },
+    {
+        "name": "Solar Stone",
+        "description": "Deals P.DMG equal to (0) of ATK to nearby enemies in a circular range every second and decreases their Heal Rate by (1) for 5 sec.",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%",
+            "1": "30%, 36%, 43%, 52%, 62%, 75%"
+        },
+        "thumbnail": "artifacts/Solar Stone.png",
+        "story": "A magic tool sculpted into the shape of the Sun. Made from a stone embodying the essence of fire, it has the power to cleanse and purify all evil energy surrounding its wearer.",
+        "aliases": null
+    },
+    {
+        "name": "Sorcerous Black Dagger",
+        "description": "Upon auto-attacking, there is a (0) chance to reduce the enemy's mana by (1). Has a cooldown of 6 sec.",
+        "value": {
+            "0": "10%, 12%, 14%, 16%, 18%, 20%",
+            "1": "600, 700, 800, 1000, 1200, 1500"
+        },
+        "thumbnail": "artifacts/Sorcerous Black Dagger.png",
+        "story": "An ancient sorcerous dagger thought to be used for assassinations. It is enchanted with a vile spell that disrupts mana.",
+        "aliases": null
+    },
+    {
+        "name": "Soul Spring Water",
+        "description": "At the beginning of each battle, recover (0) HP and (1) mana.",
+        "value": {
+            "0": "24%, 28%, 34%, 42%, 50%, 60%",
+            "1": "12%, 14%, 17%, 21%, 25%, 30%"
+        },
+        "thumbnail": "artifacts/Soul Spring Water.png",
+        "story": "One drop of it is said to become available every hundred years at the Soul Spring. A very rare and effective panacea.",
+        "aliases": ["ssw"]
+    },
+    {
+        "name": "Talismans of Resistance",
+        "description": "Removes debuffs upon receiving them. After removal, gain immunity to CC for (0) sec. Has a cooldown for (1) sec.",
+        "value": {
+            "0": "1, 1.5, 2, 3, 4, 5",
+            "1": "20, 19, 18, 17, 16, 15"
+        },
+        "thumbnail": "artifacts/Talismans of Resistance.png",
+        "story": "A pile of old exotic talismans that drives away harmful spirits. They are rendered useless for a while once used.",
+        "aliases": null
+    },
+    {
+        "name": "Tarot Card of Loss",
+        "description": "Reduces Crit Chance by (0) and increases ATK by (1).",
+        "value": {
+            "0": "150, 180, 210, 260, 310, 375",
+            "1": "30%, 36%, 43%, 52%, 63%, 75%"
+        },
+        "thumbnail": "artifacts/Tarot Card of Loss.png",
+        "story": "A deck of Tarot Card containing unfathomable magic. Appears to be a lost property of someone. It is said to be crafted by Eucalytus the witch to honor the death of her loved one.",
+        "aliases": null
+    },
+    {
+        "name": "The Ancient Scope",
+        "description": "When MP is at 100%, Crit Chance and ACC rises by (0) for 10 sec. Has a cooldown of 20 sec.",
+        "value": {
+            "0": "400, 480, 570, 680, 820, 1000"
+        },
+        "thumbnail": "artifacts/The Ancient Scope.png",
+        "story": "A scope created by an ancient technomagi. A useful tool that can zoom into a faraway object to a good level of detail.",
+        "aliases": null
+    },
+    {
+        "name": "Tome of Black Magic",
+        "description": "Every 10 sec, target a single enemy. Said enemy takes DMG that ignores DEF equal to (0) of current HP each second for 5 sec, and reduces Mana by (1). This skill is effective only in the Arena.",
+        "value": {
+            "0": "2%, 2.4%, 2.9%, 3.5%, 4.2%, 5%",
+            "1": "200, 240, 290, 350, 420, 500"
+        },
+        "thumbnail": "artifacts/Tome of Black Magic.png",
+        "story": "A book with evil black magic. It is filled with many spells that the devil has taught to mankind.",
+        "aliases": null
+    },
+    {
+        "name": "Vase of Sacrifice",
+        "description": "Upon taking DMG 50 times, heals HP of 1 random ally by (0) of own ATK and increases the target's ATK by (1) for 10 secs.",
+        "value": {
+            "0": "200%, 240%, 290%, 350%, 420%, 500%",
+            "1": "30%, 36%, 43%, 51%, 63%, 75%"
+        },
+        "thumbnail": "artifacts/Vase of Sacrifice.png",
+        "story": "A vase dedicated to the tomb of a fallen general from the Demon War. Within it flows water from the river of Eden, glistening brilliantly.",
+        "aliases": null
+    },
+    {
+        "name": "Fragment of an Ancient Kingdom",
+        "description": "Increases CC Resist by (0) and CC ACC by (1).",
+        "value": {
+            "0": "200, 240, 290, 350, 420, 500",
+            "1": "200, 240, 290, 350, 420, 500"
+        },
+        "thumbnail": "artifacts/Fragment of an Ancient Kingdom.png",
+        "story": "A component found from an ancient and mysterious machine. It is suspected to be a part of a teleportation device.",
+        "aliases": null
+    },
+    {
+        "name": "Goddess of Glory",
+        "description": "Increases ATK Spd of 4 allies by (0) for 20 sec when the battle starts. This effect will not be stacked with other similar effects cast by allies.",
+        "value": {
+            "0": "100, 120, 140, 170, 210, 250"
+        },
+        "thumbnail": "artifacts/Goddess of Glory.png",
+        "story": "A golden statue of a goddess holding a laurel branch. It brings victory to its owner.",
+        "aliases": null
+    },
+    {
+        "name": "Master Chef's Recipe Book",
+        "description": "Increase self's All DEF by (0) and Heal Rate by (1).",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%",
+            "1": "10%, 12%, 14%, 17%, 21%, 25%"
+        },
+        "thumbnail": "artifacts/Master Chef's Recipe Book.png",
+        "story": "They say there are those who go by the title, Master Chef. It is a title given only to the best chefs who created a new paradigm in the history of cooking. This rare book not only contains the best recipes in the world, but also contains information on how one can obtain the ingredients that are used in those recipes. The book of course, also explains how challenging and dangerous it is to find those ingredients... One interesting fact is that the signature dish of the first master chef who wrote this book is a sandwich.",
+        "aliases": null
+    },
+    {
+        "name": "Pendulum of Fantasy",
+        "description": "At the beginning of each battle, ATK is permanently increased by (0). This effect stacks up to max 5 times, and is irremovable.",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%"
+        },
+        "thumbnail": "artifacts/Pendulum of Fantasy.png",
+        "story": "An artifact told to have been in Hexipolia's possession before he used the dice. If you watch the pendulum move left and right, it feels as if the pendulum will suck you into a world of fantasy.",
+        "aliases": null
+    },
+    {
+        "name": "Otherworldly Radiance",
+        "description": "At the beginning of the first battle, and every 15 sec, gains [Otherworldly Radiance] that lasts for 4 sec. If [Otherworldly Radiance] is still active after 4 sec, dispels negative effects from self and reduces All DMG taken by (0) for 4 sec. If [Otherworldly Radiance] is dispelled in 4 sec, dispels positive effect from 2 random enemies, knocks them away for 3 sec, and reduces their Mana by (1). DMG Reduction effect is irremovable.",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%",
+            "1": "800, 1000, 1200, 1400, 1700, 2000"
+        },
+        "thumbnail": "artifacts/Otherworldly Radiance.png",
+        "story": "A fragment of spite carried by Shakmeh. It lends its power to those who pay the price with the fervor toward otherworldly darkness. The radiance of evil can overwhelm the enemy's appearence just with its aura, and paralyzes the user's logic, arousing them. Whether this will result in a courageous warriot or blood-crazed madman is up to how they use it.",
+        "aliases": null
+    },
+    {
+        "name": "Ancient God King's Coin",
+        "description": "Increases ATK and Crit DMG by (0).",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%"
+        },
+        "thumbnail": "artifacts/Ancient God King's Coin.png",
+        "story": "During ancient times, God King Cain led the desert kingdom of Sekireinel to a golden age. This is a commemorative coin crafted from the gold he extracted from the desert. It holds mysterious power that makes one feel the sun's power and heat when held.",
+        "aliases": null
+    },
+    {
+        "name": "Amethyst Pendulum",
+        "description": "Increases All Crit Resistance by (0) for 7 sec every 10 sec.",
+        "value": {
+            "0": "200, 240, 290, 350, 420, 500"
+        },
+        "thumbnail": "artifacts/Amethyst Pendulum.png",
+        "story": "An amethyst pendulum that has the power to drive away the dark energy, and detect negative energy.",
+        "aliases": ["amethyst"]
+    },
+    {
+        "name": "Otherworldly Helm",
+        "description": "Increases self's Max HP by (0), and upon taking DMG 3 times, reduces [DMG dealt to Heroes] of self and 2 enemies with the highest ATK by (1) for 5 sec. This effect is irremovable and has a 30 sec Cooldown.",
+        "value": {
+            "0": "20%, 24%, 29%, 35%, 42%, 50%",
+            "1": "50%, 55%, 60%, 65%, 70%, 75%"
+        },
+        "thumbnail": "artifacts/Otherworldly Helm.png",
+        "story": "A fragment of hatred carried by Shakmeh. This helm that takes the shape of a beast has a terrifying glare that makes anyone who looks into its eyes feel the terror of being prey. The terror that takes away the will to fight is deeply engraved within the helm, affecting the user as well.",
+        "aliases": null
+    },
+    {
+        "name": "Treasure Hunt Capsule",
+        "description": "At the beginning of each battle, immediatly reduces Cooldown of all Skills of self by (0) sec and increases DMG dealt to Non-Hero enemies by (1). DMG Boost against Non-Hero enemies can stack up to max 10 times and is irremovable. Upon reaching 10 stacks, Cooldown reduction effect is doubled.",
+        "value": {
+            "0": "1, 1.2, 1.4, 1.7, 2.1, 2.5",
+            "1": "1%, 1.2%, 1.4%, 1.7%, 2.1%, 2.5%"
+        },
+        "thumbnail": "artifacts/Treasure Hunt Capsule.png",
+        "story": "A Capsule used in the treasure hunt event hosted at the Orvel Water Park. It is designed to be sealed so that it can float on water, and anyone who gets their hand on it can close or open it. However, since the inside of the capsule is specially designed to melt upon contacting water, it should be opened outside water. Each capsule contains a note, and most of the notes, of course, are losing tickets. The notes vary starting from 5th place to 1st place, and it is said that the one who finds the note that places them in the 1st place will receive a great reward.",
+        "aliases": null
+    },
+    {
+        "name": "Forge Hammer MK-II",
+        "description": "Normal attacks have a 5% chance to increase ATK Spd by (0) for 5 sec.",
+        "value": {
+            "0": "400, 480, 570, 690, 830, 1000"
+        },
+        "thumbnail": "artifacts/Forge Hammer MK-II.png",
+        "story": "A replica of the Hammer of Titan, Jin's favorite tool. Its durability is on par with the Hammer of Titan which only 3 of its kind still remain. It is too heavy for humans to wield since it was miniaturized in Dragon standard.",
+        "aliases": ["hammer"]
+    },
+    {
+        "name": "Honorary Trophy",
+        "description": "Increases ATK by (0) and Crit Chance by (1).",
+        "value": {
+            "0": "25%, 30%, 35%, 40%, 45%, 50%",
+            "1": "250, 300, 350, 400, 450, 500"
+        },
+        "thumbnail": "artifacts/Honorary Trophy.png",
+        "story": "An honorary trophy that is given to a Hero who trained hard.",
+        "aliases": ["trophy"]
+    },
+    {
+        "name": "Honorary Medal",
+        "description": "Increases ATK, HP, and All DEF of all allies by (0). This effect does not stack with same effects from other allies",
+        "value": {
+            "0": "7.5%, 9%, 10.5%, 12%, 13.5%, 15%"
+        },
+        "thumbnail": "artifacts/Honorary Medal.png",
+        "story": "An honorary medal that is given to a Hero who put in a lot of effort.",
+        "aliases": ["medal"]
+    },
+    {
+        "name": "Hero's Plaque of Appreciation",
+        "description": "Increases Max HP by (0). 30 sec after the battle starts, increases Crit DMG of the ally with the highest ATK excluding self by (1). This effect is irremovable and does not stack with same effects from other allies.",
+        "value": {
+            "0": "25%, 30%, 35%, 40%, 45%, 50%",
+            "1": "50%, 60%, 70%, 80%, 90%, 100%"
+        },
+        "thumbnail": "artifacts/Hero's Plaque of Appreciation.png",
+        "story": "An honorary plaque that is given to a Hero who fought hard.",
+        "aliases": ["plaque"]
+    },
+    {
+        "name": "Academic Achievement Award",
+        "description": "Increases ATK of all allies by (0), and All DEF of self by (1). This effect will not stack with other similar effects cast by allies.",
+        "value": {
+            "0": "8%, 10%, 12%, 14%, 17%, 20%",
+            "1": "10%, 12%, 14%, 17%, 21%, 25%"
+        },
+        "thumbnail": "artifacts/Academic Achievement Award.png",
+        "story": "In recognition of your outstanding excellence, superior performance, and good conduct, we hereby confer this medal to you. - Principal Rephy",
+        "aliases": ["aaa"]
+    },
+    {
+        "name": "Dragon's Doomstone",
+        "description": "Increase DMG dealt to Non-Hero enemies by (0) and takes (1) reduced DMG from them. If the target is a [Dragon], the effect is tripled.",
+        "value": {
+            "0": "10%, 12%, 14%, 17%, 21%, 25%",
+            "1": "5%, 6%, 7%, 8.5%, 10.5%, 12.5%"
+        },
+        "thumbnail": "artifacts/Dragon's Doomstone.png",
+        "story": "A stone that radiates a mysterious energy. It is said to be a stone that was once used by the Dragon Slayers of old to hunt down dragons.",
+        "aliases": null
+    },
+    {
+        "name": "Apocalypsion's Tear",
+        "description": "When there is only 1 enemy or more than 5 enemies, increases ATK and Crit DMG of all allies by (0) and (1) respectively. This effect does not stack with other similar effects cast by allies.",
+        "value": {
+            "0": "12%, 14%, 17%, 21%, 25%, 30%",
+            "1": "24%, 28%, 34%, 42%, 50%, 60%"
+        },
+        "thumbnail": "artifacts/Apocalypsion's Tear.png",
+        "story": "A fragment of Apocalypsion.",
+        "aliases": null
+    }
+]

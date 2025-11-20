@@ -1,0 +1,24 @@
+{
+  "name": "kingsraid-team-builder",
+  "version": "1.0.0",
+  "description": "Team builder website based on the game King's Raid",
+  "license": "MIT",
+  "author": "Torenciel",
+  "type": "commonjs",
+  "main": "script.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "download-data": "node scripts/download-data.js",
+    "setup": "npm run download-data && npm start"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "morgan": "^1.10.1",
+    "tailwindcss": "^4.1.17"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "keywords": ["kingsraid", "team-builder", "express", "nodejs"]
+}

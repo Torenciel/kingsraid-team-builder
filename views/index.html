@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingsRaid Team Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .character-slot {
+            background: #374151;
+            border: 2px dashed #6B7280;
+        }
+        .character-slot.empty:hover {
+            background: #4B5563;
+        }
+        .hero-card {
+            background: #1F2937;
+            position: relative;
+            aspect-ratio: 1;
+        }
+        .hero-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2px;
+            font-size: 11px;
+            text-align: center;
+        }
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .class-icon {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-2xl font-bold mb-2">KingsRaid Team Builder</h1>
+        </header>
+
+        <!-- Team Slots -->
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-center mb-4">Your Team</h2>
+            <div class="flex justify-center gap-3" id="team-slots">
+                <!-- 6 emplacements -->
+            </div>
+        </div>
+
+        <!-- Available Heroes -->
+        <div>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold">Available Heroes</h2>
+                <div class="flex gap-2">
+                    <select id="role-filter" class="bg-gray-800 border border-gray-600 rounded px-3 py-1 text-sm">
+                        <option value="all">All Roles</option>
+                        <option value="Warrior">Warrior</option>
+                        <option value="Knight">Knight</option>
+                        <option value="Assassin">Assassin</option>
+                        <option value="Archer">Archer</option>
+                        <option value="Wizard">Wizard</option>
+                        <option value="Priest">Priest</option>
+                        <option value="Mechanic">Mechanic</option>
+                    </select>
+                    <input type="text" id="search-input" placeholder="Search..." class="bg-gray-800 border border-gray-600 rounded px-3 py-1 text-sm w-32">
+                </div>
+            </div>
+            
+            <div id="heroes-grid" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2">
+                <!-- Heroes will be loaded here -->
+            </div>
+            <div id="hero-count" class="text-center text-gray-400 text-sm mt-4"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentTeam = Array(6).fill(null);
+        let allHeroes = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTeamSlots();
+            loadHeroes();
+            setupFilters();
+        });
+
+        function initializeTeamSlots() {
+            const teamSlots = document.getElementById('team-slots');
+            teamSlots.innerHTML = '';
+
+            for (let i = 0; i < 6; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'character-slot w-16 h-16 rounded flex items-center justify-center cursor-pointer empty';
+                slot.innerHTML = '<span class="text-gray-400">+</span>';
+                slot.onclick = () => removeHero(i);
+                teamSlots.appendChild(slot);
+            }
+        }
+
+        async function loadHeroes() {
+            try {
+                const response = await fetch('/api/heroes');
+                const data = await response.json();
+                allHeroes = data.heroes;
+                displayHeroes(allHeroes);
+                updateHeroCount(allHeroes.length);
+            } catch (error) {
+                console.error('Error loading heroes:', error);
+            }
+        }
+
+        function displayHeroes(heroes) {
+            const heroesGrid = document.getElementById('heroes-grid');
+            heroesGrid.innerHTML = '';
+
+            heroes.forEach(hero => {
+                const heroCard = document.createElement('div');
+                heroCard.className = 'hero-card rounded cursor-pointer';
+                
+                const classIconPath = getClassIconPath(hero.role);
+                
+                heroCard.innerHTML = `
+                    <img src="${hero.image}" alt="${hero.name}" class="hero-image rounded">
+                    <div class="hero-name">${hero.name}</div>
+                    <img src="${classIconPath}" alt="${hero.role}" class="class-icon rounded">
+                `;
+                heroCard.onclick = () => addHeroToTeam(hero);
+                heroesGrid.appendChild(heroCard);
+            });
+        }
+
+        function getClassIconPath(className) {
+            const classMap = {
+                'Warrior': '/kingsraid-data/assets/classes/warrior.png',
+                'Knight': '/kingsraid-data/assets/classes/knight.png',
+                'Assassin': '/kingsraid-data/assets/classes/assassin.png',
+                'Archer': '/kingsraid-data/assets/classes/archer.png',
+                'Wizard': '/kingsraid-data/assets/classes/wizard.png',
+                'Priest': '/kingsraid-data/assets/classes/priest.png',
+                'Mechanic': '/kingsraid-data/assets/classes/mechanic.png'
+            };
+            return classMap[className] || '/kingsraid-data/assets/classes/default.png';
+        }
+
+        function setupFilters() {
+            const roleFilter = document.getElementById('role-filter');
+            const searchInput = document.getElementById('search-input');
+
+            roleFilter.addEventListener('change', filterHeroes);
+            searchInput.addEventListener('input', filterHeroes);
+        }
+
+        function filterHeroes() {
+            const roleFilter = document.getElementById('role-filter').value;
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+
+            let filteredHeroes = allHeroes;
+
+            // Filtre par rôle
+            if (roleFilter !== 'all') {
+                filteredHeroes = filteredHeroes.filter(hero => hero.role === roleFilter);
+            }
+
+            // Filtre par recherche
+            if (searchTerm) {
+                filteredHeroes = filteredHeroes.filter(hero => 
+                    hero.name.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            displayHeroes(filteredHeroes);
+            updateHeroCount(filteredHeroes.length);
+        }
+
+        function updateHeroCount(count) {
+            document.getElementById('hero-count').textContent = `${count} heroes`;
+        }
+
+        function addHeroToTeam(hero) {
+            const emptySlotIndex = currentTeam.findIndex(slot => slot === null);
+            if (emptySlotIndex !== -1) {
+                currentTeam[emptySlotIndex] = hero;
+                updateTeamSlots();
+            }
+        }
+
+        function removeHero(index) {
+            if (currentTeam[index]) {
+                currentTeam[index] = null;
+                updateTeamSlots();
+            }
+        }
+
+        function updateTeamSlots() {
+            const slots = document.getElementById('team-slots').children;
+            
+            currentTeam.forEach((hero, index) => {
+                const slot = slots[index];
+                if (hero) {
+                    slot.className = 'character-slot w-16 h-16 rounded flex items-center justify-center cursor-pointer';
+                    slot.innerHTML = `<img src="${hero.image}" alt="${hero.name}" class="w-14 h-14 rounded object-cover">`;
+                } else {
+                    slot.className = 'character-slot w-16 h-16 rounded flex items-center justify-center cursor-pointer empty';
+                    slot.innerHTML = '<span class="text-gray-400">+</span>';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
