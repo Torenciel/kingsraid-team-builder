@@ -38,8 +38,14 @@
         position: absolute;
         top: 2px;
         right: 2px;
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 20px;
+        background-color: black;
+        border: 0.5px solid black;
+        border-radius: 100%;
+      }
+      .class-icon.missing {
+        display: none; /* Cache l'icône si elle n'existe pas */
       }
     </style>
   </head>
@@ -63,18 +69,28 @@
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-lg font-semibold">Available Heroes</h2>
           <div class="flex gap-2">
+            <!-- Sélecteur de tri avec onchange inline -->
+            <select
+              id="sort-filter"
+              onchange="loadHeroes(this.value)"
+              class="bg-gray-800 border border-gray-600 rounded px-3 py-1 text-sm"
+            >
+              <option value="name">Sort by Name</option>
+              <option value="release">Sort by Release</option>
+            </select>
+
             <select
               id="role-filter"
               class="bg-gray-800 border border-gray-600 rounded px-3 py-1 text-sm"
             >
               <option value="all">All Roles</option>
-              <option value="Warrior">Warrior</option>
               <option value="Knight">Knight</option>
-              <option value="Assassin">Assassin</option>
+              <option value="Warrior">Warrior</option>
               <option value="Archer">Archer</option>
+              <option value="Mechanic">Mechanic</option>
+              <option value="Assassin">Assassin</option>
               <option value="Wizard">Wizard</option>
               <option value="Priest">Priest</option>
-              <option value="Mechanic">Mechanic</option>
             </select>
             <input
               type="text"
@@ -103,9 +119,10 @@
       let allHeroes = [];
 
       document.addEventListener("DOMContentLoaded", function () {
+        console.log("🚀 DOM chargé - Initialisation...");
         initializeTeamSlots();
-        loadHeroes();
         setupFilters();
+        loadHeroes();
       });
 
       function initializeTeamSlots() {
@@ -122,21 +139,63 @@
         }
       }
 
-      async function loadHeroes() {
+      // Modifiez loadHeroes pour accepter le tri
+      async function loadHeroes(sortType = "name") {
         try {
-          const response = await fetch("/api/heroes");
+          console.log(`🔄 Chargement des héros avec tri: ${sortType}`);
+          const response = await fetch(`/api/heroes?sort=${sortType}`);
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
           const data = await response.json();
-          allHeroes = data.heroes;
+          console.log("📊 Données reçues:", data);
+
+          // S'assurer que allHeroes est toujours un array
+          allHeroes = data.heroes || [];
+          currentSort = sortType;
+
+          console.log(
+            `✅ ${allHeroes.length} héros chargés avec tri: ${sortType}`
+          );
+          console.log(
+            "👑 Premiers héros:",
+            allHeroes.slice(0, 3).map((h) => h.name)
+          );
+
           displayHeroes(allHeroes);
           updateHeroCount(allHeroes.length);
+
+          // Mettre à jour le sélecteur de tri
+          document.getElementById("sort-filter").value = sortType;
         } catch (error) {
-          console.error("Error loading heroes:", error);
+          console.error("❌ Error loading heroes:", error);
+          // Réinitialiser en cas d'erreur
+          allHeroes = [];
+          displayHeroes([]);
+          updateHeroCount(0);
         }
       }
-      //====================================================================================================
+
       function displayHeroes(heroes) {
         const heroesGrid = document.getElementById("heroes-grid");
+
+        // S'assurer que heroes est toujours un array
+        if (!heroes || !Array.isArray(heroes)) {
+          console.error("❌ displayHeroes: heroes n'est pas un array", heroes);
+          heroes = [];
+        }
+
         heroesGrid.innerHTML = "";
+
+        console.log(`🎨 Affichage de ${heroes.length} héros`);
+        if (heroes.length > 0) {
+          console.log(
+            "👑 Premiers héros affichés:",
+            heroes.slice(0, 3).map((h) => h.name)
+          );
+        }
 
         heroes.forEach((hero) => {
           const heroCard = document.createElement("div");
@@ -146,14 +205,14 @@
 
           // Construction conditionnelle de l'icône
           const classIconHTML = classIconPath
-            ? `<img src="${classIconPath}" alt="${hero.role}" class="class-icon rounded">`
+            ? `<img src="${classIconPath}" alt="${hero.role}" class="class-icon">`
             : "";
 
           heroCard.innerHTML = `
-      <img src="${hero.image}" alt="${hero.name}" class="hero-image rounded">
-      <div class="hero-name">${hero.name}</div>
-      ${classIconHTML}
-    `;
+            <img src="${hero.image}" alt="${hero.name}" class="hero-image rounded">
+            <div class="hero-name">${hero.name}</div>
+            ${classIconHTML}
+          `;
 
           heroCard.onclick = () => addHeroToTeam(hero);
           heroesGrid.appendChild(heroCard);
@@ -181,6 +240,8 @@
 
         roleFilter.addEventListener("change", filterHeroes);
         searchInput.addEventListener("input", filterHeroes);
+
+        console.log("✅ Filtres rôle et recherche attachés");
       }
 
       function filterHeroes() {
@@ -205,6 +266,9 @@
           );
         }
 
+        console.log(
+          `🔍 Filtrage: ${filteredHeroes.length} héros après filtres`
+        );
         displayHeroes(filteredHeroes);
         updateHeroCount(filteredHeroes.length);
       }
