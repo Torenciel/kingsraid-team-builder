@@ -26,17 +26,21 @@
       .hero-card:hover {
         scale: 1.05;
       }
-      .hero-name {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 2px;
-        font-size: 11px;
-        text-align: center;
-      }
+.hero-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
+    color: white;
+    padding: 4px 2px;
+    font-size: 11px;
+    text-align: center;
+    height: 60px; /* Augmenter la hauteur */
+    display: flex;
+    align-items: flex-end; /* Pousse le texte vers le bas */
+    justify-content: center;
+}
       .hero-image {
         width: 100%;
         height: 100%;
@@ -128,22 +132,23 @@
         background: #111827;
         padding: 20px;
         border-radius: 8px;
-        max-width: 400px;
+        max-width: 500px;
         width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
       }
-      .ut-option, .uw-option {
+      .ut-option, .uw-option, .artifact-option {
         width: 80px;
         height: 80px;
         cursor: pointer;
-        /* border: 4px solid transparent; */
         border-radius: 4px;
         background: #374151;
         border: 2px solid #6b7280;
       }
-      .ut-option:hover, .uw-option:hover {
+      .ut-option:hover, .uw-option:hover, .artifact-option:hover {
         border-color: #10B981;
       }
-      .ut-option.selected, .uw-option.selected {
+      .ut-option.selected, .uw-option.selected, .artifact-option.selected {
         border-color: #3B82F6;
       }
       .stars-container {
@@ -175,6 +180,21 @@
         padding: 1px 3px;
         border-radius: 3px;
       }
+      .team-hero-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
+    color: white;
+    padding: 4px 2px;
+    font-size: 11px;
+    text-align: center;
+    height: 60px; /* Augmenter la hauteur */
+    display: flex;
+    align-items: flex-end; /* Pousse le texte vers le bas */
+    justify-content: center;
+}
     </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen">
@@ -251,7 +271,7 @@
     <!-- Modal pour choisir les images UW -->
     <div id="uw-modal" class="modal">
       <div class="modal-content">
-        <h3 class="text-lg font-bold mb-4 text-center">Choisir UW</h3>
+        <h3 class="text-lg font-bold mb-4 text-center">UW</h3>
         <div class="flex justify-center gap-4 mb-4" id="uw-options">
           <!-- Les options UW seront ajoutées ici dynamiquement -->
         </div>
@@ -259,8 +279,8 @@
           <!-- Les étoiles UW seront ajoutées ici dynamiquement -->
         </div>
         <div class="flex justify-center gap-4 mt-6">
-          <button id="confirm-uw" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Confirmer</button>
-          <button id="cancel-uw" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Annuler</button>
+          <button id="confirm-uw" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Confirm</button>
+          <button id="cancel-uw" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Cancel</button>
         </div>
       </div>
     </div>
@@ -268,7 +288,7 @@
     <!-- Modal pour choisir les images UT -->
     <div id="ut-modal" class="modal">
       <div class="modal-content">
-        <h3 class="text-lg font-bold mb-4 text-center">Choisir une image UT</h3>
+        <h3 class="text-lg font-bold mb-4 text-center">UT</h3>
         <div class="grid grid-cols-2 gap-4 justify-items-center mb-4" id="ut-options">
           <!-- Les options UT seront ajoutées ici dynamiquement -->
         </div>
@@ -279,8 +299,28 @@
           <!-- Les étoiles UT seront ajoutées ici dynamiquement -->
         </div>
         <div class="flex justify-center gap-4 mt-6">
-          <button id="confirm-ut" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Confirmer</button>
-          <button id="cancel-ut" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Annuler</button>
+          <button id="confirm-ut" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Confirm</button>
+          <button id="cancel-ut" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour choisir les artefacts -->
+    <div id="artifact-modal" class="modal">
+      <div class="modal-content">
+        <h3 class="text-lg font-bold mb-4 text-center">Artifact</h3>
+        <div class="grid grid-cols-3 gap-4 justify-items-center mb-4" id="artifact-options">
+          <!-- Les options artefacts seront ajoutées ici dynamiquement -->
+        </div>
+        <div class="flex justify-center mb-4" id="artifact-empty-option">
+          <!-- L'option vide pour artefact sera ajoutée ici dynamiquement -->
+        </div>
+        <div class="stars-container" id="artifact-stars">
+          <!-- Les étoiles artefact seront ajoutées ici dynamiquement -->
+        </div>
+        <div class="flex justify-center gap-4 mt-6">
+          <button id="confirm-artifact" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Confirm</button>
+          <button id="cancel-artifact" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Cancel</button>
         </div>
       </div>
     </div>
@@ -291,6 +331,7 @@
       
       let currentTeam = Array(MAX_TEAM_SLOTS).fill(null);
       let allHeroes = [];
+      let allArtifacts = [];
       let currentSubSlots = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(null));
       let currentSubStars = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(0));
       let currentModalData = null;
@@ -301,7 +342,28 @@
         setupFilters();
         setupModals();
         loadHeroes();
+        loadArtifacts();
       });
+
+      async function loadArtifacts() {
+        try {
+          console.log(`🔄 Chargement des artefacts...`);
+          const response = await fetch('/kingsraid-data/artifact_release_order.json');
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log("📊 Données artefacts reçues:", data);
+
+          allArtifacts = data.artifacts || [];
+          console.log(`✅ ${allArtifacts.length} artefacts chargés`);
+        } catch (error) {
+          console.error("❌ Error loading artifacts:", error);
+          allArtifacts = [];
+        }
+      }
 
       function initializeTeamSlots() {
         const teamSlots = document.getElementById("team-slots");
@@ -312,7 +374,7 @@
           const slotContainer = document.createElement("div");
           slotContainer.className = "flex flex-col items-center gap-2";
           
-          // Slot principal agrandi
+          // Slot principal (Héro)
           const mainSlot = document.createElement("div");
           mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
           mainSlot.innerHTML = '<span class="text-gray-400 text-lg">+</span>';
@@ -321,7 +383,7 @@
           const subSlotsContainer = document.createElement("div");
           subSlotsContainer.className = "grid grid-cols-2 gap-1";
           
-          // Créer 4 sous-slots / sub-slot
+          // Créer 4 sous-slots / sub-slot : UW, Ut, Artifacts, Perks
           for (let j = 0; j < 4; j++) {
             const subSlot = document.createElement("div");
             subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
@@ -366,6 +428,20 @@
             closeModal('ut-modal');
           }
         });
+
+        // Modal Artifact
+        const artifactModal = document.getElementById('artifact-modal');
+        const confirmArtifactBtn = document.getElementById('confirm-artifact');
+        const cancelArtifactBtn = document.getElementById('cancel-artifact');
+
+        confirmArtifactBtn.addEventListener('click', confirmArtifactSelection);
+        cancelArtifactBtn.addEventListener('click', () => closeModal('artifact-modal'));
+
+        artifactModal.addEventListener('click', (e) => {
+          if (e.target === artifactModal) {
+            closeModal('artifact-modal');
+          }
+        });
       }
 
       function handleSubSlotClick(teamSlotIndex, subSlotIndex) {
@@ -379,9 +455,17 @@
         if (subSlotIndex === 0) {
           openUWModal(teamSlotIndex, subSlotIndex, hero.name);
         }
-        // Slots 1, 2, 3: UT (choix parmi 1.png, 2.png, 3.png, 4.png)
-        else if (subSlotIndex >= 1 && subSlotIndex <= 3) {
+        // Slot 1: UT (choix parmi 1.png, 2.png, 3.png, 4.png)
+        else if (subSlotIndex === 1) {
           openUTModal(teamSlotIndex, subSlotIndex, hero.name);
+        }
+        // Slot 2: Artifact
+        else if (subSlotIndex === 2) {
+          openArtifactModal(teamSlotIndex, subSlotIndex);
+        }
+        // Slot 3: Réservé pour future fonctionnalité
+        else if (subSlotIndex === 3) {
+          alert('Slot réservé pour une future fonctionnalité!');
         }
       }
 
@@ -412,7 +496,7 @@
         // Option vide
         const emptyOption = document.createElement('div');
         emptyOption.className = `uw-option ${currentModalData.selectedOption === 'empty' ? 'selected' : ''}`;
-        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Vide</div>';
+        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
         emptyOption.onclick = () => selectUWOption('empty');
         optionsContainer.appendChild(emptyOption);
 
@@ -463,6 +547,46 @@
         modal.style.display = 'flex';
       }
 
+      function openArtifactModal(teamSlotIndex, subSlotIndex) {
+        currentModalData = { 
+          teamSlotIndex, 
+          subSlotIndex,
+          selectedArtifact: currentSubSlots[teamSlotIndex][subSlotIndex] ? 
+            currentSubSlots[teamSlotIndex][subSlotIndex].split('/artifacts/')[1].split('.')[0] : null,
+          selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0
+        };
+        
+        const modal = document.getElementById('artifact-modal');
+        const optionsContainer = document.getElementById('artifact-options');
+        const emptyContainer = document.getElementById('artifact-empty-option');
+        const starsContainer = document.getElementById('artifact-stars');
+        
+        optionsContainer.innerHTML = '';
+        emptyContainer.innerHTML = '';
+        
+        // Créer les options artefacts
+        allArtifacts.forEach((artifactName, index) => {
+          const option = document.createElement('div');
+          option.className = `artifact-option ${currentModalData.selectedArtifact === artifactName ? 'selected' : ''}`;
+          const artifactPath = `/kingsraid-data/assets/artifacts/${artifactName}.png`;
+          option.innerHTML = `<img src="${artifactPath}" alt="${artifactName}" class="w-full h-full object-cover rounded">`;
+          option.onclick = () => selectArtifactOption(artifactName);
+          optionsContainer.appendChild(option);
+        });
+
+        // Option vide (en dessous)
+        const emptyOption = document.createElement('div');
+        emptyOption.className = `artifact-option ${currentModalData.selectedArtifact === null ? 'selected' : ''}`;
+        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
+        emptyOption.onclick = () => selectArtifactOption(null);
+        emptyContainer.appendChild(emptyOption);
+
+        // Créer les étoiles
+        createStars(starsContainer, 'artifact', currentModalData.selectedStars);
+        
+        modal.style.display = 'flex';
+      }
+
       function selectUWOption(option) {
         // Retirer la sélection précédente
         document.querySelectorAll('.uw-option').forEach(opt => {
@@ -487,6 +611,19 @@
         
         // Stocker temporairement le numéro UT sélectionné (0 pour vide)
         currentModalData.selectedUT = utNumber;
+      }
+
+      function selectArtifactOption(artifactName) {
+        // Retirer la sélection précédente
+        document.querySelectorAll('.artifact-option').forEach(option => {
+          option.classList.remove('selected');
+        });
+        
+        // Ajouter la sélection actuelle
+        event.target.closest('.artifact-option').classList.add('selected');
+        
+        // Stocker temporairement le nom de l'artefact sélectionné (null pour vide)
+        currentModalData.selectedArtifact = artifactName;
       }
 
       function createStars(container, type, currentStars) {
@@ -609,6 +746,30 @@
         }
         
         closeModal('ut-modal');
+      }
+
+      function confirmArtifactSelection() {
+        if (!currentModalData || currentModalData.selectedArtifact === undefined) {
+          alert('Veuillez sélectionner une option Artifact!');
+          return;
+        }
+
+        const { teamSlotIndex, subSlotIndex, selectedArtifact, selectedStars } = currentModalData;
+        
+        if (selectedArtifact === null) {
+          // Option vide sélectionnée
+          currentSubSlots[teamSlotIndex][subSlotIndex] = null;
+          currentSubStars[teamSlotIndex][subSlotIndex] = 0;
+          removeSubItem(teamSlotIndex, subSlotIndex);
+        } else {
+          // Option Artifact sélectionnée
+          const artifactPath = `/kingsraid-data/assets/artifacts/${selectedArtifact}.png`;
+          currentSubSlots[teamSlotIndex][subSlotIndex] = artifactPath;
+          currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
+          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, artifactPath, selectedStars);
+        }
+        
+        closeModal('artifact-modal');
       }
 
       function closeModal(modalId) {
@@ -820,11 +981,18 @@
 
           //====== Team slot size / taille ======
           if (hero) {
+            const classIconPath = getClassIconPath(hero.role);
+            const classIconHTML = classIconPath
+              ? `<img src="${classIconPath}" alt="${hero.role}" class="class-icon">`
+              : "";
+
             //taille de slot de basse
             mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer";
             //taille de slot avec un hero
             mainSlot.innerHTML = `
-              <img src="${hero.image}" alt="${hero.name}" class="w-[96%] h-[96%] rounded object-cover ">
+              <img src="${hero.image}" alt="${hero.name}" class="w-full h-full rounded object-cover">
+              <div class="team-hero-name">${hero.name}</div>
+              ${classIconHTML}
               <div class="remove-btn" onclick="removeHeroFromTeam('${hero.id}')">×</div>
             `;
 
