@@ -8,7 +8,8 @@
     <style>
       .character-slot {
         background: #374151;
-        border: 2px dashed #6b7280;
+        border: 2px solid #6b7280;
+        position: relative;
       }
       .character-slot.empty:hover {
         background: #4b5563;
@@ -17,6 +18,13 @@
         background: #1f2937;
         position: relative;
         aspect-ratio: 1;
+      }
+      .hero-card.in-team {
+        border: 4px solid #10B981;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+      }
+      .hero-card:hover {
+        scale: 1.05;
       }
       .hero-name {
         position: absolute;
@@ -45,11 +53,131 @@
         border-radius: 100%;
       }
       .class-icon.missing {
-        display: none; /* Cache l'icône si elle n'existe pas */
+        display: none;
+      }
+      .remove-btn {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #EF4444;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        cursor: pointer;
+        border: 2px solid #1F2937;
+        z-index: 10;
+      }
+      .character-slot:not(.empty):hover .remove-btn {
+        display: flex;
+      }
+      .sub-slot {
+        background: #374151;
+        border: 2px solid #6b7280;
+        border-radius: 4px;
+        position: relative;
+      }
+      .sub-slot.empty:hover {
+        background: #4b5563;
+      }
+      .sub-slot-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+      .sub-remove-btn {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #EF4444;
+        color: white;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        font-size: 12px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        cursor: pointer;
+        border: 2px solid #1F2937;
+        z-index: 10;
+      }
+      .sub-slot:not(.empty):hover .sub-remove-btn {
+        display: flex;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-content {
+        background: #111827;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 400px;
+        width: 90%;
+      }
+      .ut-option, .uw-option {
+        width: 80px;
+        height: 80px;
+        cursor: pointer;
+        /* border: 4px solid transparent; */
+        border-radius: 4px;
+        background: #374151;
+        border: 2px solid #6b7280;
+      }
+      .ut-option:hover, .uw-option:hover {
+        border-color: #10B981;
+      }
+      .ut-option.selected, .uw-option.selected {
+        border-color: #3B82F6;
+      }
+      .stars-container {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin: 15px 0;
+      }
+      .star {
+        font-size: 24px;
+        cursor: pointer;
+        color: #6B7280;
+      }
+      .star.filled {
+        color: #FBBF24;
+      }
+      .star.hover-preview {
+        color: #FBBF24;
+        opacity: 0.6;
+      }
+      .stars-text {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        color: #FBBF24;
+        font-size: 10px;
+        font-weight: bold;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 1px 3px;
+        border-radius: 3px;
       }
     </style>
-  </head>
-  <body class="bg-gray-900 text-white min-h-screen">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
     <div class="container mx-auto px-4 py-8">
       <!-- Header -->
       <header class="text-center mb-8">
@@ -59,8 +187,15 @@
       <!-- Team Slots -->
       <div class="mb-8">
         <h2 class="text-lg font-semibold text-center mb-4">Your Team</h2>
-        <div class="flex justify-center gap-3" id="team-slots">
-          <!-- 6 emplacements -->
+        
+        <!-- Tous les slots disponibles immédiatement -->
+        <div class="flex justify-center gap-6 flex-wrap" id="team-slots">
+          <!-- 8 emplacements au total -->
+        </div>
+
+        <!-- Compteur d'équipe -->
+        <div class="text-center text-sm text-gray-400 mt-4">
+          Heroes: <span id="current-team-size">0</span>/<span id="max-team-size">8</span>
         </div>
       </div>
 
@@ -69,7 +204,6 @@
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-lg font-semibold">Available Heroes</h2>
           <div class="flex gap-2">
-            <!-- Sélecteur de tri avec onchange inline -->
             <select
               id="sort-filter"
               onchange="loadHeroes(this.value)"
@@ -103,7 +237,7 @@
 
         <div
           id="heroes-grid"
-          class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2"
+          class="grid grid-cols-8 md:grid-cols-12 lg:grid-cols-16 xl:grid-cols-20 gap-1"
         >
           <!-- Heroes will be loaded here -->
         </div>
@@ -114,14 +248,58 @@
       </div>
     </div>
 
+    <!-- Modal pour choisir les images UW -->
+    <div id="uw-modal" class="modal">
+      <div class="modal-content">
+        <h3 class="text-lg font-bold mb-4 text-center">Choisir UW</h3>
+        <div class="flex justify-center gap-4 mb-4" id="uw-options">
+          <!-- Les options UW seront ajoutées ici dynamiquement -->
+        </div>
+        <div class="stars-container" id="uw-stars">
+          <!-- Les étoiles UW seront ajoutées ici dynamiquement -->
+        </div>
+        <div class="flex justify-center gap-4 mt-6">
+          <button id="confirm-uw" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Confirmer</button>
+          <button id="cancel-uw" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Annuler</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour choisir les images UT -->
+    <div id="ut-modal" class="modal">
+      <div class="modal-content">
+        <h3 class="text-lg font-bold mb-4 text-center">Choisir une image UT</h3>
+        <div class="grid grid-cols-2 gap-4 justify-items-center mb-4" id="ut-options">
+          <!-- Les options UT seront ajoutées ici dynamiquement -->
+        </div>
+        <div class="flex justify-center mb-4" id="ut-empty-option">
+          <!-- L'option vide pour UT sera ajoutée ici dynamiquement -->
+        </div>
+        <div class="stars-container" id="ut-stars">
+          <!-- Les étoiles UT seront ajoutées ici dynamiquement -->
+        </div>
+        <div class="flex justify-center gap-4 mt-6">
+          <button id="confirm-ut" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Confirmer</button>
+          <button id="cancel-ut" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Annuler</button>
+        </div>
+      </div>
+    </div>
+
     <script>
-      let currentTeam = Array(6).fill(null);
+      // CONFIGURATION SIMPLIFIEE
+      const MAX_TEAM_SLOTS = 8;
+      
+      let currentTeam = Array(MAX_TEAM_SLOTS).fill(null);
       let allHeroes = [];
+      let currentSubSlots = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(null));
+      let currentSubStars = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(0));
+      let currentModalData = null;
 
       document.addEventListener("DOMContentLoaded", function () {
         console.log("🚀 DOM chargé - Initialisation...");
         initializeTeamSlots();
         setupFilters();
+        setupModals();
         loadHeroes();
       });
 
@@ -129,14 +307,346 @@
         const teamSlots = document.getElementById("team-slots");
         teamSlots.innerHTML = "";
 
-        for (let i = 0; i < 6; i++) {
-          const slot = document.createElement("div");
-          slot.className =
-            "character-slot w-16 h-16 rounded flex items-center justify-center cursor-pointer empty";
-          slot.innerHTML = '<span class="text-gray-400">+</span>';
-          slot.onclick = () => removeHero(i);
-          teamSlots.appendChild(slot);
+        // Créer tous les slots avec sous-slots
+        for (let i = 0; i < MAX_TEAM_SLOTS; i++) {
+          const slotContainer = document.createElement("div");
+          slotContainer.className = "flex flex-col items-center gap-2";
+          
+          // Slot principal agrandi
+          const mainSlot = document.createElement("div");
+          mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
+          mainSlot.innerHTML = '<span class="text-gray-400 text-lg">+</span>';
+          
+          // Container pour les 4 sous-slots (2x2)
+          const subSlotsContainer = document.createElement("div");
+          subSlotsContainer.className = "grid grid-cols-2 gap-1";
+          
+          // Créer 4 sous-slots / sub-slot
+          for (let j = 0; j < 4; j++) {
+            const subSlot = document.createElement("div");
+            subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+            subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
+            subSlot.onclick = () => handleSubSlotClick(i, j);
+            subSlotsContainer.appendChild(subSlot);
+          }
+          
+          slotContainer.appendChild(mainSlot);
+          slotContainer.appendChild(subSlotsContainer);
+          teamSlots.appendChild(slotContainer);
         }
+
+        updateTeamDisplay();
+      }
+
+      function setupModals() {
+        // Modal UW
+        const uwModal = document.getElementById('uw-modal');
+        const confirmUwBtn = document.getElementById('confirm-uw');
+        const cancelUwBtn = document.getElementById('cancel-uw');
+
+        confirmUwBtn.addEventListener('click', confirmUWSelection);
+        cancelUwBtn.addEventListener('click', () => closeModal('uw-modal'));
+
+        uwModal.addEventListener('click', (e) => {
+          if (e.target === uwModal) {
+            closeModal('uw-modal');
+          }
+        });
+
+        // Modal UT
+        const utModal = document.getElementById('ut-modal');
+        const confirmUtBtn = document.getElementById('confirm-ut');
+        const cancelUtBtn = document.getElementById('cancel-ut');
+
+        confirmUtBtn.addEventListener('click', confirmUTSelection);
+        cancelUtBtn.addEventListener('click', () => closeModal('ut-modal'));
+
+        utModal.addEventListener('click', (e) => {
+          if (e.target === utModal) {
+            closeModal('ut-modal');
+          }
+        });
+      }
+
+      function handleSubSlotClick(teamSlotIndex, subSlotIndex) {
+        const hero = currentTeam[teamSlotIndex];
+        if (!hero) {
+          alert('Veuillez d\'abord ajouter un héros dans ce slot!');
+          return;
+        }
+
+        // Slot 0: UW (uw.png)
+        if (subSlotIndex === 0) {
+          openUWModal(teamSlotIndex, subSlotIndex, hero.name);
+        }
+        // Slots 1, 2, 3: UT (choix parmi 1.png, 2.png, 3.png, 4.png)
+        else if (subSlotIndex >= 1 && subSlotIndex <= 3) {
+          openUTModal(teamSlotIndex, subSlotIndex, hero.name);
+        }
+      }
+
+      function openUWModal(teamSlotIndex, subSlotIndex, heroName) {
+        currentModalData = { 
+          teamSlotIndex, 
+          subSlotIndex, 
+          heroName,
+          selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0,
+          selectedOption: currentSubSlots[teamSlotIndex][subSlotIndex] ? 'uw' : 'empty'
+        };
+        
+        const modal = document.getElementById('uw-modal');
+        const optionsContainer = document.getElementById('uw-options');
+        const starsContainer = document.getElementById('uw-stars');
+        
+        // Créer les options UW
+        optionsContainer.innerHTML = '';
+        
+        // Option UW
+        const uwOption = document.createElement('div');
+        uwOption.className = `uw-option ${currentModalData.selectedOption === 'uw' ? 'selected' : ''}`;
+        const uwPath = `/kingsraid-data/assets/heroes/${heroName}/uw.png`;
+        uwOption.innerHTML = `<img src="${uwPath}" alt="UW" class="w-full h-full object-cover rounded">`;
+        uwOption.onclick = () => selectUWOption('uw');
+        optionsContainer.appendChild(uwOption);
+
+        // Option vide
+        const emptyOption = document.createElement('div');
+        emptyOption.className = `uw-option ${currentModalData.selectedOption === 'empty' ? 'selected' : ''}`;
+        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Vide</div>';
+        emptyOption.onclick = () => selectUWOption('empty');
+        optionsContainer.appendChild(emptyOption);
+
+        // Créer les étoiles
+        createStars(starsContainer, 'uw', currentModalData.selectedStars);
+        
+        modal.style.display = 'flex';
+      }
+
+      function openUTModal(teamSlotIndex, subSlotIndex, heroName) {
+        currentModalData = { 
+          teamSlotIndex, 
+          subSlotIndex, 
+          heroName,
+          selectedUT: currentSubSlots[teamSlotIndex][subSlotIndex] ? 
+            parseInt(currentSubSlots[teamSlotIndex][subSlotIndex].split('/ut/')[1].split('.')[0]) : 0,
+          selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0
+        };
+        
+        const modal = document.getElementById('ut-modal');
+        const optionsContainer = document.getElementById('ut-options');
+        const emptyContainer = document.getElementById('ut-empty-option');
+        const starsContainer = document.getElementById('ut-stars');
+        
+        optionsContainer.innerHTML = '';
+        emptyContainer.innerHTML = '';
+        
+        // Créer les 4 options UT
+        for (let i = 1; i <= 4; i++) {
+          const option = document.createElement('div');
+          option.className = `ut-option ${currentModalData.selectedUT === i ? 'selected' : ''}`;
+          const utPath = `/kingsraid-data/assets/heroes/${heroName}/ut/${i}.png`;
+          option.innerHTML = `<img src="${utPath}" alt="UT ${i}" class="w-full h-full object-cover rounded">`;
+          option.onclick = () => selectUTOption(i);
+          optionsContainer.appendChild(option);
+        }
+
+        // Option vide (en dessous)
+        const emptyOption = document.createElement('div');
+        emptyOption.className = `ut-option ${currentModalData.selectedUT === 0 ? 'selected' : ''}`;
+        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
+        emptyOption.onclick = () => selectUTOption(0);
+        emptyContainer.appendChild(emptyOption);
+
+        // Créer les étoiles
+        createStars(starsContainer, 'ut', currentModalData.selectedStars);
+        
+        modal.style.display = 'flex';
+      }
+
+      function selectUWOption(option) {
+        // Retirer la sélection précédente
+        document.querySelectorAll('.uw-option').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+        
+        // Ajouter la sélection actuelle
+        event.target.closest('.uw-option').classList.add('selected');
+        
+        // Stocker temporairement l'option sélectionnée
+        currentModalData.selectedOption = option;
+      }
+
+      function selectUTOption(utNumber) {
+        // Retirer la sélection précédente
+        document.querySelectorAll('.ut-option').forEach(option => {
+          option.classList.remove('selected');
+        });
+        
+        // Ajouter la sélection actuelle
+        event.target.closest('.ut-option').classList.add('selected');
+        
+        // Stocker temporairement le numéro UT sélectionné (0 pour vide)
+        currentModalData.selectedUT = utNumber;
+      }
+
+      function createStars(container, type, currentStars) {
+        container.innerHTML = '';
+        
+        // Ajouter l'option 0 étoiles (X) à gauche
+        const zeroStar = document.createElement('span');
+        zeroStar.className = 'star';
+        zeroStar.innerHTML = '×';
+        zeroStar.style.color = '#EF4444';
+        zeroStar.onclick = () => selectStars(0, type);
+        container.appendChild(zeroStar);
+
+        // Ajouter les 5 étoiles
+        for (let i = 1; i <= 5; i++) {
+          const star = document.createElement('span');
+          star.className = `star ${i <= currentStars ? 'filled' : ''}`;
+          star.innerHTML = i <= currentStars ? '★' : '☆';
+          star.dataset.value = i;
+          
+          // Événements pour le hover preview (inversé)
+          star.addEventListener('mouseover', () => showHoverPreview(i, type, currentStars));
+          star.addEventListener('mouseout', () => clearHoverPreview(type, currentStars));
+          star.addEventListener('click', () => selectStars(i, type));
+          
+          container.appendChild(star);
+        }
+      }
+
+      function showHoverPreview(hoveredStar, type, currentStars) {
+        const starsContainer = document.getElementById(`${type}-stars`);
+        const stars = starsContainer.querySelectorAll('.star');
+        
+        stars.forEach((star, index) => {
+          if (index > 0) { // Ignorer le × (index 0)
+            const starValue = parseInt(star.dataset.value);
+            if (starValue > currentStars && starValue <= hoveredStar) {
+              // Les étoiles au-dessus du niveau actuel et sous la souris deviennent semi-transparentes
+              star.classList.add('hover-preview');
+            } else {
+              star.classList.remove('hover-preview');
+            }
+          }
+        });
+      }
+
+      function clearHoverPreview(type, currentStars) {
+        const starsContainer = document.getElementById(`${type}-stars`);
+        const stars = starsContainer.querySelectorAll('.star');
+        
+        stars.forEach((star, index) => {
+          if (index > 0) {
+            star.classList.remove('hover-preview');
+          }
+        });
+      }
+
+      function selectStars(starCount, type) {
+        currentModalData.selectedStars = starCount;
+        
+        const starsContainer = document.getElementById(`${type}-stars`);
+        const stars = starsContainer.querySelectorAll('.star');
+        
+        stars.forEach((star, index) => {
+          if (index > 0) { // Ignorer le × (index 0)
+            if (index <= starCount) {
+              star.innerHTML = '★';
+              star.classList.add('filled');
+              star.classList.remove('hover-preview');
+            } else {
+              star.innerHTML = '☆';
+              star.classList.remove('filled', 'hover-preview');
+            }
+          }
+        });
+      }
+
+      function confirmUWSelection() {
+        if (!currentModalData) {
+          return;
+        }
+
+        const { teamSlotIndex, subSlotIndex, heroName, selectedOption, selectedStars } = currentModalData;
+        
+        if (selectedOption === 'empty') {
+          // Option vide sélectionnée
+          currentSubSlots[teamSlotIndex][subSlotIndex] = null;
+          currentSubStars[teamSlotIndex][subSlotIndex] = 0;
+          removeSubItem(teamSlotIndex, subSlotIndex);
+        } else {
+          // Option UW sélectionnée
+          const uwPath = `/kingsraid-data/assets/heroes/${heroName}/uw.png`;
+          currentSubSlots[teamSlotIndex][subSlotIndex] = uwPath;
+          currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
+          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, uwPath, selectedStars);
+        }
+        
+        closeModal('uw-modal');
+      }
+
+      function confirmUTSelection() {
+        if (!currentModalData || currentModalData.selectedUT === null) {
+          alert('Veuillez sélectionner une option UT!');
+          return;
+        }
+
+        const { teamSlotIndex, subSlotIndex, heroName, selectedUT, selectedStars } = currentModalData;
+        
+        if (selectedUT === 0) {
+          // Option vide sélectionnée
+          currentSubSlots[teamSlotIndex][subSlotIndex] = null;
+          currentSubStars[teamSlotIndex][subSlotIndex] = 0;
+          removeSubItem(teamSlotIndex, subSlotIndex);
+        } else {
+          // Option UT sélectionnée
+          const utPath = `/kingsraid-data/assets/heroes/${heroName}/ut/${selectedUT}.png`;
+          currentSubSlots[teamSlotIndex][subSlotIndex] = utPath;
+          currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
+          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, utPath, selectedStars);
+        }
+        
+        closeModal('ut-modal');
+      }
+
+      function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'none';
+        currentModalData = null;
+      }
+
+      function updateSubSlotDisplay(teamSlotIndex, subSlotIndex, imagePath, stars) {
+        const slotContainers = document.getElementById("team-slots").children;
+        const slotContainer = slotContainers[teamSlotIndex];
+        const subSlotsContainer = slotContainer.children[1];
+        const subSlot = subSlotsContainer.children[subSlotIndex];
+        
+        const starsDisplay = stars > 0 ? 
+          `<div class="stars-text">${stars}★</div>` : 
+          '';
+        
+        subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer";
+        subSlot.innerHTML = `
+          <img src="${imagePath}" alt="Sub item" class="sub-slot-image">
+          <div class="sub-remove-btn" onclick="removeSubItem(${teamSlotIndex}, ${subSlotIndex})">×</div>
+          ${starsDisplay}
+        `;
+      }
+
+      function removeSubItem(teamSlotIndex, subSlotIndex) {
+        event.stopPropagation(); // Empêcher le déclenchement du click sur le sous-slot
+        currentSubSlots[teamSlotIndex][subSlotIndex] = null;
+        currentSubStars[teamSlotIndex][subSlotIndex] = 0;
+        
+        const slotContainers = document.getElementById("team-slots").children;
+        const slotContainer = slotContainers[teamSlotIndex];
+        const subSlotsContainer = slotContainer.children[1];
+        const subSlot = subSlotsContainer.children[subSlotIndex];
+        
+        subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+        subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
       }
 
       // Modifiez loadHeroes pour accepter le tri
@@ -152,26 +662,19 @@
           const data = await response.json();
           console.log("📊 Données reçues:", data);
 
-          // S'assurer que allHeroes est toujours un array
           allHeroes = data.heroes || [];
           currentSort = sortType;
 
           console.log(
             `✅ ${allHeroes.length} héros chargés avec tri: ${sortType}`
           );
-          console.log(
-            "👑 Premiers héros:",
-            allHeroes.slice(0, 3).map((h) => h.name)
-          );
 
           displayHeroes(allHeroes);
           updateHeroCount(allHeroes.length);
 
-          // Mettre à jour le sélecteur de tri
           document.getElementById("sort-filter").value = sortType;
         } catch (error) {
           console.error("❌ Error loading heroes:", error);
-          // Réinitialiser en cas d'erreur
           allHeroes = [];
           displayHeroes([]);
           updateHeroCount(0);
@@ -181,7 +684,6 @@
       function displayHeroes(heroes) {
         const heroesGrid = document.getElementById("heroes-grid");
 
-        // S'assurer que heroes est toujours un array
         if (!heroes || !Array.isArray(heroes)) {
           console.error("❌ displayHeroes: heroes n'est pas un array", heroes);
           heroes = [];
@@ -190,20 +692,17 @@
         heroesGrid.innerHTML = "";
 
         console.log(`🎨 Affichage de ${heroes.length} héros`);
-        if (heroes.length > 0) {
-          console.log(
-            "👑 Premiers héros affichés:",
-            heroes.slice(0, 3).map((h) => h.name)
-          );
-        }
 
         heroes.forEach((hero) => {
           const heroCard = document.createElement("div");
-          heroCard.className = "hero-card rounded cursor-pointer";
+          
+          // Vérifier si le héros est dans l'équipe
+          const isInTeam = currentTeam.some(slot => slot && slot.id === hero.id);
+          
+          heroCard.className = `hero-card rounded cursor-pointer ${isInTeam ? 'in-team' : ''}`;
 
           const classIconPath = getClassIconPath(hero.role);
 
-          // Construction conditionnelle de l'icône
           const classIconHTML = classIconPath
             ? `<img src="${classIconPath}" alt="${hero.role}" class="class-icon">`
             : "";
@@ -214,7 +713,15 @@
             ${classIconHTML}
           `;
 
-          heroCard.onclick = () => addHeroToTeam(hero);
+          // Comportement différent selon si le héros est dans l'équipe ou non
+          heroCard.onclick = () => {
+            if (isInTeam) {
+              removeHeroFromTeam(hero.id);
+            } else {
+              addHeroToTeam(hero);
+            }
+          };
+
           heroesGrid.appendChild(heroCard);
         });
       }
@@ -230,7 +737,6 @@
           Priest: "/kingsraid-data/assets/classes/priest.png",
         };
 
-        // Retourne l'icône si elle existe, sinon null pour ne pas afficher d'image
         return classMap[className] || null;
       }
 
@@ -252,14 +758,12 @@
 
         let filteredHeroes = allHeroes;
 
-        // Filtre par rôle
         if (roleFilter !== "all") {
           filteredHeroes = filteredHeroes.filter(
             (hero) => hero.role === roleFilter
           );
         }
 
-        // Filtre par recherche
         if (searchTerm) {
           filteredHeroes = filteredHeroes.filter((hero) =>
             hero.name.toLowerCase().includes(searchTerm)
@@ -280,34 +784,113 @@
       function addHeroToTeam(hero) {
         const emptySlotIndex = currentTeam.findIndex((slot) => slot === null);
         if (emptySlotIndex !== -1) {
+          // Vérifier si le héros est déjà dans l'équipe
+          if (currentTeam.some(slot => slot && slot.id === hero.id)) {
+            alert('This hero is already in your team!');
+            return;
+          }
+          
           currentTeam[emptySlotIndex] = hero;
-          updateTeamSlots();
+          updateTeamDisplay();
+          refreshHeroesDisplay(); // Met à jour l'affichage des héros
+        } else {
+          alert('No empty slots available! Remove a hero first.');
         }
       }
 
-      function removeHero(index) {
-        if (currentTeam[index]) {
-          currentTeam[index] = null;
-          updateTeamSlots();
+      function removeHeroFromTeam(heroId) {
+        const heroIndex = currentTeam.findIndex(slot => slot && slot.id === heroId);
+        if (heroIndex !== -1) {
+          // Supprimer aussi les sous-slots associés
+          currentSubSlots[heroIndex] = Array(4).fill(null);
+          currentSubStars[heroIndex] = Array(4).fill(0);
+          currentTeam[heroIndex] = null;
+          updateTeamDisplay();
+          refreshHeroesDisplay(); // Met à jour l'affichage des héros
         }
       }
 
-      function updateTeamSlots() {
-        const slots = document.getElementById("team-slots").children;
+      function updateTeamDisplay() {
+        const slotContainers = document.getElementById("team-slots").children;
 
         currentTeam.forEach((hero, index) => {
-          const slot = slots[index];
+          const slotContainer = slotContainers[index];
+          const mainSlot = slotContainer.children[0]; // Le slot principal
+          const subSlotsContainer = slotContainer.children[1]; // Les sous-slots
+
+          //====== Team slot size / taille ======
           if (hero) {
-            slot.className =
-              "character-slot w-16 h-16 rounded flex items-center justify-center cursor-pointer";
-            slot.innerHTML = `<img src="${hero.image}" alt="${hero.name}" class="w-14 h-14 rounded object-cover">`;
+            //taille de slot de basse
+            mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer";
+            //taille de slot avec un hero
+            mainSlot.innerHTML = `
+              <img src="${hero.image}" alt="${hero.name}" class="w-[96%] h-[96%] rounded object-cover ">
+              <div class="remove-btn" onclick="removeHeroFromTeam('${hero.id}')">×</div>
+            `;
+
+            // Mettre à jour les sous-slots
+            for (let j = 0; j < 4; j++) {
+              const subSlot = subSlotsContainer.children[j];
+              const subItem = currentSubSlots[index][j];
+              const subStars = currentSubStars[index][j];
+              
+              if (subItem) {
+                const starsDisplay = subStars > 0 ? 
+                  `<div class="stars-text">${subStars}★</div>` : 
+                  '';
+                
+                subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer";
+                subSlot.innerHTML = `
+                  <img src="${subItem}" alt="Sub item" class="sub-slot-image">
+                  <div class="sub-remove-btn" onclick="removeSubItem(${index}, ${j})">×</div>
+                  ${starsDisplay}
+                `;
+              } else {
+                subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+                subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
+              }
+            }
           } else {
-            slot.className =
-              "character-slot w-16 h-16 rounded flex items-center justify-center cursor-pointer empty";
-            slot.innerHTML = '<span class="text-gray-400">+</span>';
+            //taille de slot vide
+            mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
+            mainSlot.innerHTML = '<span class="text-gray-400 text-lg">+</span>';
+
+            // Réinitialiser les sous-slots
+            for (let j = 0; j < 4; j++) {
+              const subSlot = subSlotsContainer.children[j];
+              subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+              subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
+            }
           }
         });
+
+        // Mettre à jour le compteur d'équipe
+        const currentSize = currentTeam.filter(hero => hero !== null).length;
+        document.getElementById('current-team-size').textContent = currentSize;
+        document.getElementById('max-team-size').textContent = MAX_TEAM_SLOTS;
+      }
+
+      function refreshHeroesDisplay() {
+        // Réaffiche les héros avec les états à jour
+        const roleFilter = document.getElementById("role-filter").value;
+        const searchTerm = document.getElementById("search-input").value.toLowerCase();
+
+        let filteredHeroes = allHeroes;
+
+        if (roleFilter !== "all") {
+          filteredHeroes = filteredHeroes.filter(
+            (hero) => hero.role === roleFilter
+          );
+        }
+
+        if (searchTerm) {
+          filteredHeroes = filteredHeroes.filter((hero) =>
+            hero.name.toLowerCase().includes(searchTerm)
+          );
+        }
+
+        displayHeroes(filteredHeroes);
       }
     </script>
-  </body>
+</body>
 </html>
