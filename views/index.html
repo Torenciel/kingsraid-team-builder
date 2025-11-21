@@ -259,7 +259,7 @@
 
       .perk-option {
         width: 50px;
-        height: 50px;
+        height: 30px;
         cursor: pointer;
         border-radius: 4px;
         background: #374151;
@@ -326,11 +326,11 @@
       }
 
       .perk-preview-option {
-        width: 18px;
-        height: 18px;
-        border-radius: 4px;
+        width: 20px;
+        height: 12px;
+        border-radius: 1px;
         background: #374151;
-        border: 2px solid #6b7280;
+        border: 1px solid #6b7280;
       }
 
       .perk-preview-option.selected {
@@ -366,6 +366,22 @@
           Heroes: <span id="current-team-size">0</span>/<span id="max-team-size"
             >8</span
           >
+        </div>
+
+        <!-- Boutons de sauvegarde/chargement -->
+        <div class="text-center mt-6">
+          <button
+            id="save-team"
+            class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mr-2"
+          >
+            Save Team to Link
+          </button>
+          <button
+            id="load-team"
+            class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded"
+          >
+            Load Team from Link
+          </button>
         </div>
       </div>
 
@@ -583,6 +599,36 @@
       </div>
     </div>
 
+    <!-- Modal pour charger une team -->
+    <div id="load-team-modal" class="modal">
+      <div class="modal-content">
+        <h3 class="text-lg font-bold mb-4 text-center">Load Team</h3>
+        <p class="text-center mb-4 text-gray-300">
+          Paste your team link below:
+        </p>
+        <input
+          type="text"
+          id="team-link-input"
+          placeholder="Paste team link here..."
+          class="w-full p-3 bg-gray-800 border border-gray-600 rounded mb-4 text-white"
+        />
+        <div class="flex justify-center gap-4">
+          <button
+            id="confirm-load-team"
+            class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded"
+          >
+            Load Team
+          </button>
+          <button
+            id="cancel-load-team"
+            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script>
       // CONFIGURATION SIMPLIFIEE
       const MAX_TEAM_SLOTS = 8;
@@ -604,6 +650,7 @@
         initializeTeamSlots();
         setupFilters();
         setupModals();
+        setupSaveLoad();
         loadHeroes();
         loadArtifacts();
 
@@ -795,6 +842,155 @@
             closeModal("perk-modal");
           }
         });
+
+        // Modal Load Team
+        const loadTeamModal = document.getElementById("load-team-modal");
+        const confirmLoadTeamBtn = document.getElementById("confirm-load-team");
+        const cancelLoadTeamBtn = document.getElementById("cancel-load-team");
+
+        confirmLoadTeamBtn.addEventListener("click", loadTeamFromLink);
+        cancelLoadTeamBtn.addEventListener("click", () =>
+          closeModal("load-team-modal")
+        );
+
+        loadTeamModal.addEventListener("click", (e) => {
+          if (e.target === loadTeamModal) {
+            closeModal("load-team-modal");
+          }
+        });
+      }
+
+      function setupSaveLoad() {
+        const saveBtn = document.getElementById("save-team");
+        const loadBtn = document.getElementById("load-team");
+
+        saveBtn.addEventListener("click", saveTeamToLink);
+        loadBtn.addEventListener("click", () => {
+          document.getElementById("team-link-input").value = "";
+          document.getElementById("load-team-modal").style.display = "flex";
+        });
+
+        // Charger automatiquement depuis l'URL si présente
+        loadTeamFromURL();
+      }
+
+      function saveTeamToLink() {
+        const teamData = {
+          heroes: currentTeam.map((hero) => (hero ? hero.id : null)),
+          subSlots: currentSubSlots,
+          subStars: currentSubStars,
+        };
+
+        // Compresser les données en base64
+        const jsonString = JSON.stringify(teamData);
+        const compressed = btoa(unescape(encodeURIComponent(jsonString)));
+
+        // Créer l'URL avec les données
+        const currentURL = window.location.href.split("?")[0];
+        const teamURL = `${currentURL}?team=${compressed}`;
+
+        // Copier dans le clipboard
+        navigator.clipboard
+          .writeText(teamURL)
+          .then(() => {
+            alert(
+              "Team link copied to clipboard! You can now share this link."
+            );
+          })
+          .catch(() => {
+            // Fallback si clipboard n'est pas supporté
+            prompt("Copy this link to share your team:", teamURL);
+          });
+      }
+
+      function loadTeamFromLink() {
+        const linkInput = document.getElementById("team-link-input");
+        const teamDataString = linkInput.value.trim();
+
+        if (!teamDataString) {
+          alert("Please paste a team link first!");
+          return;
+        }
+
+        try {
+          // Extraire les données de l'URL
+          let compressedData;
+          if (teamDataString.includes("?team=")) {
+            compressedData = teamDataString.split("?team=")[1];
+          } else {
+            compressedData = teamDataString;
+          }
+
+          // Décompresser les données
+          const jsonString = decodeURIComponent(escape(atob(compressedData)));
+          const teamData = JSON.parse(jsonString);
+
+          // Charger l'équipe
+          loadTeamData(teamData);
+          closeModal("load-team-modal");
+        } catch (error) {
+          console.error("Error loading team:", error);
+          alert("Invalid team link! Please check the link and try again.");
+        }
+      }
+
+      function loadTeamFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const teamDataString = urlParams.get("team");
+
+        if (teamDataString) {
+          try {
+            const jsonString = decodeURIComponent(escape(atob(teamDataString)));
+            const teamData = JSON.parse(jsonString);
+            loadTeamData(teamData);
+          } catch (error) {
+            console.error("Error loading team from URL:", error);
+          }
+        }
+      }
+
+      function loadTeamData(teamData) {
+        // Réinitialiser l'équipe actuelle
+        currentTeam = Array(MAX_TEAM_SLOTS).fill(null);
+        currentSubSlots = Array(MAX_TEAM_SLOTS)
+          .fill(null)
+          .map(() => Array(4).fill(null));
+        currentSubStars = Array(MAX_TEAM_SLOTS)
+          .fill(null)
+          .map(() => Array(4).fill(0));
+
+        // Charger les héros
+        teamData.heroes.forEach((heroId, index) => {
+          if (heroId) {
+            const hero = allHeroes.find((h) => h.id === heroId);
+            if (hero) {
+              currentTeam[index] = hero;
+            }
+          }
+        });
+
+        // Charger les sous-slots et étoiles
+        if (teamData.subSlots) {
+          teamData.subSlots.forEach((slot, slotIndex) => {
+            slot.forEach((subItem, subIndex) => {
+              currentSubSlots[slotIndex][subIndex] = subItem;
+            });
+          });
+        }
+
+        if (teamData.subStars) {
+          teamData.subStars.forEach((slot, slotIndex) => {
+            slot.forEach((stars, subIndex) => {
+              currentSubStars[slotIndex][subIndex] = stars;
+            });
+          });
+        }
+
+        // Mettre à jour l'affichage
+        updateTeamDisplay();
+        refreshHeroesDisplay();
+
+        alert("Team loaded successfully!");
       }
 
       function handleSubSlotClick(teamSlotIndex, subSlotIndex) {
@@ -1111,7 +1307,7 @@
           subSlot.className =
             "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer perk-slot-active";
           subSlot.innerHTML = `
-            <div class="w-full h-full flex items-center justify-center text-[#1f2937] text-xs font-bold">
+            <div class="w-full h-full flex items-center justify-center text-black text-xs font-bold">
               Perks
             </div>
           `;
