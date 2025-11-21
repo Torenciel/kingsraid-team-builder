@@ -20,27 +20,32 @@
         aspect-ratio: 1;
       }
       .hero-card.in-team {
-        border: 4px solid #10B981;
-        box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        border: 4px solid #64e210;
+        box-shadow: 0 0 10px rgba(34, 199, 13, 0.5);
       }
       .hero-card:hover {
         scale: 1.05;
       }
-.hero-name {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
-    color: white;
-    padding: 4px 2px;
-    font-size: 11px;
-    text-align: center;
-    height: 60px; /* Augmenter la hauteur */
-    display: flex;
-    align-items: flex-end; /* Pousse le texte vers le bas */
-    justify-content: center;
-}
+      .hero-name {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.9),
+          rgba(0, 0, 0, 0.4),
+          transparent
+        );
+        color: white;
+        padding: 4px 2px;
+        font-size: 11px;
+        text-align: center;
+        height: 60px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
       .hero-image {
         width: 100%;
         height: 100%;
@@ -49,11 +54,10 @@
       .class-icon {
         position: absolute;
         top: 2px;
-        right: 2px;
+        left: 2px;
         width: 20px;
         height: 20px;
-        background-color: black;
-        border: 0.5px solid black;
+        background-color: #433c30;
         border-radius: 100%;
       }
       .class-icon.missing {
@@ -61,21 +65,19 @@
       }
       .remove-btn {
         position: absolute;
-        top: -5px;
-        right: -5px;
-        background: #EF4444;
-        color: white;
+        top: -8px;
+        right: -8px;
+        background: #ef4444;
         border-radius: 50%;
         width: 20px;
         height: 20px;
-        font-size: 14px;
         display: none;
         align-items: center;
         justify-content: center;
-        font-weight: bold;
         cursor: pointer;
-        border: 2px solid #1F2937;
+        border: 2px solid #1f2937;
         z-index: 10;
+        padding: 0;
       }
       .character-slot:not(.empty):hover .remove-btn {
         display: flex;
@@ -95,27 +97,6 @@
         object-fit: cover;
         border-radius: 4px;
       }
-      .sub-remove-btn {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background: #EF4444;
-        color: white;
-        border-radius: 50%;
-        width: 16px;
-        height: 16px;
-        font-size: 12px;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        cursor: pointer;
-        border: 2px solid #1F2937;
-        z-index: 10;
-      }
-      .sub-slot:not(.empty):hover .sub-remove-btn {
-        display: flex;
-      }
       .modal {
         display: none;
         position: fixed;
@@ -133,11 +114,13 @@
         padding: 20px;
         border-radius: 8px;
         max-width: 500px;
-        width: 90%;
+        width: auto;
         max-height: 90vh;
         overflow-y: auto;
       }
-      .ut-option, .uw-option, .artifact-option {
+      .ut-option,
+      .uw-option,
+      .artifact-option {
         width: 80px;
         height: 80px;
         cursor: pointer;
@@ -145,11 +128,15 @@
         background: #374151;
         border: 2px solid #6b7280;
       }
-      .ut-option:hover, .uw-option:hover, .artifact-option:hover {
-        border-color: #10B981;
+      .ut-option:hover,
+      .uw-option:hover,
+      .artifact-option:hover {
+        border-color: #64e210;
       }
-      .ut-option.selected, .uw-option.selected, .artifact-option.selected {
-        border-color: #3B82F6;
+      .ut-option.selected,
+      .uw-option.selected,
+      .artifact-option.selected {
+        border-color: #2cbcff;
       }
       .stars-container {
         display: flex;
@@ -160,20 +147,20 @@
       .star {
         font-size: 24px;
         cursor: pointer;
-        color: #6B7280;
+        color: #6b7280;
       }
       .star.filled {
-        color: #FBBF24;
+        color: #fbbf24;
       }
       .star.hover-preview {
-        color: #FBBF24;
+        color: #fbbf24;
         opacity: 0.6;
       }
       .stars-text {
         position: absolute;
         bottom: 0px;
         left: 0px;
-        color: #FBBF24;
+        color: #fbbf24;
         font-size: 10px;
         font-weight: bold;
         background: rgba(0, 0, 0, 0.7);
@@ -181,23 +168,184 @@
         border-radius: 3px;
       }
       .team-hero-name {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
-    color: white;
-    padding: 4px 2px;
-    font-size: 11px;
-    text-align: center;
-    height: 60px; /* Augmenter la hauteur */
-    display: flex;
-    align-items: flex-end; /* Pousse le texte vers le bas */
-    justify-content: center;
-}
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.9),
+          rgba(0, 0, 0, 0.4),
+          transparent
+        );
+        color: white;
+        padding: 4px 2px;
+        font-size: 11px;
+        text-align: center;
+        height: 60px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      #artifact-modal .modal-content {
+        max-width: 800px !important;
+        width: fit-content !important;
+        height: auto !important;
+        max-height: none !important;
+        padding: 15px;
+      }
+
+      .artifact-grid {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 2px;
+        max-height: none;
+        overflow-y: visible;
+        padding: 2px;
+        background: #1f2937;
+        border-radius: 6px;
+      }
+
+      .artifact-option {
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        border-radius: 2px;
+        background: #374151;
+        border: 2px solid #6b7280;
+        position: relative;
+      }
+
+      .artifact-option:hover {
+        border-color: #64e210;
+        transform: scale(1.05);
+      }
+
+      .artifact-option.selected {
+        border-color: #2cbcff;
+        transform: scale(1.05);
+      }
+
+      .artifact-search {
+        background: #374151;
+        border: 1px solid #4b5563;
+        border-radius: 6px;
+        padding: 8px 12px;
+        color: white;
+        width: 100%;
+        margin-bottom: 12px;
+      }
+
+      .artifact-search:focus {
+        outline: none;
+        border-color: #3b82f6;
+      }
+
+      /* Styles pour les perks */
+      .perk-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 8px;
+        background: #1f2937;
+        border-radius: 6px;
+      }
+
+      .perk-row {
+        display: flex;
+        gap: 4px;
+        justify-content: flex-start;
+      }
+
+      .perk-option {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        border-radius: 4px;
+        background: #374151;
+        border: 2px solid #6b7280;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+        color: #9ca3af;
+        transition: all 0.2s;
+      }
+
+      .perk-option:hover {
+        border-color: #10b981;
+        transform: scale(1.05);
+      }
+
+      .perk-option.selected {
+        border-color: #fbbf24;
+        background: #fbbf24;
+        color: #1f2937;
+        transform: scale(1.05);
+      }
+
+      .perk-option.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        border-color: #6b7280;
+      }
+
+      #perk-modal .modal-content {
+        max-width: 400px !important;
+        width: 90% !important;
+      }
+
+      .perk-points {
+        background: #374151;
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 12px;
+        text-align: center;
+        border: 1px solid #4b5563;
+      }
+
+      .perk-points.over-limit {
+        background: #7f1d1d;
+        border-color: #dc2626;
+      }
+
+      /* Styles pour la preview des perks */
+      .perk-preview {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-top: 8px;
+        max-width: 250px;
+      }
+
+      .perk-preview-row {
+        display: flex;
+        gap: 2px;
+        justify-content: flex-start;
+      }
+
+      .perk-preview-option {
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        background: #374151;
+        border: 2px solid #6b7280;
+      }
+
+      .perk-preview-option.selected {
+        background: #fbbf24;
+        border-color: #fbbf24;
+      }
+
+      .perk-slot-active {
+        background: #fbbf24 !important;
+        color: #1f2937 !important;
+        font-weight: bold;
+      }
     </style>
-</head>
-<body class="bg-gray-900 text-white min-h-screen">
+  </head>
+  <body class="bg-gray-900 text-white min-h-screen">
     <div class="container mx-auto px-4 py-8">
       <!-- Header -->
       <header class="text-center mb-8">
@@ -207,7 +355,7 @@
       <!-- Team Slots -->
       <div class="mb-8">
         <h2 class="text-lg font-semibold text-center mb-4">Your Team</h2>
-        
+
         <!-- Tous les slots disponibles immédiatement -->
         <div class="flex justify-center gap-6 flex-wrap" id="team-slots">
           <!-- 8 emplacements au total -->
@@ -215,7 +363,9 @@
 
         <!-- Compteur d'équipe -->
         <div class="text-center text-sm text-gray-400 mt-4">
-          Heroes: <span id="current-team-size">0</span>/<span id="max-team-size">8</span>
+          Heroes: <span id="current-team-size">0</span>/<span id="max-team-size"
+            >8</span
+          >
         </div>
       </div>
 
@@ -257,7 +407,7 @@
 
         <div
           id="heroes-grid"
-          class="grid grid-cols-8 md:grid-cols-12 lg:grid-cols-16 xl:grid-cols-20 gap-1"
+          class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2"
         >
           <!-- Heroes will be loaded here -->
         </div>
@@ -265,6 +415,30 @@
           id="hero-count"
           class="text-center text-gray-400 text-sm mt-4"
         ></div>
+      </div>
+    </div>
+
+    <!-- Modal pour confirmer la suppression d'un héros -->
+    <div id="remove-hero-modal" class="modal">
+      <div class="modal-content">
+        <h3 class="text-lg font-bold mb-4 text-center">Remove Hero</h3>
+        <p class="text-center mb-6" id="remove-hero-message">
+          Are you sure you want to remove this hero from the team?
+        </p>
+        <div class="flex justify-center gap-4">
+          <button
+            id="confirm-remove-hero"
+            class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded"
+          >
+            Yes
+          </button>
+          <button
+            id="cancel-remove-hero"
+            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+          >
+            No
+          </button>
+        </div>
       </div>
     </div>
 
@@ -279,8 +453,18 @@
           <!-- Les étoiles UW seront ajoutées ici dynamiquement -->
         </div>
         <div class="flex justify-center gap-4 mt-6">
-          <button id="confirm-uw" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Confirm</button>
-          <button id="cancel-uw" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Cancel</button>
+          <button
+            id="confirm-uw"
+            class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded"
+          >
+            Confirm
+          </button>
+          <button
+            id="cancel-uw"
+            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
@@ -289,7 +473,10 @@
     <div id="ut-modal" class="modal">
       <div class="modal-content">
         <h3 class="text-lg font-bold mb-4 text-center">UT</h3>
-        <div class="grid grid-cols-2 gap-4 justify-items-center mb-4" id="ut-options">
+        <div
+          class="grid grid-cols-2 gap-4 justify-items-center mb-4"
+          id="ut-options"
+        >
           <!-- Les options UT seront ajoutées ici dynamiquement -->
         </div>
         <div class="flex justify-center mb-4" id="ut-empty-option">
@@ -299,8 +486,18 @@
           <!-- Les étoiles UT seront ajoutées ici dynamiquement -->
         </div>
         <div class="flex justify-center gap-4 mt-6">
-          <button id="confirm-ut" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Confirm</button>
-          <button id="cancel-ut" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Cancel</button>
+          <button
+            id="confirm-ut"
+            class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded"
+          >
+            Confirm
+          </button>
+          <button
+            id="cancel-ut"
+            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
@@ -309,18 +506,79 @@
     <div id="artifact-modal" class="modal">
       <div class="modal-content">
         <h3 class="text-lg font-bold mb-4 text-center">Artifact</h3>
-        <div class="grid grid-cols-3 gap-4 justify-items-center mb-4" id="artifact-options">
+
+        <!-- Barre de recherche -->
+        <input
+          type="text"
+          id="artifact-search"
+          placeholder="Search artifacts..."
+          class="artifact-search"
+        />
+
+        <!-- Grid des artefacts -->
+        <div class="artifact-grid" id="artifact-options">
           <!-- Les options artefacts seront ajoutées ici dynamiquement -->
         </div>
-        <div class="flex justify-center mb-4" id="artifact-empty-option">
+
+        <!-- Option vide -->
+        <div class="flex justify-center mt-4" id="artifact-empty-option">
           <!-- L'option vide pour artefact sera ajoutée ici dynamiquement -->
         </div>
+
+        <!-- Étoiles -->
         <div class="stars-container" id="artifact-stars">
           <!-- Les étoiles artefact seront ajoutées ici dynamiquement -->
         </div>
+
+        <!-- Boutons -->
         <div class="flex justify-center gap-4 mt-6">
-          <button id="confirm-artifact" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Confirm</button>
-          <button id="cancel-artifact" class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">Cancel</button>
+          <button
+            id="confirm-artifact"
+            class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded"
+          >
+            Confirm
+          </button>
+          <button
+            id="cancel-artifact"
+            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal pour choisir les perks -->
+    <div id="perk-modal" class="modal">
+      <div class="modal-content">
+        <h3 class="text-lg font-bold mb-4 text-center">Perks</h3>
+
+        <!-- Compteur de points -->
+        <div id="perk-points-display" class="perk-points">
+          <div class="text-sm font-semibold">
+            Points used: <span id="perk-points-used">0</span> / 95
+          </div>
+        </div>
+
+        <!-- Grid des perks -->
+        <div class="perk-grid" id="perk-options">
+          <!-- Les perks seront ajoutées ici dynamiquement -->
+        </div>
+
+        <!-- Boutons -->
+        <div class="flex justify-center gap-4 mt-6">
+          <button
+            id="confirm-perk"
+            class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded"
+          >
+            Confirm
+          </button>
+          <button
+            id="cancel-perk"
+            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
@@ -328,13 +586,18 @@
     <script>
       // CONFIGURATION SIMPLIFIEE
       const MAX_TEAM_SLOTS = 8;
-      
+
       let currentTeam = Array(MAX_TEAM_SLOTS).fill(null);
       let allHeroes = [];
       let allArtifacts = [];
-      let currentSubSlots = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(null));
-      let currentSubStars = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(0));
+      let currentSubSlots = Array(MAX_TEAM_SLOTS)
+        .fill(null)
+        .map(() => Array(4).fill(null));
+      let currentSubStars = Array(MAX_TEAM_SLOTS)
+        .fill(null)
+        .map(() => Array(4).fill(0));
       let currentModalData = null;
+      let pendingRemoveHeroId = null;
 
       document.addEventListener("DOMContentLoaded", function () {
         console.log("🚀 DOM chargé - Initialisation...");
@@ -343,12 +606,23 @@
         setupModals();
         loadHeroes();
         loadArtifacts();
+
+        // Vérifier le statut du chargement des artefacts
+        setTimeout(() => {
+          if (allArtifacts.length === 0) {
+            console.warn(
+              "⚠️ Aucun artefact chargé - vérifiez le chemin du fichier JSON"
+            );
+          }
+        }, 2000);
       });
 
       async function loadArtifacts() {
         try {
           console.log(`🔄 Chargement des artefacts...`);
-          const response = await fetch('/kingsraid-data/artifact_release_order.json');
+          const response = await fetch(
+            "/kingsraid-data/artifact_release_order.json"
+          );
 
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -357,11 +631,47 @@
           const data = await response.json();
           console.log("📊 Données artefacts reçues:", data);
 
-          allArtifacts = data.artifacts || [];
-          console.log(`✅ ${allArtifacts.length} artefacts chargés`);
+          // Convertir l'objet en tableau de noms d'artefacts
+          if (data && typeof data === "object") {
+            allArtifacts = Object.keys(data);
+            console.log(
+              `✅ ${allArtifacts.length} artefacts chargés:`,
+              allArtifacts.slice(0, 5)
+            );
+          } else {
+            allArtifacts = [];
+            console.warn("❌ Format de données d'artefacts non reconnu");
+          }
+
+          // Vérifier que les images existent
+          await verifyArtifactImages();
         } catch (error) {
           console.error("❌ Error loading artifacts:", error);
           allArtifacts = [];
+        }
+      }
+
+      async function verifyArtifactImages() {
+        const missingImages = [];
+
+        for (const artifactName of allArtifacts) {
+          const imagePath = `/kingsraid-data/assets/artifacts/${artifactName}.png`;
+          try {
+            const response = await fetch(imagePath, { method: "HEAD" });
+            if (!response.ok) {
+              missingImages.push(artifactName);
+            }
+          } catch (error) {
+            missingImages.push(artifactName);
+          }
+        }
+
+        if (missingImages.length > 0) {
+          console.warn(
+            `⚠️ Images manquantes pour: ${missingImages.join(", ")}`
+          );
+        } else {
+          console.log("✅ Toutes les images d'artefacts sont disponibles");
         }
       }
 
@@ -373,27 +683,35 @@
         for (let i = 0; i < MAX_TEAM_SLOTS; i++) {
           const slotContainer = document.createElement("div");
           slotContainer.className = "flex flex-col items-center gap-2";
-          
+
           // Slot principal (Héro)
           const mainSlot = document.createElement("div");
-          mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
+          mainSlot.className =
+            "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
           mainSlot.innerHTML = '<span class="text-gray-400 text-lg">+</span>';
-          
+
           // Container pour les 4 sous-slots (2x2)
           const subSlotsContainer = document.createElement("div");
           subSlotsContainer.className = "grid grid-cols-2 gap-1";
-          
+
           // Créer 4 sous-slots / sub-slot : UW, Ut, Artifacts, Perks
           for (let j = 0; j < 4; j++) {
             const subSlot = document.createElement("div");
-            subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+            subSlot.className =
+              "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
             subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
             subSlot.onclick = () => handleSubSlotClick(i, j);
             subSlotsContainer.appendChild(subSlot);
           }
-          
+
+          // Container pour la preview des perks
+          const perkPreviewContainer = document.createElement("div");
+          perkPreviewContainer.className = "perk-preview";
+          perkPreviewContainer.id = `perk-preview-${i}`;
+
           slotContainer.appendChild(mainSlot);
           slotContainer.appendChild(subSlotsContainer);
+          slotContainer.appendChild(perkPreviewContainer);
           teamSlots.appendChild(slotContainer);
         }
 
@@ -401,45 +719,80 @@
       }
 
       function setupModals() {
+        // Modal de confirmation pour supprimer un héros
+        const removeHeroModal = document.getElementById("remove-hero-modal");
+        const confirmRemoveHeroBtn = document.getElementById(
+          "confirm-remove-hero"
+        );
+        const cancelRemoveHeroBtn =
+          document.getElementById("cancel-remove-hero");
+
+        confirmRemoveHeroBtn.addEventListener("click", confirmRemoveHero);
+        cancelRemoveHeroBtn.addEventListener("click", () =>
+          closeModal("remove-hero-modal")
+        );
+
+        removeHeroModal.addEventListener("click", (e) => {
+          if (e.target === removeHeroModal) {
+            closeModal("remove-hero-modal");
+          }
+        });
+
         // Modal UW
-        const uwModal = document.getElementById('uw-modal');
-        const confirmUwBtn = document.getElementById('confirm-uw');
-        const cancelUwBtn = document.getElementById('cancel-uw');
+        const uwModal = document.getElementById("uw-modal");
+        const confirmUwBtn = document.getElementById("confirm-uw");
+        const cancelUwBtn = document.getElementById("cancel-uw");
 
-        confirmUwBtn.addEventListener('click', confirmUWSelection);
-        cancelUwBtn.addEventListener('click', () => closeModal('uw-modal'));
+        confirmUwBtn.addEventListener("click", confirmUWSelection);
+        cancelUwBtn.addEventListener("click", () => closeModal("uw-modal"));
 
-        uwModal.addEventListener('click', (e) => {
+        uwModal.addEventListener("click", (e) => {
           if (e.target === uwModal) {
-            closeModal('uw-modal');
+            closeModal("uw-modal");
           }
         });
 
         // Modal UT
-        const utModal = document.getElementById('ut-modal');
-        const confirmUtBtn = document.getElementById('confirm-ut');
-        const cancelUtBtn = document.getElementById('cancel-ut');
+        const utModal = document.getElementById("ut-modal");
+        const confirmUtBtn = document.getElementById("confirm-ut");
+        const cancelUtBtn = document.getElementById("cancel-ut");
 
-        confirmUtBtn.addEventListener('click', confirmUTSelection);
-        cancelUtBtn.addEventListener('click', () => closeModal('ut-modal'));
+        confirmUtBtn.addEventListener("click", confirmUTSelection);
+        cancelUtBtn.addEventListener("click", () => closeModal("ut-modal"));
 
-        utModal.addEventListener('click', (e) => {
+        utModal.addEventListener("click", (e) => {
           if (e.target === utModal) {
-            closeModal('ut-modal');
+            closeModal("ut-modal");
           }
         });
 
         // Modal Artifact
-        const artifactModal = document.getElementById('artifact-modal');
-        const confirmArtifactBtn = document.getElementById('confirm-artifact');
-        const cancelArtifactBtn = document.getElementById('cancel-artifact');
+        const artifactModal = document.getElementById("artifact-modal");
+        const confirmArtifactBtn = document.getElementById("confirm-artifact");
+        const cancelArtifactBtn = document.getElementById("cancel-artifact");
 
-        confirmArtifactBtn.addEventListener('click', confirmArtifactSelection);
-        cancelArtifactBtn.addEventListener('click', () => closeModal('artifact-modal'));
+        confirmArtifactBtn.addEventListener("click", confirmArtifactSelection);
+        cancelArtifactBtn.addEventListener("click", () =>
+          closeModal("artifact-modal")
+        );
 
-        artifactModal.addEventListener('click', (e) => {
+        artifactModal.addEventListener("click", (e) => {
           if (e.target === artifactModal) {
-            closeModal('artifact-modal');
+            closeModal("artifact-modal");
+          }
+        });
+
+        // Modal Perk
+        const perkModal = document.getElementById("perk-modal");
+        const confirmPerkBtn = document.getElementById("confirm-perk");
+        const cancelPerkBtn = document.getElementById("cancel-perk");
+
+        confirmPerkBtn.addEventListener("click", confirmPerkSelection);
+        cancelPerkBtn.addEventListener("click", () => closeModal("perk-modal"));
+
+        perkModal.addEventListener("click", (e) => {
+          if (e.target === perkModal) {
+            closeModal("perk-modal");
           }
         });
       }
@@ -447,7 +800,7 @@
       function handleSubSlotClick(teamSlotIndex, subSlotIndex) {
         const hero = currentTeam[teamSlotIndex];
         if (!hero) {
-          alert('Veuillez d\'abord ajouter un héros dans ce slot!');
+          alert("Veuillez d'abord ajouter un héros dans ce slot!");
           return;
         }
 
@@ -461,73 +814,94 @@
         }
         // Slot 2: Artifact
         else if (subSlotIndex === 2) {
-          openArtifactModal(teamSlotIndex, subSlotIndex);
+          if (allArtifacts.length === 0) {
+            alert("Artifacts are still loading, please wait...");
+            loadArtifacts().then(() => {
+              openArtifactModal(teamSlotIndex, subSlotIndex);
+            });
+          } else {
+            openArtifactModal(teamSlotIndex, subSlotIndex);
+          }
         }
-        // Slot 3: Réservé pour future fonctionnalité
+        // Slot 3: Perks
         else if (subSlotIndex === 3) {
-          alert('Slot réservé pour une future fonctionnalité!');
+          openPerkModal(teamSlotIndex, subSlotIndex);
         }
       }
 
       function openUWModal(teamSlotIndex, subSlotIndex, heroName) {
-        currentModalData = { 
-          teamSlotIndex, 
-          subSlotIndex, 
+        currentModalData = {
+          teamSlotIndex,
+          subSlotIndex,
           heroName,
           selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0,
-          selectedOption: currentSubSlots[teamSlotIndex][subSlotIndex] ? 'uw' : 'empty'
+          selectedOption: currentSubSlots[teamSlotIndex][subSlotIndex]
+            ? "uw"
+            : "empty",
         };
-        
-        const modal = document.getElementById('uw-modal');
-        const optionsContainer = document.getElementById('uw-options');
-        const starsContainer = document.getElementById('uw-stars');
-        
+
+        const modal = document.getElementById("uw-modal");
+        const optionsContainer = document.getElementById("uw-options");
+        const starsContainer = document.getElementById("uw-stars");
+
         // Créer les options UW
-        optionsContainer.innerHTML = '';
-        
+        optionsContainer.innerHTML = "";
+
         // Option UW
-        const uwOption = document.createElement('div');
-        uwOption.className = `uw-option ${currentModalData.selectedOption === 'uw' ? 'selected' : ''}`;
+        const uwOption = document.createElement("div");
+        uwOption.className = `uw-option ${
+          currentModalData.selectedOption === "uw" ? "selected" : ""
+        }`;
         const uwPath = `/kingsraid-data/assets/heroes/${heroName}/uw.png`;
         uwOption.innerHTML = `<img src="${uwPath}" alt="UW" class="w-full h-full object-cover rounded">`;
-        uwOption.onclick = () => selectUWOption('uw');
+        uwOption.onclick = () => selectUWOption("uw");
         optionsContainer.appendChild(uwOption);
 
         // Option vide
-        const emptyOption = document.createElement('div');
-        emptyOption.className = `uw-option ${currentModalData.selectedOption === 'empty' ? 'selected' : ''}`;
-        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
-        emptyOption.onclick = () => selectUWOption('empty');
+        const emptyOption = document.createElement("div");
+        emptyOption.className = `uw-option ${
+          currentModalData.selectedOption === "empty" ? "selected" : ""
+        }`;
+        emptyOption.innerHTML =
+          '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
+        emptyOption.onclick = () => selectUWOption("empty");
         optionsContainer.appendChild(emptyOption);
 
         // Créer les étoiles
-        createStars(starsContainer, 'uw', currentModalData.selectedStars);
-        
-        modal.style.display = 'flex';
+        createStars(starsContainer, "uw", currentModalData.selectedStars);
+
+        modal.style.display = "flex";
       }
 
       function openUTModal(teamSlotIndex, subSlotIndex, heroName) {
-        currentModalData = { 
-          teamSlotIndex, 
-          subSlotIndex, 
+        currentModalData = {
+          teamSlotIndex,
+          subSlotIndex,
           heroName,
-          selectedUT: currentSubSlots[teamSlotIndex][subSlotIndex] ? 
-            parseInt(currentSubSlots[teamSlotIndex][subSlotIndex].split('/ut/')[1].split('.')[0]) : 0,
-          selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0
+          selectedUT: currentSubSlots[teamSlotIndex][subSlotIndex]
+            ? parseInt(
+                currentSubSlots[teamSlotIndex][subSlotIndex]
+                  .split("/ut/")[1]
+                  .split(".")[0]
+              )
+            : 0,
+          selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0,
         };
-        
-        const modal = document.getElementById('ut-modal');
-        const optionsContainer = document.getElementById('ut-options');
-        const emptyContainer = document.getElementById('ut-empty-option');
-        const starsContainer = document.getElementById('ut-stars');
-        
-        optionsContainer.innerHTML = '';
-        emptyContainer.innerHTML = '';
-        
+
+        const modal = document.getElementById("ut-modal");
+        const optionsContainer = document.getElementById("ut-options");
+        const emptyContainer = document.getElementById("ut-empty-option");
+        const starsContainer = document.getElementById("ut-stars");
+
+        optionsContainer.innerHTML = "";
+        emptyContainer.innerHTML = "";
+
         // Créer les 4 options UT
         for (let i = 1; i <= 4; i++) {
-          const option = document.createElement('div');
-          option.className = `ut-option ${currentModalData.selectedUT === i ? 'selected' : ''}`;
+          const option = document.createElement("div");
+          option.className = `ut-option ${
+            currentModalData.selectedUT === i ? "selected" : ""
+          }`;
           const utPath = `/kingsraid-data/assets/heroes/${heroName}/ut/${i}.png`;
           option.innerHTML = `<img src="${utPath}" alt="UT ${i}" class="w-full h-full object-cover rounded">`;
           option.onclick = () => selectUTOption(i);
@@ -535,136 +909,368 @@
         }
 
         // Option vide (en dessous)
-        const emptyOption = document.createElement('div');
-        emptyOption.className = `ut-option ${currentModalData.selectedUT === 0 ? 'selected' : ''}`;
-        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
+        const emptyOption = document.createElement("div");
+        emptyOption.className = `ut-option ${
+          currentModalData.selectedUT === 0 ? "selected" : ""
+        }`;
+        emptyOption.innerHTML =
+          '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
         emptyOption.onclick = () => selectUTOption(0);
         emptyContainer.appendChild(emptyOption);
 
         // Créer les étoiles
-        createStars(starsContainer, 'ut', currentModalData.selectedStars);
-        
-        modal.style.display = 'flex';
+        createStars(starsContainer, "ut", currentModalData.selectedStars);
+
+        modal.style.display = "flex";
       }
 
       function openArtifactModal(teamSlotIndex, subSlotIndex) {
-        currentModalData = { 
-          teamSlotIndex, 
+        currentModalData = {
+          teamSlotIndex,
           subSlotIndex,
-          selectedArtifact: currentSubSlots[teamSlotIndex][subSlotIndex] ? 
-            currentSubSlots[teamSlotIndex][subSlotIndex].split('/artifacts/')[1].split('.')[0] : null,
-          selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0
+          selectedArtifact: currentSubSlots[teamSlotIndex][subSlotIndex]
+            ? currentSubSlots[teamSlotIndex][subSlotIndex]
+                .split("/artifacts/")[1]
+                .split(".")[0]
+            : null,
+          selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0,
+          allArtifacts: [...allArtifacts], // Copie pour la recherche
         };
-        
-        const modal = document.getElementById('artifact-modal');
-        const optionsContainer = document.getElementById('artifact-options');
-        const emptyContainer = document.getElementById('artifact-empty-option');
-        const starsContainer = document.getElementById('artifact-stars');
-        
-        optionsContainer.innerHTML = '';
-        emptyContainer.innerHTML = '';
-        
-        // Créer les options artefacts
-        allArtifacts.forEach((artifactName, index) => {
-          const option = document.createElement('div');
-          option.className = `artifact-option ${currentModalData.selectedArtifact === artifactName ? 'selected' : ''}`;
-          const artifactPath = `/kingsraid-data/assets/artifacts/${artifactName}.png`;
-          option.innerHTML = `<img src="${artifactPath}" alt="${artifactName}" class="w-full h-full object-cover rounded">`;
-          option.onclick = () => selectArtifactOption(artifactName);
-          optionsContainer.appendChild(option);
-        });
 
-        // Option vide (en dessous)
-        const emptyOption = document.createElement('div');
-        emptyOption.className = `artifact-option ${currentModalData.selectedArtifact === null ? 'selected' : ''}`;
-        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
+        const modal = document.getElementById("artifact-modal");
+        const optionsContainer = document.getElementById("artifact-options");
+        const emptyContainer = document.getElementById("artifact-empty-option");
+        const starsContainer = document.getElementById("artifact-stars");
+        const searchInput = document.getElementById("artifact-search");
+
+        console.log(
+          `🔧 Ouverture modal artefact pour slot ${teamSlotIndex}, sous-slot ${subSlotIndex}`
+        );
+        console.log(`🎨 Affichage de ${allArtifacts.length} artefacts`);
+
+        // Réinitialiser la recherche
+        searchInput.value = "";
+
+        // Configurer la recherche
+        searchInput.oninput = (e) => {
+          filterArtifacts(e.target.value.toLowerCase());
+        };
+
+        // Afficher tous les artefacts initialement
+        displayArtifacts(allArtifacts, optionsContainer);
+
+        // Option vide
+        emptyContainer.innerHTML = "";
+        const emptyOption = document.createElement("div");
+        emptyOption.className = `artifact-option ${
+          currentModalData.selectedArtifact === null ? "selected" : ""
+        }`;
+        emptyOption.innerHTML =
+          '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
         emptyOption.onclick = () => selectArtifactOption(null);
         emptyContainer.appendChild(emptyOption);
 
         // Créer les étoiles
-        createStars(starsContainer, 'artifact', currentModalData.selectedStars);
-        
-        modal.style.display = 'flex';
+        createStars(starsContainer, "artifact", currentModalData.selectedStars);
+
+        modal.style.display = "flex";
+      }
+
+      function openPerkModal(teamSlotIndex, subSlotIndex) {
+        currentModalData = {
+          teamSlotIndex,
+          subSlotIndex,
+          selectedPerks: currentSubSlots[teamSlotIndex][subSlotIndex] || [],
+          maxPoints: 95,
+          usedPoints: 0,
+        };
+
+        const modal = document.getElementById("perk-modal");
+        const optionsContainer = document.getElementById("perk-options");
+        const pointsUsedElement = document.getElementById("perk-points-used");
+        const pointsDisplay = document.getElementById("perk-points-display");
+
+        // Réinitialiser
+        optionsContainer.innerHTML = "";
+        currentModalData.usedPoints = 0;
+
+        // Créer la structure des perks
+        const perkLayout = [
+          { count: 5, cost: 10 }, // Row 1: 5 perks, cost 10
+          { count: 5, cost: 15 }, // Row 2: 5 perks, cost 15
+          { count: 4, cost: 15 }, // Row 3: 4 perks, cost 15
+          { count: 4, cost: 15 }, // Row 4: 4 perks, cost 15
+          { count: 2, cost: 15 }, // Row 5: 2 perks, cost 15
+        ];
+
+        // Créer les rows de perks
+        perkLayout.forEach((row, rowIndex) => {
+          const rowElement = document.createElement("div");
+          rowElement.className = "perk-row";
+
+          for (let i = 0; i < row.count; i++) {
+            const perkIndex = rowIndex * 10 + i; // Index unique pour chaque perk
+            const perkOption = document.createElement("div");
+            perkOption.className = "perk-option";
+            perkOption.textContent = row.cost;
+            perkOption.dataset.cost = row.cost;
+            perkOption.dataset.index = perkIndex;
+
+            // Vérifier si ce perk est déjà sélectionné
+            if (currentModalData.selectedPerks.includes(perkIndex)) {
+              perkOption.classList.add("selected");
+              currentModalData.usedPoints += row.cost;
+            }
+
+            perkOption.onclick = () =>
+              togglePerkSelection(perkOption, row.cost, perkIndex);
+            rowElement.appendChild(perkOption);
+          }
+
+          optionsContainer.appendChild(rowElement);
+        });
+
+        // Mettre à jour l'affichage des points
+        updatePerkPointsDisplay();
+
+        modal.style.display = "flex";
+      }
+
+      function togglePerkSelection(perkElement, cost, perkIndex) {
+        const isSelected = perkElement.classList.contains("selected");
+        const newPoints = isSelected
+          ? currentModalData.usedPoints - cost
+          : currentModalData.usedPoints + cost;
+
+        // Vérifier si on dépasse la limite
+        if (newPoints > currentModalData.maxPoints && !isSelected) {
+          alert(
+            `Cannot select this perk! You would exceed the ${currentModalData.maxPoints} point limit.`
+          );
+          return;
+        }
+
+        // Basculer la sélection
+        if (isSelected) {
+          perkElement.classList.remove("selected");
+          currentModalData.usedPoints -= cost;
+          // Retirer le perk du tableau selectedPerks
+          const index = currentModalData.selectedPerks.indexOf(perkIndex);
+          if (index > -1) {
+            currentModalData.selectedPerks.splice(index, 1);
+          }
+        } else {
+          perkElement.classList.add("selected");
+          currentModalData.usedPoints += cost;
+          currentModalData.selectedPerks.push(perkIndex);
+        }
+
+        updatePerkPointsDisplay();
+      }
+
+      function updatePerkPointsDisplay() {
+        const pointsUsedElement = document.getElementById("perk-points-used");
+        const pointsDisplay = document.getElementById("perk-points-display");
+
+        pointsUsedElement.textContent = currentModalData.usedPoints;
+
+        // Changer la couleur si on dépasse la limite
+        if (currentModalData.usedPoints > currentModalData.maxPoints) {
+          pointsDisplay.classList.add("over-limit");
+        } else {
+          pointsDisplay.classList.remove("over-limit");
+        }
+      }
+
+      function confirmPerkSelection() {
+        const { teamSlotIndex, subSlotIndex, selectedPerks } = currentModalData;
+
+        // Stocker les perks sélectionnés
+        currentSubSlots[teamSlotIndex][subSlotIndex] = selectedPerks;
+
+        // Mettre à jour l'affichage du sous-slot
+        updatePerkSubSlotDisplay(teamSlotIndex, subSlotIndex, selectedPerks);
+
+        // Mettre à jour la preview des perks
+        updatePerkPreview(teamSlotIndex, selectedPerks);
+
+        closeModal("perk-modal");
+      }
+
+      function updatePerkSubSlotDisplay(
+        teamSlotIndex,
+        subSlotIndex,
+        selectedPerks
+      ) {
+        const slotContainers = document.getElementById("team-slots").children;
+        const slotContainer = slotContainers[teamSlotIndex];
+        const subSlotsContainer = slotContainer.children[1];
+        const subSlot = subSlotsContainer.children[subSlotIndex];
+
+        if (selectedPerks && selectedPerks.length > 0) {
+          subSlot.className =
+            "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer perk-slot-active";
+          subSlot.innerHTML = `
+            <div class="w-full h-full flex items-center justify-center text-[#1f2937] text-xs font-bold">
+              Perks
+            </div>
+          `;
+        } else {
+          subSlot.className =
+            "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+          subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
+        }
+      }
+
+      function updatePerkPreview(teamSlotIndex, selectedPerks) {
+        const previewContainer = document.getElementById(
+          `perk-preview-${teamSlotIndex}`
+        );
+        previewContainer.innerHTML = "";
+
+        if (!selectedPerks || selectedPerks.length === 0) {
+          return;
+        }
+
+        // Structure des perks pour la preview
+        const perkLayout = [5, 5, 4, 4, 2];
+
+        perkLayout.forEach((perkCount, rowIndex) => {
+          const rowElement = document.createElement("div");
+          rowElement.className = "perk-preview-row";
+
+          for (let i = 0; i < perkCount; i++) {
+            const perkIndex = rowIndex * 10 + i;
+            const perkPreview = document.createElement("div");
+            perkPreview.className = "perk-preview-option";
+
+            // Marquer comme sélectionné si présent dans selectedPerks
+            if (selectedPerks.includes(perkIndex)) {
+              perkPreview.classList.add("selected");
+            }
+
+            rowElement.appendChild(perkPreview);
+          }
+
+          previewContainer.appendChild(rowElement);
+        });
+      }
+
+      function displayArtifacts(artifacts, container) {
+        container.innerHTML = "";
+
+        artifacts.forEach((artifactName) => {
+          const option = document.createElement("div");
+          option.className = `artifact-option ${
+            currentModalData.selectedArtifact === artifactName ? "selected" : ""
+          }`;
+
+          const artifactPath = `/kingsraid-data/assets/artifacts/${artifactName}.png`;
+
+          option.innerHTML = `
+      <img src="${artifactPath}" alt="${artifactName}" 
+           class="w-full h-full object-cover rounded"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+      <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded p-1 text-center">
+        ${artifactName}
+      </div>
+    `;
+
+          option.onclick = () => selectArtifactOption(artifactName);
+          container.appendChild(option);
+        });
+      }
+
+      function filterArtifacts(searchTerm) {
+        const optionsContainer = document.getElementById("artifact-options");
+
+        if (!searchTerm) {
+          // Afficher tous les artefacts si la recherche est vide
+          displayArtifacts(allArtifacts, optionsContainer);
+          return;
+        }
+
+        // Filtrer les artefacts par nom
+        const filteredArtifacts = allArtifacts.filter((artifactName) =>
+          artifactName.toLowerCase().includes(searchTerm)
+        );
+
+        displayArtifacts(filteredArtifacts, optionsContainer);
       }
 
       function selectUWOption(option) {
-        // Retirer la sélection précédente
-        document.querySelectorAll('.uw-option').forEach(opt => {
-          opt.classList.remove('selected');
+        document.querySelectorAll(".uw-option").forEach((opt) => {
+          opt.classList.remove("selected");
         });
-        
-        // Ajouter la sélection actuelle
-        event.target.closest('.uw-option').classList.add('selected');
-        
-        // Stocker temporairement l'option sélectionnée
+        event.target.closest(".uw-option").classList.add("selected");
         currentModalData.selectedOption = option;
       }
 
       function selectUTOption(utNumber) {
-        // Retirer la sélection précédente
-        document.querySelectorAll('.ut-option').forEach(option => {
-          option.classList.remove('selected');
+        document.querySelectorAll(".ut-option").forEach((option) => {
+          option.classList.remove("selected");
         });
-        
-        // Ajouter la sélection actuelle
-        event.target.closest('.ut-option').classList.add('selected');
-        
-        // Stocker temporairement le numéro UT sélectionné (0 pour vide)
+        event.target.closest(".ut-option").classList.add("selected");
         currentModalData.selectedUT = utNumber;
       }
 
       function selectArtifactOption(artifactName) {
-        // Retirer la sélection précédente
-        document.querySelectorAll('.artifact-option').forEach(option => {
-          option.classList.remove('selected');
+        // Retirer la sélection précédente de tous les artefacts
+        document.querySelectorAll(".artifact-option").forEach((option) => {
+          option.classList.remove("selected");
         });
-        
+
         // Ajouter la sélection actuelle
-        event.target.closest('.artifact-option').classList.add('selected');
-        
+        const selectedElement = event.target.closest(".artifact-option");
+        if (selectedElement) {
+          selectedElement.classList.add("selected");
+        }
+
         // Stocker temporairement le nom de l'artefact sélectionné (null pour vide)
         currentModalData.selectedArtifact = artifactName;
       }
 
       function createStars(container, type, currentStars) {
-        container.innerHTML = '';
-        
+        container.innerHTML = "";
+
         // Ajouter l'option 0 étoiles (X) à gauche
-        const zeroStar = document.createElement('span');
-        zeroStar.className = 'star';
-        zeroStar.innerHTML = '×';
-        zeroStar.style.color = '#EF4444';
+        const zeroStar = document.createElement("span");
+        zeroStar.className = "star";
+        zeroStar.innerHTML = "×";
+        zeroStar.style.color = "#EF4444";
         zeroStar.onclick = () => selectStars(0, type);
         container.appendChild(zeroStar);
 
         // Ajouter les 5 étoiles
         for (let i = 1; i <= 5; i++) {
-          const star = document.createElement('span');
-          star.className = `star ${i <= currentStars ? 'filled' : ''}`;
-          star.innerHTML = i <= currentStars ? '★' : '☆';
+          const star = document.createElement("span");
+          star.className = `star ${i <= currentStars ? "filled" : ""}`;
+          star.innerHTML = i <= currentStars ? "★" : "☆";
           star.dataset.value = i;
-          
-          // Événements pour le hover preview (inversé)
-          star.addEventListener('mouseover', () => showHoverPreview(i, type, currentStars));
-          star.addEventListener('mouseout', () => clearHoverPreview(type, currentStars));
-          star.addEventListener('click', () => selectStars(i, type));
-          
+
+          star.addEventListener("mouseover", () =>
+            showHoverPreview(i, type, currentStars)
+          );
+          star.addEventListener("mouseout", () =>
+            clearHoverPreview(type, currentStars)
+          );
+          star.addEventListener("click", () => selectStars(i, type));
+
           container.appendChild(star);
         }
       }
 
       function showHoverPreview(hoveredStar, type, currentStars) {
         const starsContainer = document.getElementById(`${type}-stars`);
-        const stars = starsContainer.querySelectorAll('.star');
-        
+        const stars = starsContainer.querySelectorAll(".star");
+
         stars.forEach((star, index) => {
-          if (index > 0) { // Ignorer le × (index 0)
+          if (index > 0) {
             const starValue = parseInt(star.dataset.value);
             if (starValue > currentStars && starValue <= hoveredStar) {
-              // Les étoiles au-dessus du niveau actuel et sous la souris deviennent semi-transparentes
-              star.classList.add('hover-preview');
+              star.classList.add("hover-preview");
             } else {
-              star.classList.remove('hover-preview');
+              star.classList.remove("hover-preview");
             }
           }
         });
@@ -672,145 +1278,172 @@
 
       function clearHoverPreview(type, currentStars) {
         const starsContainer = document.getElementById(`${type}-stars`);
-        const stars = starsContainer.querySelectorAll('.star');
-        
+        const stars = starsContainer.querySelectorAll(".star");
+
         stars.forEach((star, index) => {
           if (index > 0) {
-            star.classList.remove('hover-preview');
+            star.classList.remove("hover-preview");
           }
         });
       }
 
       function selectStars(starCount, type) {
         currentModalData.selectedStars = starCount;
-        
+
         const starsContainer = document.getElementById(`${type}-stars`);
-        const stars = starsContainer.querySelectorAll('.star');
-        
+        const stars = starsContainer.querySelectorAll(".star");
+
         stars.forEach((star, index) => {
-          if (index > 0) { // Ignorer le × (index 0)
+          if (index > 0) {
             if (index <= starCount) {
-              star.innerHTML = '★';
-              star.classList.add('filled');
-              star.classList.remove('hover-preview');
+              star.innerHTML = "★";
+              star.classList.add("filled");
+              star.classList.remove("hover-preview");
             } else {
-              star.innerHTML = '☆';
-              star.classList.remove('filled', 'hover-preview');
+              star.innerHTML = "☆";
+              star.classList.remove("filled", "hover-preview");
             }
           }
         });
       }
 
       function confirmUWSelection() {
-        if (!currentModalData) {
-          return;
-        }
+        if (!currentModalData) return;
 
-        const { teamSlotIndex, subSlotIndex, heroName, selectedOption, selectedStars } = currentModalData;
-        
-        if (selectedOption === 'empty') {
-          // Option vide sélectionnée
+        const {
+          teamSlotIndex,
+          subSlotIndex,
+          heroName,
+          selectedOption,
+          selectedStars,
+        } = currentModalData;
+
+        if (selectedOption === "empty") {
           currentSubSlots[teamSlotIndex][subSlotIndex] = null;
           currentSubStars[teamSlotIndex][subSlotIndex] = 0;
           removeSubItem(teamSlotIndex, subSlotIndex);
         } else {
-          // Option UW sélectionnée
           const uwPath = `/kingsraid-data/assets/heroes/${heroName}/uw.png`;
           currentSubSlots[teamSlotIndex][subSlotIndex] = uwPath;
           currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
-          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, uwPath, selectedStars);
+          updateSubSlotDisplay(
+            teamSlotIndex,
+            subSlotIndex,
+            uwPath,
+            selectedStars
+          );
         }
-        
-        closeModal('uw-modal');
+
+        closeModal("uw-modal");
       }
 
       function confirmUTSelection() {
         if (!currentModalData || currentModalData.selectedUT === null) {
-          alert('Veuillez sélectionner une option UT!');
+          alert("Veuillez sélectionner une option UT!");
           return;
         }
 
-        const { teamSlotIndex, subSlotIndex, heroName, selectedUT, selectedStars } = currentModalData;
-        
+        const {
+          teamSlotIndex,
+          subSlotIndex,
+          heroName,
+          selectedUT,
+          selectedStars,
+        } = currentModalData;
+
         if (selectedUT === 0) {
-          // Option vide sélectionnée
           currentSubSlots[teamSlotIndex][subSlotIndex] = null;
           currentSubStars[teamSlotIndex][subSlotIndex] = 0;
           removeSubItem(teamSlotIndex, subSlotIndex);
         } else {
-          // Option UT sélectionnée
           const utPath = `/kingsraid-data/assets/heroes/${heroName}/ut/${selectedUT}.png`;
           currentSubSlots[teamSlotIndex][subSlotIndex] = utPath;
           currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
-          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, utPath, selectedStars);
+          updateSubSlotDisplay(
+            teamSlotIndex,
+            subSlotIndex,
+            utPath,
+            selectedStars
+          );
         }
-        
-        closeModal('ut-modal');
+
+        closeModal("ut-modal");
       }
 
       function confirmArtifactSelection() {
-        if (!currentModalData || currentModalData.selectedArtifact === undefined) {
-          alert('Veuillez sélectionner une option Artifact!');
+        if (
+          !currentModalData ||
+          currentModalData.selectedArtifact === undefined
+        ) {
+          alert("Please select an artifact option!");
           return;
         }
 
-        const { teamSlotIndex, subSlotIndex, selectedArtifact, selectedStars } = currentModalData;
-        
+        const { teamSlotIndex, subSlotIndex, selectedArtifact, selectedStars } =
+          currentModalData;
+
         if (selectedArtifact === null) {
-          // Option vide sélectionnée
           currentSubSlots[teamSlotIndex][subSlotIndex] = null;
           currentSubStars[teamSlotIndex][subSlotIndex] = 0;
           removeSubItem(teamSlotIndex, subSlotIndex);
         } else {
-          // Option Artifact sélectionnée
           const artifactPath = `/kingsraid-data/assets/artifacts/${selectedArtifact}.png`;
           currentSubSlots[teamSlotIndex][subSlotIndex] = artifactPath;
           currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
-          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, artifactPath, selectedStars);
+          updateSubSlotDisplay(
+            teamSlotIndex,
+            subSlotIndex,
+            artifactPath,
+            selectedStars
+          );
         }
-        
-        closeModal('artifact-modal');
+
+        closeModal("artifact-modal");
       }
 
       function closeModal(modalId) {
         const modal = document.getElementById(modalId);
-        modal.style.display = 'none';
+        modal.style.display = "none";
         currentModalData = null;
       }
 
-      function updateSubSlotDisplay(teamSlotIndex, subSlotIndex, imagePath, stars) {
+      function updateSubSlotDisplay(
+        teamSlotIndex,
+        subSlotIndex,
+        imagePath,
+        stars
+      ) {
         const slotContainers = document.getElementById("team-slots").children;
         const slotContainer = slotContainers[teamSlotIndex];
         const subSlotsContainer = slotContainer.children[1];
         const subSlot = subSlotsContainer.children[subSlotIndex];
-        
-        const starsDisplay = stars > 0 ? 
-          `<div class="stars-text">${stars}★</div>` : 
-          '';
-        
-        subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer";
+
+        const starsDisplay =
+          stars > 0 ? `<div class="stars-text">${stars}★</div>` : "";
+
+        subSlot.className =
+          "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer";
         subSlot.innerHTML = `
           <img src="${imagePath}" alt="Sub item" class="sub-slot-image">
-          <div class="sub-remove-btn" onclick="removeSubItem(${teamSlotIndex}, ${subSlotIndex})">×</div>
           ${starsDisplay}
         `;
       }
 
       function removeSubItem(teamSlotIndex, subSlotIndex) {
-        event.stopPropagation(); // Empêcher le déclenchement du click sur le sous-slot
+        event.stopPropagation();
         currentSubSlots[teamSlotIndex][subSlotIndex] = null;
         currentSubStars[teamSlotIndex][subSlotIndex] = 0;
-        
+
         const slotContainers = document.getElementById("team-slots").children;
         const slotContainer = slotContainers[teamSlotIndex];
         const subSlotsContainer = slotContainer.children[1];
         const subSlot = subSlotsContainer.children[subSlotIndex];
-        
-        subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+
+        subSlot.className =
+          "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
         subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
       }
 
-      // Modifiez loadHeroes pour accepter le tri
       async function loadHeroes(sortType = "name") {
         try {
           console.log(`🔄 Chargement des héros avec tri: ${sortType}`);
@@ -856,11 +1489,14 @@
 
         heroes.forEach((hero) => {
           const heroCard = document.createElement("div");
-          
-          // Vérifier si le héros est dans l'équipe
-          const isInTeam = currentTeam.some(slot => slot && slot.id === hero.id);
-          
-          heroCard.className = `hero-card rounded cursor-pointer ${isInTeam ? 'in-team' : ''}`;
+
+          const isInTeam = currentTeam.some(
+            (slot) => slot && slot.id === hero.id
+          );
+
+          heroCard.className = `hero-card rounded cursor-pointer ${
+            isInTeam ? "in-team" : ""
+          }`;
 
           const classIconPath = getClassIconPath(hero.role);
 
@@ -874,7 +1510,6 @@
             ${classIconHTML}
           `;
 
-          // Comportement différent selon si le héros est dans l'équipe ou non
           heroCard.onclick = () => {
             if (isInTeam) {
               removeHeroFromTeam(hero.id);
@@ -889,13 +1524,13 @@
 
       function getClassIconPath(className) {
         const classMap = {
-          Knight: "/kingsraid-data/assets/classes/knight.png",
-          Warrior: "/kingsraid-data/assets/classes/warrior.png",
-          Archer: "/kingsraid-data/assets/classes/archer.png",
-          Mechanic: "/kingsraid-data/assets/classes/mechanic.png",
-          Assassin: "/kingsraid-data/assets/classes/assassin.png",
-          Wizard: "/kingsraid-data/assets/classes/wizard.png",
-          Priest: "/kingsraid-data/assets/classes/priest.png",
+          Knight: "/kingsraid-data/assets/classes_hd/knight.png",
+          Warrior: "/kingsraid-data/assets/classes_hd/warrior.png",
+          Archer: "/kingsraid-data/assets/classes_hd/archer.png",
+          Mechanic: "/kingsraid-data/assets/classes_hd/mechanic.png",
+          Assassin: "/kingsraid-data/assets/classes_hd/assassin.png",
+          Wizard: "/kingsraid-data/assets/classes_hd/wizard.png",
+          Priest: "/kingsraid-data/assets/classes_hd/priest.png",
         };
 
         return classMap[className] || null;
@@ -945,29 +1580,62 @@
       function addHeroToTeam(hero) {
         const emptySlotIndex = currentTeam.findIndex((slot) => slot === null);
         if (emptySlotIndex !== -1) {
-          // Vérifier si le héros est déjà dans l'équipe
-          if (currentTeam.some(slot => slot && slot.id === hero.id)) {
-            alert('This hero is already in your team!');
+          if (currentTeam.some((slot) => slot && slot.id === hero.id)) {
+            alert("This hero is already in your team!");
             return;
           }
-          
+
           currentTeam[emptySlotIndex] = hero;
           updateTeamDisplay();
-          refreshHeroesDisplay(); // Met à jour l'affichage des héros
+          refreshHeroesDisplay();
         } else {
-          alert('No empty slots available! Remove a hero first.');
+          alert("No empty slots available! Remove a hero first.");
         }
       }
 
       function removeHeroFromTeam(heroId) {
-        const heroIndex = currentTeam.findIndex(slot => slot && slot.id === heroId);
+        const heroIndex = currentTeam.findIndex(
+          (slot) => slot && slot.id === heroId
+        );
         if (heroIndex !== -1) {
-          // Supprimer aussi les sous-slots associés
-          currentSubSlots[heroIndex] = Array(4).fill(null);
-          currentSubStars[heroIndex] = Array(4).fill(0);
-          currentTeam[heroIndex] = null;
-          updateTeamDisplay();
-          refreshHeroesDisplay(); // Met à jour l'affichage des héros
+          const hero = currentTeam[heroIndex];
+
+          const hasSubItems = currentSubSlots[heroIndex].some(
+            (slot) => slot !== null
+          );
+
+          if (hasSubItems) {
+            pendingRemoveHeroId = heroId;
+            document.getElementById(
+              "remove-hero-message"
+            ).textContent = `Are you sure you want to remove "${hero.name}" from the team?`;
+            document.getElementById("remove-hero-modal").style.display = "flex";
+          } else {
+            performHeroRemoval(heroIndex);
+          }
+        }
+      }
+
+      function performHeroRemoval(heroIndex) {
+        currentSubSlots[heroIndex] = Array(4).fill(null);
+        currentSubStars[heroIndex] = Array(4).fill(0);
+        currentTeam[heroIndex] = null;
+        updateTeamDisplay();
+        refreshHeroesDisplay();
+      }
+
+      function confirmRemoveHero() {
+        if (pendingRemoveHeroId) {
+          const heroIndex = currentTeam.findIndex(
+            (slot) => slot && slot.id === pendingRemoveHeroId
+          );
+
+          if (heroIndex !== -1) {
+            performHeroRemoval(heroIndex);
+          }
+
+          pendingRemoveHeroId = null;
+          closeModal("remove-hero-modal");
         }
       }
 
@@ -976,72 +1644,89 @@
 
         currentTeam.forEach((hero, index) => {
           const slotContainer = slotContainers[index];
-          const mainSlot = slotContainer.children[0]; // Le slot principal
-          const subSlotsContainer = slotContainer.children[1]; // Les sous-slots
+          const mainSlot = slotContainer.children[0];
+          const subSlotsContainer = slotContainer.children[1];
+          const perkPreviewContainer = document.getElementById(
+            `perk-preview-${index}`
+          );
 
-          //====== Team slot size / taille ======
           if (hero) {
             const classIconPath = getClassIconPath(hero.role);
             const classIconHTML = classIconPath
               ? `<img src="${classIconPath}" alt="${hero.role}" class="class-icon">`
               : "";
 
-            //taille de slot de basse
-            mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer";
-            //taille de slot avec un hero
+            mainSlot.className =
+              "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer";
             mainSlot.innerHTML = `
               <img src="${hero.image}" alt="${hero.name}" class="w-full h-full rounded object-cover">
               <div class="team-hero-name">${hero.name}</div>
               ${classIconHTML}
-              <div class="remove-btn" onclick="removeHeroFromTeam('${hero.id}')">×</div>
+              <div class="remove-btn" onclick="removeHeroFromTeam('${hero.id}')">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2">
+                  <path d="M3 3L9 9M9 3L3 9"/>
+                </svg>
+              </div>
             `;
 
-            // Mettre à jour les sous-slots
             for (let j = 0; j < 4; j++) {
               const subSlot = subSlotsContainer.children[j];
               const subItem = currentSubSlots[index][j];
               const subStars = currentSubStars[index][j];
-              
+
               if (subItem) {
-                const starsDisplay = subStars > 0 ? 
-                  `<div class="stars-text">${subStars}★</div>` : 
-                  '';
-                
-                subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer";
-                subSlot.innerHTML = `
-                  <img src="${subItem}" alt="Sub item" class="sub-slot-image">
-                  <div class="sub-remove-btn" onclick="removeSubItem(${index}, ${j})">×</div>
-                  ${starsDisplay}
-                `;
+                if (j === 3 && Array.isArray(subItem)) {
+                  // C'est un slot de perks
+                  updatePerkSubSlotDisplay(index, j, subItem);
+                  updatePerkPreview(index, subItem);
+                } else {
+                  const starsDisplay =
+                    subStars > 0
+                      ? `<div class="stars-text">${subStars}★</div>`
+                      : "";
+
+                  subSlot.className =
+                    "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer";
+                  subSlot.innerHTML = `
+                    <img src="${subItem}" alt="Sub item" class="sub-slot-image">
+                    ${starsDisplay}
+                  `;
+                }
               } else {
-                subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
-                subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
+                subSlot.className =
+                  "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+                subSlot.innerHTML =
+                  '<span class="text-gray-400 text-xs">+</span>';
               }
             }
           } else {
-            //taille de slot vide
-            mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
+            mainSlot.className =
+              "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
             mainSlot.innerHTML = '<span class="text-gray-400 text-lg">+</span>';
 
-            // Réinitialiser les sous-slots
             for (let j = 0; j < 4; j++) {
               const subSlot = subSlotsContainer.children[j];
-              subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
-              subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
+              subSlot.className =
+                "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+              subSlot.innerHTML =
+                '<span class="text-gray-400 text-xs">+</span>';
             }
+
+            // Vider la preview des perks
+            perkPreviewContainer.innerHTML = "";
           }
         });
 
-        // Mettre à jour le compteur d'équipe
-        const currentSize = currentTeam.filter(hero => hero !== null).length;
-        document.getElementById('current-team-size').textContent = currentSize;
-        document.getElementById('max-team-size').textContent = MAX_TEAM_SLOTS;
+        const currentSize = currentTeam.filter((hero) => hero !== null).length;
+        document.getElementById("current-team-size").textContent = currentSize;
+        document.getElementById("max-team-size").textContent = MAX_TEAM_SLOTS;
       }
 
       function refreshHeroesDisplay() {
-        // Réaffiche les héros avec les états à jour
         const roleFilter = document.getElementById("role-filter").value;
-        const searchTerm = document.getElementById("search-input").value.toLowerCase();
+        const searchTerm = document
+          .getElementById("search-input")
+          .value.toLowerCase();
 
         let filteredHeroes = allHeroes;
 
@@ -1060,5 +1745,5 @@
         displayHeroes(filteredHeroes);
       }
     </script>
-</body>
+  </body>
 </html>
