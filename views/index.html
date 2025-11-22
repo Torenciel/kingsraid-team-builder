@@ -5,10 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KingsRaid Team Builder</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
     <style>
       body {
         /* neutral-900 */
         background-color: #171717;
+      }
+      .team-title-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+
+      .team-title-input {
+        background: #262626;
+        border: 1px solid #525252;
+        border-radius: 4px;
+        padding: 4px 8px;
+        color: white;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        width: 300px;
+      }
+
+      .team-title-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+      }
+
+      .edit-title-btn {
+        background: #3b82f6;
+        border: none;
+        border-radius: 4px;
+        padding: 4px 8px;
+        color: white;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .edit-title-btn:hover {
+        background: #2563eb;
       }
       .character-slot {
         /* neutral-800 */
@@ -359,30 +398,38 @@
       <header class="text-center mb-8">
         <h1 class="text-2xl font-bold mb-2">KingsRaid Team Builder</h1>
       </header>
-
       <!-- Team Slots -->
       <div class="mb-8">
-        <h2 class="text-lg font-semibold text-center mb-4">Your Team</h2>
-
+        <div class="team-title-container">
+          <h2 id="team-title-display" class="text-lg font-semibold">
+            Your Team
+          </h2>
+          <input
+            type="text"
+            id="team-title-input"
+            class="team-title-input"
+            style="display: none"
+            maxlength="50"
+          />
+          <button id="edit-title-btn" class="edit-title-btn">Edit</button>
+        </div>
         <!-- Tous les slots disponibles immédiatement -->
         <div class="flex justify-center gap-6 flex-wrap" id="team-slots">
           <!-- 8 emplacements au total -->
         </div>
-
         <!-- Compteur d'équipe -->
         <div class="text-center text-sm text-neutral-400 mt-4">
           Heroes: <span id="current-team-size">0</span>/<span id="max-team-size"
             >8</span
           >
         </div>
-
         <!-- Boutons de sauvegarde/chargement -->
         <div class="text-center mt-6">
           <button
             id="save-team"
-            class="bg-neutral-600 hover:bg-neutral-700 rounded px-4 py-2 rounded mr-2"
+            class="bg-green-600 hover:bg-green-700 rounded px-4 py-2 rounded mr-2"
           >
-            Save Team to Link
+            Save Team & Get Share Link
           </button>
           <button
             id="load-team"
@@ -392,7 +439,16 @@
           </button>
         </div>
       </div>
-
+      <!-- Nouvel input pour afficher le lien de la team -->
+      <div class="text-center mt-4">
+        <input
+          type="text"
+          id="team-link-display"
+          readonly
+          placeholder="Team link will appear here after saving..."
+          class="w-full max-w-md bg-neutral-800 border border-neutral-600 rounded px-3 py-2 text-sm text-center text-gray-300"
+        />
+      </div>
       <!-- Available Heroes -->
       <div>
         <div class="flex justify-between items-center mb-4">
@@ -641,6 +697,7 @@
       // CONFIGURATION SIMPLIFIEE
       const MAX_TEAM_SLOTS = 8;
 
+      let currentTeamTitle = "Your Team";
       let currentTeam = Array(MAX_TEAM_SLOTS).fill(null);
       let allHeroes = [];
       let allArtifacts = [];
@@ -659,10 +716,15 @@
         setupFilters();
         setupModals();
         setupSaveLoad();
+        setupTeamTitle();
         loadHeroes();
         loadArtifacts();
 
-        // Vérifier le statut du chargement des artefacts
+        // Charger l'équipe depuis l'URL après un petit délai pour que les héros soient chargés
+        setTimeout(() => {
+          loadTeamFromURL();
+        }, 1000);
+
         setTimeout(() => {
           if (allArtifacts.length === 0) {
             console.warn(
@@ -671,7 +733,6 @@
           }
         }, 2000);
       });
-
       async function loadArtifacts() {
         try {
           console.log(`🔄 Chargement des artefacts...`);
@@ -882,27 +943,77 @@
         loadTeamFromURL();
       }
 
+      // ========== DEBUT DES FONCTIONS SAVE LINK / LOAD LINK ==========
+      // Setup pour le titre d'équipe
+      function setupTeamTitle() {
+        const editTitleBtn = document.getElementById("edit-title-btn");
+        const teamTitleInput = document.getElementById("team-title-input");
+        const teamTitleDisplay = document.getElementById("team-title-display");
+
+        editTitleBtn.addEventListener("click", () => {
+          if (teamTitleInput.style.display === "none") {
+            // Mode édition
+            teamTitleInput.value = currentTeamTitle;
+            teamTitleInput.style.display = "block";
+            teamTitleDisplay.style.display = "none";
+            editTitleBtn.textContent = "Save";
+            teamTitleInput.focus();
+          } else {
+            // Sauvegarde
+            const newTitle = teamTitleInput.value.trim() || "Your Team";
+            currentTeamTitle = newTitle;
+            teamTitleDisplay.textContent = newTitle;
+            teamTitleInput.style.display = "none";
+            teamTitleDisplay.style.display = "block";
+            editTitleBtn.textContent = "Edit";
+          }
+        });
+
+        teamTitleInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            editTitleBtn.click();
+          }
+        });
+      }
+
       function saveTeamToLink() {
+        // Vérifier qu'il y a au moins un héros dans l'équipe
+        const heroCount = currentTeam.filter((hero) => hero !== null).length;
+        if (heroCount === 0) {
+          alert("Please add at least one hero to your team before saving!");
+          return;
+        }
+
         const teamData = {
+          title: currentTeamTitle,
           heroes: currentTeam.map((hero) => (hero ? hero.id : null)),
           subSlots: currentSubSlots,
           subStars: currentSubStars,
+          timestamp: Date.now(),
         };
 
-        // Compresser les données en base64
-        const jsonString = JSON.stringify(teamData);
-        const compressed = btoa(unescape(encodeURIComponent(jsonString)));
+        console.log("Saving team data:", teamData);
 
-        // Créer l'URL avec les données
-        const currentURL = window.location.href.split("?")[0];
-        const teamURL = `${currentURL}?team=${compressed}`;
+        // Compresser avec LZString
+        const jsonString = JSON.stringify(teamData);
+        const compressed = LZString.compressToEncodedURIComponent(jsonString);
+
+        // Slugifier le titre pour l'URL
+        const titleSlug = slugify(currentTeamTitle);
+
+        // Créer l'URL - les données sont directement dans l'URL
+        const currentURL = window.location.origin + window.location.pathname;
+        const teamURL = `${currentURL}team/${compressed}/${titleSlug}`;
+
+        console.log("Generated URL:", teamURL);
 
         // Copier dans le clipboard
         navigator.clipboard
           .writeText(teamURL)
           .then(() => {
             alert(
-              "Team link copied to clipboard! You can now share this link."
+              "Team link copied to clipboard! You can now share this link.\n\nURL: " +
+                teamURL
             );
           })
           .catch(() => {
@@ -911,30 +1022,102 @@
           });
       }
 
+      function generateShortId() {
+        return Math.random().toString(36).substring(2, 8).toUpperCase();
+      }
+
+      function slugify(text) {
+        return text
+          .toString()
+          .toLowerCase()
+          .replace(/\s+/g, "-") // Remplacer les espaces par des tirets
+          .replace(/[^\w\-]+/g, "") // Supprimer les caractères non alphanumériques
+          .replace(/\-\-+/g, "-") // Remplacer les tirets multiples par un seul
+          .replace(/^-+/, "") // Supprimer les tirets du début
+          .replace(/-+$/, "") // Supprimer les tirets de la fin
+          .substring(0, 30); // Limiter la longueur
+      }
+
+      function loadTeamFromURL() {
+        const path = window.location.pathname;
+        const teamMatch = path.match(/\/team\/([^\/]+)\/([^\/]+)/);
+
+        if (teamMatch) {
+          const compressedData = teamMatch[1];
+          const titleSlug = teamMatch[2];
+
+          console.log("Loading team from URL:", compressedData);
+
+          try {
+            // Décompresser les données
+            const jsonString =
+              LZString.decompressFromEncodedURIComponent(compressedData);
+            if (!jsonString) {
+              throw new Error("Invalid compressed data");
+            }
+
+            const teamData = JSON.parse(jsonString);
+            console.log("Loaded team data:", teamData);
+
+            // Charger les héros d'abord, puis l'équipe
+            loadHeroes()
+              .then(() => {
+                loadTeamData(teamData);
+              })
+              .catch((error) => {
+                console.error("Error loading heroes:", error);
+                loadTeamData(teamData); // Essayer quand même
+              });
+          } catch (error) {
+            console.error("Error loading team from URL:", error);
+            alert("Invalid team link! The link may be corrupted or expired.");
+          }
+        }
+      }
+
+      function loadTeamFromCompressedData(compressedData) {
+        try {
+          // Décompresser avec LZString
+          const jsonString = LZString.decompressFromBase64(compressedData);
+          if (!jsonString) {
+            console.error("Invalid team data");
+            return;
+          }
+
+          const teamData = JSON.parse(jsonString);
+          loadTeamData(teamData);
+
+          console.log("Team loaded automatically from URL");
+        } catch (error) {
+          console.error("Error loading team from URL:", error);
+        }
+      }
+
       function loadTeamFromLink() {
         const linkInput = document.getElementById("team-link-input");
-        const teamDataString = linkInput.value.trim();
+        const teamURL = linkInput.value.trim();
 
-        if (!teamDataString) {
+        if (!teamURL) {
           alert("Please paste a team link first!");
           return;
         }
 
         try {
-          // Extraire les données de l'URL
           let compressedData;
-          if (teamDataString.includes("?team=")) {
-            compressedData = teamDataString.split("?team=")[1];
+
+          // Extraire les données de l'URL
+          if (teamURL.includes("/team/")) {
+            const url = new URL(teamURL);
+            const pathParts = url.pathname.split("/");
+            compressedData = pathParts[2]; // Le compressed data est la 3ème partie
+          } else if (teamURL.includes("?team=")) {
+            compressedData = teamURL.split("?team=")[1];
           } else {
-            compressedData = teamDataString;
+            // Supposer que c'est déjà le compressed data
+            compressedData = teamURL;
           }
 
-          // Décompresser les données
-          const jsonString = decodeURIComponent(escape(atob(compressedData)));
-          const teamData = JSON.parse(jsonString);
-
-          // Charger l'équipe
-          loadTeamData(teamData);
+          loadTeamFromCompressedData(compressedData);
           closeModal("load-team-modal");
         } catch (error) {
           console.error("Error loading team:", error);
@@ -942,19 +1125,16 @@
         }
       }
 
-      function loadTeamFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const teamDataString = urlParams.get("team");
-
-        if (teamDataString) {
-          try {
-            const jsonString = decodeURIComponent(escape(atob(teamDataString)));
-            const teamData = JSON.parse(jsonString);
-            loadTeamData(teamData);
-          } catch (error) {
-            console.error("Error loading team from URL:", error);
-          }
-        }
+      // Fonction utilitaire pour slugifier le titre
+      function slugify(text) {
+        return text
+          .toString()
+          .toLowerCase()
+          .replace(/\s+/g, "-") // Remplacer les espaces par -
+          .replace(/[^\w\-]+/g, "") // Supprimer les caractères non alphanumériques
+          .replace(/\-\-+/g, "-") // Remplacer les -- multiples par -
+          .replace(/^-+/, "") // Supprimer les - au début
+          .replace(/-+$/, ""); // Supprimer les - à la fin
       }
 
       function loadTeamData(teamData) {
@@ -967,15 +1147,27 @@
           .fill(null)
           .map(() => Array(4).fill(0));
 
+        // Charger le titre
+        if (teamData.title) {
+          currentTeamTitle = teamData.title;
+          document.getElementById("team-title-display").textContent =
+            teamData.title;
+        }
+
         // Charger les héros
-        teamData.heroes.forEach((heroId, index) => {
-          if (heroId) {
-            const hero = allHeroes.find((h) => h.id === heroId);
-            if (hero) {
-              currentTeam[index] = hero;
+        if (teamData.heroes) {
+          teamData.heroes.forEach((heroId, index) => {
+            if (heroId) {
+              const hero = allHeroes.find((h) => h.id === heroId);
+              if (hero) {
+                currentTeam[index] = hero;
+                console.log(`Loaded hero: ${hero.name} at slot ${index}`);
+              } else {
+                console.warn(`Hero not found: ${heroId}`);
+              }
             }
-          }
-        });
+          });
+        }
 
         // Charger les sous-slots et étoiles
         if (teamData.subSlots) {
@@ -998,8 +1190,10 @@
         updateTeamDisplay();
         refreshHeroesDisplay();
 
-        alert("Team loaded successfully!");
+        console.log("Team loaded successfully!");
       }
+
+      //  ========== FIN DES FONCTIONS SAVE LINK / LOAD LINK ==========
 
       function handleSubSlotClick(teamSlotIndex, subSlotIndex) {
         const hero = currentTeam[teamSlotIndex];
