@@ -6,13 +6,19 @@
     <title>KingsRaid Team Builder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+      body {
+        /* neutral-900 */
+        background-color: #171717;
+      }
       .character-slot {
-        background: #374151;
-        border: 2px solid #6b7280;
+        /* neutral-800 */
+        background: #262626;
+        /* neutral-600 */
+        border: 1px solid #525252;
         position: relative;
       }
       .character-slot.empty:hover {
-        background: #4b5563;
+        background: #404040;
       }
       .hero-card {
         background: #1f2937;
@@ -20,8 +26,8 @@
         aspect-ratio: 1;
       }
       .hero-card.in-team {
-        border: 4px solid #64e210;
-        box-shadow: 0 0 10px rgba(34, 199, 13, 0.5);
+        border: 4px solid #fbbf24;
+        box-shadow: 0 0 10px #fbbe2488;
       }
       .hero-card:hover {
         scale: 1.05;
@@ -39,7 +45,8 @@
         );
         color: white;
         padding: 4px 2px;
-        font-size: 11px;
+        font-size: 12px;
+        font-weight: 600;
         text-align: center;
         height: 60px;
         display: flex;
@@ -75,7 +82,7 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        border: 2px solid #1f2937;
+        border: 2px solid #404040;
         z-index: 10;
         padding: 0;
       }
@@ -83,13 +90,13 @@
         display: flex;
       }
       .sub-slot {
-        background: #374151;
-        border: 2px solid #6b7280;
+        background: #262626;
+        border: 1px solid #525252;
         border-radius: 4px;
         position: relative;
       }
       .sub-slot.empty:hover {
-        background: #4b5563;
+        background: #404040;
       }
       .sub-slot-image {
         width: 100%;
@@ -110,7 +117,7 @@
         justify-content: center;
       }
       .modal-content {
-        background: #111827;
+        background: #171717;
         padding: 20px;
         border-radius: 8px;
         max-width: 500px;
@@ -125,8 +132,8 @@
         height: 80px;
         cursor: pointer;
         border-radius: 4px;
-        background: #374151;
-        border: 2px solid #6b7280;
+        background: #262626;
+        border: 2px solid #525252;
       }
       .ut-option:hover,
       .uw-option:hover,
@@ -136,7 +143,7 @@
       .ut-option.selected,
       .uw-option.selected,
       .artifact-option.selected {
-        border-color: #2cbcff;
+        border-color: #fbbf24;
       }
       .stars-container {
         display: flex;
@@ -145,9 +152,9 @@
         margin: 15px 0;
       }
       .star {
-        font-size: 24px;
+        font-size: 26px;
         cursor: pointer;
-        color: #6b7280;
+        color: #737373;
       }
       .star.filled {
         color: #fbbf24;
@@ -161,7 +168,7 @@
         bottom: 0px;
         left: 0px;
         color: #fbbf24;
-        font-size: 10px;
+        font-size: 12px;
         font-weight: bold;
         background: rgba(0, 0, 0, 0.7);
         padding: 1px 3px;
@@ -180,7 +187,8 @@
         );
         color: white;
         padding: 4px 2px;
-        font-size: 11px;
+        font-size: 12px;
+        font-weight: 600;
         text-align: center;
         height: 60px;
         display: flex;
@@ -202,7 +210,7 @@
         max-height: none;
         overflow-y: visible;
         padding: 2px;
-        background: #1f2937;
+        /* background: #1f2937; */
         border-radius: 6px;
       }
 
@@ -211,8 +219,8 @@
         height: 48px;
         cursor: pointer;
         border-radius: 2px;
-        background: #374151;
-        border: 2px solid #6b7280;
+        background: #262626;
+        border: 2px solid #525252;
         position: relative;
       }
 
@@ -222,13 +230,13 @@
       }
 
       .artifact-option.selected {
-        border-color: #2cbcff;
+        border-color: #fbbf24;
         transform: scale(1.05);
       }
 
       .artifact-search {
-        background: #374151;
-        border: 1px solid #4b5563;
+        background: #262626;
+        border: 1px solid #525252;
         border-radius: 6px;
         padding: 8px 12px;
         color: white;
@@ -247,7 +255,7 @@
         flex-direction: column;
         gap: 4px;
         padding: 8px;
-        background: #1f2937;
+        /* background: #262626; */
         border-radius: 6px;
       }
 
@@ -259,11 +267,11 @@
 
       .perk-option {
         width: 50px;
-        height: 30px;
+        height: 50px;
         cursor: pointer;
         border-radius: 4px;
-        background: #374151;
-        border: 2px solid #6b7280;
+        background: #262626;
+        border: 2px solid #525252;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -274,7 +282,7 @@
       }
 
       .perk-option:hover {
-        border-color: #10b981;
+        border-color: #64e210;
         transform: scale(1.05);
       }
 
@@ -297,12 +305,12 @@
       }
 
       .perk-points {
-        background: #374151;
+        background: #262626;
         border-radius: 6px;
         padding: 10px;
         margin-bottom: 12px;
         text-align: center;
-        border: 1px solid #4b5563;
+        border: 1px solid #525252;
       }
 
       .perk-points.over-limit {
@@ -326,11 +334,11 @@
       }
 
       .perk-preview-option {
-        width: 20px;
-        height: 12px;
-        border-radius: 1px;
-        background: #374151;
-        border: 1px solid #6b7280;
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        background: #262626;
+        border: 1px solid #525252;
       }
 
       .perk-preview-option.selected {
@@ -345,7 +353,7 @@
       }
     </style>
   </head>
-  <body class="bg-gray-900 text-white min-h-screen">
+  <body class="text-white min-h-screen">
     <div class="container mx-auto px-4 py-8">
       <!-- Header -->
       <header class="text-center mb-8">
@@ -362,7 +370,7 @@
         </div>
 
         <!-- Compteur d'équipe -->
-        <div class="text-center text-sm text-gray-400 mt-4">
+        <div class="text-center text-sm text-neutral-400 mt-4">
           Heroes: <span id="current-team-size">0</span>/<span id="max-team-size"
             >8</span
           >
@@ -372,13 +380,13 @@
         <div class="text-center mt-6">
           <button
             id="save-team"
-            class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mr-2"
+            class="bg-neutral-600 hover:bg-neutral-700 rounded px-4 py-2 rounded mr-2"
           >
             Save Team to Link
           </button>
           <button
             id="load-team"
-            class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded"
+            class="bg-neutral-600 hover:bg-neutral-700 rounded px-4 py-2 rounded"
           >
             Load Team from Link
           </button>
@@ -393,7 +401,7 @@
             <select
               id="sort-filter"
               onchange="loadHeroes(this.value)"
-              class="bg-gray-800 border border-gray-600 rounded px-3 py-1 text-sm"
+              class="bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
             >
               <option value="name">Sort by Name</option>
               <option value="release">Sort by Release</option>
@@ -401,7 +409,7 @@
 
             <select
               id="role-filter"
-              class="bg-gray-800 border border-gray-600 rounded px-3 py-1 text-sm"
+              class="bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
             >
               <option value="all">All Roles</option>
               <option value="Knight">Knight</option>
@@ -416,7 +424,7 @@
               type="text"
               id="search-input"
               placeholder="Search..."
-              class="bg-gray-800 border border-gray-600 rounded px-3 py-1 text-sm w-32"
+              class="bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm w-32"
             />
           </div>
         </div>
@@ -429,7 +437,7 @@
         </div>
         <div
           id="hero-count"
-          class="text-center text-gray-400 text-sm mt-4"
+          class="text-center text-neutral-400 text-sm mt-4"
         ></div>
       </div>
     </div>
@@ -450,7 +458,7 @@
           </button>
           <button
             id="cancel-remove-hero"
-            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+            class="bg-neutral-600 hover:bg-neutral-700 px-4 py-2 rounded"
           >
             No
           </button>
@@ -477,7 +485,7 @@
           </button>
           <button
             id="cancel-uw"
-            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+            class="bg-neutral-600 hover:bg-neutral-700 px-4 py-2 rounded"
           >
             Cancel
           </button>
@@ -510,7 +518,7 @@
           </button>
           <button
             id="cancel-ut"
-            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+            class="bg-neutral-600 hover:bg-neutral-700 px-4 py-2 rounded"
           >
             Cancel
           </button>
@@ -556,7 +564,7 @@
           </button>
           <button
             id="cancel-artifact"
-            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+            class="bg-neutral-600 hover:bg-neutral-700 px-4 py-2 rounded"
           >
             Cancel
           </button>
@@ -591,7 +599,7 @@
           </button>
           <button
             id="cancel-perk"
-            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+            class="bg-neutral-600 hover:bg-neutral-700 px-4 py-2 rounded"
           >
             Cancel
           </button>
@@ -621,7 +629,7 @@
           </button>
           <button
             id="cancel-load-team"
-            class="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+            class="bg-neutral-600 hover:bg-neutral-700 px-4 py-2 rounded"
           >
             Cancel
           </button>
