@@ -1,21 +1,117 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const teamDB = require("./db"); // ← Nouvelle importation
 
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-// Middleware - SERVIR le dossier public
+// Middleware
 app.use(express.static("public"));
+app.use(express.json());
 
 // Routes principales
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
-app.get("/team/:data/:title", (req, res) => {
+app.get("/team/:id/:title", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
+
+// API pour sauvegarder une équipe
+app.post("/api/teams", async (req, res) => {
+  try {
+    const teamData = req.body;
+
+    if (!teamData || !teamData.h) {
+      return res.status(400).json({ error: "Invalid team data" });
+    }
+
+    const title = teamData.t || "Unknown Team";
+    let teamId;
+    let attempts = 0;
+
+    // Générer un ID unique (gérer les collisions potentielles)
+    do {
+      teamId = generateShortId();
+      attempts++;
+
+      if (attempts > 5) {
+        throw new Error("Could not generate unique team ID after 5 attempts");
+      }
+    } while (!(await teamDB.saveTeam(teamId, teamData, title)));
+
+    // Obtenir les statistiques (optionnel)
+    const stats = await teamDB.getStats();
+    console.log(
+      `📊 Database stats: ${stats.total_teams} total teams, ${stats.total_accesses} total accesses`
+    );
+
+    res.json({
+      success: true,
+      id: teamId,
+      message: "Team saved permanently in database",
+    });
+  } catch (error) {
+    console.error("Error saving team:", error);
+    res.status(500).json({ error: "Failed to save team: " + error.message });
+  }
+});
+
+// API pour charger une équipe
+app.get("/api/teams/:id", async (req, res) => {
+  try {
+    const teamId = req.params.id;
+    const team = await teamDB.getTeam(teamId);
+
+    if (team) {
+      console.log(
+        `📂 Team loaded from database: ${teamId} (access #${
+          team.accessCount + 1
+        })`
+      );
+      res.json({
+        success: true,
+        data: team.data,
+      });
+    } else {
+      console.log(`❌ Team not found in database: ${teamId}`);
+      res.status(404).json({
+        success: false,
+        error: "Team not found",
+      });
+    }
+  } catch (error) {
+    console.error("Error loading team from database:", error);
+    res.status(500).json({ error: "Failed to load team: " + error.message });
+  }
+});
+
+// API pour les statistiques (optionnel - pour le debug)
+app.get("/api/stats", async (req, res) => {
+  try {
+    const stats = await teamDB.getStats();
+    res.json({
+      success: true,
+      stats: stats,
+    });
+  } catch (error) {
+    console.error("Error getting stats:", error);
+    res.status(500).json({ error: "Failed to get stats" });
+  }
+});
+
+// Générer un ID court (6 caractères)
+function generateShortId() {
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < 6; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
 
 // API pour tous les héros
 app.get("/api/heroes", (req, res) => {
@@ -220,10 +316,27 @@ function getRoleFromName(name) {
   return roleMap[name] || "Unknown";
 }
 
-// Démarrer le serveur
-app.listen(PORT, () => {
-  console.log(`🎮 KingsRaid Team Builder démarré sur http://localhost:${PORT}`);
-  console.log(`📁 Utilisation des données locales dans public/kingsraid-data/`);
+// Démarrer le serveur après initialisation de la DB
+teamDB
+  .init()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(
+        `🎮 KingsRaid Team Builder démarré sur http://localhost:${PORT}`
+      );
+      console.log(`💾 SQLite database enabled - Permanent links!`);
+    });
+  })
+  .catch((error) => {
+    console.error("❌ Failed to initialize database:", error);
+    process.exit(1);
+  });
+
+// Arrêt propre
+process.on("SIGINT", () => {
+  console.log("\n🛑 Shutting down gracefully...");
+  teamDB.close();
+  process.exit(0);
 });
 
 module.exports = app;

@@ -7,8 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
     <style>
+      /* [Garder tous vos styles CSS existants] */
       body {
-        /* neutral-900 */
         background-color: #171717;
       }
       .team-title-container {
@@ -18,7 +18,6 @@
         gap: 8px;
         margin-bottom: 16px;
       }
-
       .team-title-input {
         background: #262626;
         border: 1px solid #525252;
@@ -30,12 +29,10 @@
         font-weight: 600;
         width: 300px;
       }
-
       .team-title-input:focus {
         outline: none;
         border-color: #3b82f6;
       }
-
       .edit-title-btn {
         background: #3b82f6;
         border: none;
@@ -45,14 +42,11 @@
         cursor: pointer;
         font-size: 12px;
       }
-
       .edit-title-btn:hover {
         background: #2563eb;
       }
       .character-slot {
-        /* neutral-800 */
         background: #262626;
-        /* neutral-600 */
         border: 1px solid #525252;
         position: relative;
       }
@@ -241,7 +235,6 @@
         max-height: none !important;
         padding: 15px;
       }
-
       .artifact-grid {
         display: grid;
         grid-template-columns: repeat(10, 1fr);
@@ -249,10 +242,8 @@
         max-height: none;
         overflow-y: visible;
         padding: 2px;
-        /* background: #1f2937; */
         border-radius: 6px;
       }
-
       .artifact-option {
         width: 48px;
         height: 48px;
@@ -262,17 +253,14 @@
         border: 2px solid #525252;
         position: relative;
       }
-
       .artifact-option:hover {
         border-color: #64e210;
         transform: scale(1.05);
       }
-
       .artifact-option.selected {
         border-color: #fbbf24;
         transform: scale(1.05);
       }
-
       .artifact-search {
         background: #262626;
         border: 1px solid #525252;
@@ -282,28 +270,22 @@
         width: 100%;
         margin-bottom: 12px;
       }
-
       .artifact-search:focus {
         outline: none;
         border-color: #3b82f6;
       }
-
-      /* Styles pour les perks */
       .perk-grid {
         display: flex;
         flex-direction: column;
         gap: 4px;
         padding: 8px;
-        /* background: #262626; */
         border-radius: 6px;
       }
-
       .perk-row {
         display: flex;
         gap: 4px;
         justify-content: flex-start;
       }
-
       .perk-option {
         width: 50px;
         height: 50px;
@@ -319,30 +301,25 @@
         color: #9ca3af;
         transition: all 0.2s;
       }
-
       .perk-option:hover {
         border-color: #64e210;
         transform: scale(1.05);
       }
-
       .perk-option.selected {
         border-color: #fbbf24;
         background: #fbbf24;
         color: #1f2937;
         transform: scale(1.05);
       }
-
       .perk-option.disabled {
         opacity: 0.5;
         cursor: not-allowed;
         border-color: #6b7280;
       }
-
       #perk-modal .modal-content {
         max-width: 400px !important;
         width: 90% !important;
       }
-
       .perk-points {
         background: #262626;
         border-radius: 6px;
@@ -351,13 +328,10 @@
         text-align: center;
         border: 1px solid #525252;
       }
-
       .perk-points.over-limit {
         background: #7f1d1d;
         border-color: #dc2626;
       }
-
-      /* Styles pour la preview des perks */
       .perk-preview {
         display: flex;
         flex-direction: column;
@@ -365,13 +339,11 @@
         margin-top: 8px;
         max-width: 250px;
       }
-
       .perk-preview-row {
         display: flex;
         gap: 2px;
         justify-content: flex-start;
       }
-
       .perk-preview-option {
         width: 18px;
         height: 18px;
@@ -379,12 +351,10 @@
         background: #262626;
         border: 1px solid #525252;
       }
-
       .perk-preview-option.selected {
         background: #fbbf24;
         border-color: #fbbf24;
       }
-
       .perk-slot-active {
         background: #fbbf24 !important;
         color: #1f2937 !important;
@@ -398,6 +368,7 @@
       <header class="text-center mb-8">
         <h1 class="text-2xl font-bold mb-2">KingsRaid Team Builder</h1>
       </header>
+
       <!-- Team Slots -->
       <div class="mb-8">
         <div class="team-title-container">
@@ -413,33 +384,31 @@
           />
           <button id="edit-title-btn" class="edit-title-btn">Edit</button>
         </div>
+
         <!-- Tous les slots disponibles immédiatement -->
         <div class="flex justify-center gap-6 flex-wrap" id="team-slots">
           <!-- 8 emplacements au total -->
         </div>
+
         <!-- Compteur d'équipe -->
         <div class="text-center text-sm text-neutral-400 mt-4">
           Heroes: <span id="current-team-size">0</span>/<span id="max-team-size"
             >8</span
           >
         </div>
-        <!-- Boutons de sauvegarde/chargement -->
+
+        <!-- Bouton de sauvegarde seulement -->
         <div class="text-center mt-6">
           <button
             id="save-team"
-            class="bg-green-600 hover:bg-green-700 rounded px-4 py-2 rounded mr-2"
+            class="bg-green-600 hover:bg-green-700 rounded px-4 py-2 rounded"
           >
             Save Team & Get Share Link
           </button>
-          <button
-            id="load-team"
-            class="bg-neutral-600 hover:bg-neutral-700 rounded px-4 py-2 rounded"
-          >
-            Load Team from Link
-          </button>
         </div>
       </div>
-      <!-- Nouvel input pour afficher le lien de la team -->
+
+      <!-- Input pour afficher le lien de la team -->
       <div class="text-center mt-4">
         <input
           type="text"
@@ -449,6 +418,7 @@
           class="w-full max-w-md bg-neutral-800 border border-neutral-600 rounded px-3 py-2 text-sm text-center text-gray-300"
         />
       </div>
+
       <!-- Available Heroes -->
       <div>
         <div class="flex justify-between items-center mb-4">
@@ -663,36 +633,6 @@
       </div>
     </div>
 
-    <!-- Modal pour charger une team -->
-    <div id="load-team-modal" class="modal">
-      <div class="modal-content">
-        <h3 class="text-lg font-bold mb-4 text-center">Load Team</h3>
-        <p class="text-center mb-4 text-gray-300">
-          Paste your team link below:
-        </p>
-        <input
-          type="text"
-          id="team-link-input"
-          placeholder="Paste team link here..."
-          class="w-full p-3 bg-gray-800 border border-gray-600 rounded mb-4 text-white"
-        />
-        <div class="flex justify-center gap-4">
-          <button
-            id="confirm-load-team"
-            class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded"
-          >
-            Load Team
-          </button>
-          <button
-            id="cancel-load-team"
-            class="bg-neutral-600 hover:bg-neutral-700 px-4 py-2 rounded"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-
     <script>
       // CONFIGURATION SIMPLIFIEE
       const MAX_TEAM_SLOTS = 8;
@@ -710,21 +650,59 @@
       let currentModalData = null;
       let pendingRemoveHeroId = null;
 
+      // Initialisation complète
       document.addEventListener("DOMContentLoaded", function () {
         console.log("🚀 DOM chargé - Initialisation...");
+
+        // Démarrer le chronomètre
+        const startTime = performance.now();
+
+        // Initialiser l'interface d'abord (synchrone)
         initializeTeamSlots();
         setupFilters();
         setupModals();
         setupSaveLoad();
         setupTeamTitle();
-        loadHeroes();
-        loadArtifacts();
 
-        // Charger l'équipe depuis l'URL après un petit délai pour que les héros soient chargés
-        setTimeout(() => {
-          loadTeamFromURL();
-        }, 1000);
+        // Fonction asynchrone pour le chargement séquentiel
+        async function initializeApp() {
+          try {
+            // Charger les héros en premier
+            console.log("🔄 Chargement des héros, uw et ut...");
+            await loadHeroes();
 
+            // Puis charger les artefacts
+            console.log("🔄 Chargement des artefacts...");
+            await loadArtifacts();
+
+            // Enfin charger l'équipe depuis l'URL
+            console.log("🔄 Chargement de l'équipe depuis l'URL...");
+            await loadTeamFromURL();
+
+            // Calculer et afficher le temps total
+            const endTime = performance.now();
+            const totalTime = (endTime - startTime).toFixed(2);
+            console.log(`✅ Initialisation complète terminée`);
+
+            // Afficher un message plus détaillé
+            console.log(`⏱️  Temps de chargement : ${totalTime}ms`);
+            console.log(`👥 Héros chargés : ${allHeroes.length}`);
+            console.log(`🎨 Artefacts chargés : ${allArtifacts.length}`);
+
+            const heroCount = currentTeam.filter(
+              (hero) => hero !== null
+            ).length;
+            console.log(`🏆 Équipe chargée : ${heroCount} héros`);
+          } catch (error) {
+            const errorTime = (performance.now() - startTime).toFixed(2);
+            console.error(`❌ Erreur après ${errorTime}ms:`, error);
+          }
+        }
+
+        // Démarrer le chargement asynchrone
+        initializeApp();
+
+        // Vérification des artefacts (garder le timeout pour le warning)
         setTimeout(() => {
           if (allArtifacts.length === 0) {
             console.warn(
@@ -733,9 +711,9 @@
           }
         }, 2000);
       });
+
       async function loadArtifacts() {
         try {
-          console.log(`🔄 Chargement des artefacts...`);
           const response = await fetch(
             "/kingsraid-data/artifact_release_order.json"
           );
@@ -761,16 +739,20 @@
 
           // Vérifier que les images existent
           await verifyArtifactImages();
+
+          return allArtifacts; // Retourner pour await
         } catch (error) {
           console.error("❌ Error loading artifacts:", error);
           allArtifacts = [];
+          throw error; // Propager l'erreur
         }
       }
 
       async function verifyArtifactImages() {
         const missingImages = [];
 
-        for (const artifactName of allArtifacts) {
+        // Utiliser Promise.all pour vérifier plusieurs images en parallèle
+        const verificationPromises = allArtifacts.map(async (artifactName) => {
           const imagePath = `/kingsraid-data/assets/artifacts/${artifactName}.png`;
           try {
             const response = await fetch(imagePath, { method: "HEAD" });
@@ -780,7 +762,9 @@
           } catch (error) {
             missingImages.push(artifactName);
           }
-        }
+        });
+
+        await Promise.all(verificationPromises);
 
         if (missingImages.length > 0) {
           console.warn(
@@ -911,39 +895,15 @@
             closeModal("perk-modal");
           }
         });
-
-        // Modal Load Team
-        const loadTeamModal = document.getElementById("load-team-modal");
-        const confirmLoadTeamBtn = document.getElementById("confirm-load-team");
-        const cancelLoadTeamBtn = document.getElementById("cancel-load-team");
-
-        confirmLoadTeamBtn.addEventListener("click", loadTeamFromLink);
-        cancelLoadTeamBtn.addEventListener("click", () =>
-          closeModal("load-team-modal")
-        );
-
-        loadTeamModal.addEventListener("click", (e) => {
-          if (e.target === loadTeamModal) {
-            closeModal("load-team-modal");
-          }
-        });
       }
 
       function setupSaveLoad() {
         const saveBtn = document.getElementById("save-team");
-        const loadBtn = document.getElementById("load-team");
-
         saveBtn.addEventListener("click", saveTeamToLink);
-        loadBtn.addEventListener("click", () => {
-          document.getElementById("team-link-input").value = "";
-          document.getElementById("load-team-modal").style.display = "flex";
-        });
-
-        // Charger automatiquement depuis l'URL si présente
-        loadTeamFromURL();
       }
 
-      // ========== DEBUT DES FONCTIONS SAVE LINK / LOAD LINK ==========
+      // ========== FONCTIONS AVEC STOCKAGE SERVEUR ==========
+
       // Setup pour le titre d'équipe
       function setupTeamTitle() {
         const editTitleBtn = document.getElementById("edit-title-btn");
@@ -976,7 +936,7 @@
         });
       }
 
-      function saveTeamToLink() {
+      async function saveTeamToLink() {
         // Vérifier qu'il y a au moins un héros dans l'équipe
         const heroCount = currentTeam.filter((hero) => hero !== null).length;
         if (heroCount === 0) {
@@ -984,46 +944,231 @@
           return;
         }
 
-        const teamData = {
-          title: currentTeamTitle,
-          heroes: currentTeam.map((hero) => (hero ? hero.id : null)),
-          subSlots: currentSubSlots,
-          subStars: currentSubStars,
-          timestamp: Date.now(),
-        };
+        // Afficher un indicateur de chargement
+        const saveBtn = document.getElementById("save-team");
+        const originalText = saveBtn.textContent;
+        saveBtn.textContent = "Saving...";
+        saveBtn.disabled = true;
 
-        console.log("Saving team data:", teamData);
+        try {
+          // Préparer les données optimisées
+          const teamData = {
+            // Titre
+            t: currentTeamTitle,
 
-        // Compresser avec LZString
-        const jsonString = JSON.stringify(teamData);
-        const compressed = LZString.compressToEncodedURIComponent(jsonString);
+            // Héros : seulement les IDs
+            h: currentTeam.map((hero) => (hero ? hero.id : null)),
 
-        // Slugifier le titre pour l'URL
-        const titleSlug = slugify(currentTeamTitle);
+            // Sous-slots optimisés
+            s: currentSubSlots.map((slot) =>
+              slot.map((item) => {
+                if (!item) return null;
 
-        // Créer l'URL - les données sont directement dans l'URL
-        const currentURL = window.location.origin + window.location.pathname;
-        const teamURL = `${currentURL}team/${compressed}/${titleSlug}`;
+                if (item.includes("/uw.png")) return "uw";
 
-        console.log("Generated URL:", teamURL);
+                if (item.includes("/ut/")) {
+                  const utNum = item.match(/ut\/(\d)\.png/)[1];
+                  return `ut${utNum}`;
+                }
 
-        // Copier dans le clipboard
-        navigator.clipboard
-          .writeText(teamURL)
-          .then(() => {
-            alert(
-              "Team link copied to clipboard! You can now share this link.\n\nURL: " +
-                teamURL
-            );
-          })
-          .catch(() => {
-            // Fallback si clipboard n'est pas supporté
-            prompt("Copy this link to share your team:", teamURL);
+                if (item.includes("/artifacts/")) {
+                  const artifactName = item
+                    .split("/artifacts/")[1]
+                    .replace(".png", "");
+                  return artifactName;
+                }
+
+                if (Array.isArray(item)) {
+                  return item.join(",");
+                }
+
+                return item;
+              })
+            ),
+
+            // Étoiles : tableau plat pour économiser de l'espace
+            st: currentSubStars.flat(),
+
+            // Version du format (pour compatibilité future)
+            v: 1,
+          };
+
+          console.log("Saving team data to server:", teamData);
+
+          // Envoyer au serveur
+          const response = await fetch("/api/teams", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(teamData),
           });
+
+          const result = await response.json();
+
+          if (result.success) {
+            const teamId = result.id;
+
+            // Créer l'URL courte
+            const titleSlug = slugify(currentTeamTitle);
+            const teamURL = `${window.location.origin}${window.location.pathname}team/${teamId}/${titleSlug}`;
+
+            console.log("Team saved with ID:", teamId);
+            console.log("Generated URL:", teamURL);
+
+            // Afficher le lien
+            document.getElementById("team-link-display").value = teamURL;
+
+            // Copier dans le clipboard
+            navigator.clipboard
+              .writeText(teamURL)
+              .then(() => {
+                alert(
+                  `✅ Team saved!\n\nShort link copied to clipboard (${teamURL.length} characters):\n${teamURL}`
+                );
+              })
+              .catch(() => {
+                prompt("Copy this short link to share your team:", teamURL);
+              });
+          } else {
+            throw new Error(result.error || "Failed to save team");
+          }
+        } catch (error) {
+          console.error("Error saving team:", error);
+          alert("❌ Failed to save team: " + error.message);
+        } finally {
+          // Restaurer le bouton
+          saveBtn.textContent = originalText;
+          saveBtn.disabled = false;
+        }
       }
 
-      function generateShortId() {
-        return Math.random().toString(36).substring(2, 8).toUpperCase();
+      async function loadTeamFromURL() {
+        const path = window.location.pathname;
+        const teamMatch = path.match(/\/team\/([^\/]+)\/([^\/]+)/);
+
+        if (teamMatch) {
+          const teamId = teamMatch[1];
+          const titleSlug = teamMatch[2];
+
+          console.log("Loading team from server ID:", teamId);
+
+          try {
+            // Charger depuis le serveur
+            const response = await fetch(`/api/teams/${teamId}`);
+            const result = await response.json();
+
+            if (result.success) {
+              const teamData = result.data;
+              console.log("Team data loaded from server:", teamData);
+              loadTeamDataFromServer(teamData);
+            } else {
+              throw new Error(result.error || "Team not found");
+            }
+          } catch (error) {
+            console.error("Error loading team from server:", error);
+            alert(
+              "❌ Team not found! The link may be invalid or the server may be down."
+            );
+          }
+        }
+
+        return true; // Indiquer que le chargement est terminé
+      }
+
+      function loadTeamDataFromServer(teamData) {
+        // Réinitialiser l'équipe actuelle
+        currentTeam = Array(MAX_TEAM_SLOTS).fill(null);
+        currentSubSlots = Array(MAX_TEAM_SLOTS)
+          .fill(null)
+          .map(() => Array(4).fill(null));
+        currentSubStars = Array(MAX_TEAM_SLOTS)
+          .fill(null)
+          .map(() => Array(4).fill(0));
+
+        // Charger le titre
+        if (teamData.t) {
+          currentTeamTitle = teamData.t;
+          document.getElementById("team-title-display").textContent =
+            teamData.t;
+        }
+
+        // Charger les héros
+        if (teamData.h) {
+          teamData.h.forEach((heroId, index) => {
+            if (heroId) {
+              const hero = allHeroes.find((h) => h.id === heroId);
+              if (hero) {
+                currentTeam[index] = hero;
+                console.log(`Loaded hero: ${hero.name} at slot ${index}`);
+              } else {
+                console.warn(`Hero not found: ${heroId}`);
+              }
+            }
+          });
+        }
+
+        // Charger les sous-slots optimisés
+        if (teamData.s) {
+          teamData.s.forEach((slot, slotIndex) => {
+            slot.forEach((optimizedItem, subIndex) => {
+              if (!optimizedItem) {
+                currentSubSlots[slotIndex][subIndex] = null;
+                return;
+              }
+
+              const hero = currentTeam[slotIndex];
+
+              if (optimizedItem === "uw") {
+                // UW
+                if (hero) {
+                  currentSubSlots[slotIndex][
+                    subIndex
+                  ] = `/kingsraid-data/assets/heroes/${hero.name}/uw.png`;
+                }
+              } else if (optimizedItem.startsWith("ut")) {
+                // UT
+                const utNum = optimizedItem.replace("ut", "");
+                if (hero) {
+                  currentSubSlots[slotIndex][
+                    subIndex
+                  ] = `/kingsraid-data/assets/heroes/${hero.name}/ut/${utNum}.png`;
+                }
+              } else if (
+                typeof optimizedItem === "string" &&
+                optimizedItem.includes(",")
+              ) {
+                // Perks (string avec virgules)
+                currentSubSlots[slotIndex][subIndex] = optimizedItem
+                  .split(",")
+                  .map(Number);
+              } else {
+                // Artifact (nom simple)
+                currentSubSlots[slotIndex][
+                  subIndex
+                ] = `/kingsraid-data/assets/artifacts/${optimizedItem}.png`;
+              }
+            });
+          });
+        }
+
+        // Charger les étoiles (tableau plat → structure 2D)
+        if (teamData.st && Array.isArray(teamData.st)) {
+          for (let i = 0; i < MAX_TEAM_SLOTS; i++) {
+            for (let j = 0; j < 4; j++) {
+              const flatIndex = i * 4 + j;
+              if (teamData.st[flatIndex] !== undefined) {
+                currentSubStars[i][j] = teamData.st[flatIndex];
+              }
+            }
+          }
+        }
+
+        // Mettre à jour l'affichage
+        updateTeamDisplay();
+        refreshHeroesDisplay();
+
+        console.log("✅ Team loaded successfully from server!");
       }
 
       function slugify(text) {
@@ -1038,162 +1183,7 @@
           .substring(0, 30); // Limiter la longueur
       }
 
-      function loadTeamFromURL() {
-        const path = window.location.pathname;
-        const teamMatch = path.match(/\/team\/([^\/]+)\/([^\/]+)/);
-
-        if (teamMatch) {
-          const compressedData = teamMatch[1];
-          const titleSlug = teamMatch[2];
-
-          console.log("Loading team from URL:", compressedData);
-
-          try {
-            // Décompresser les données
-            const jsonString =
-              LZString.decompressFromEncodedURIComponent(compressedData);
-            if (!jsonString) {
-              throw new Error("Invalid compressed data");
-            }
-
-            const teamData = JSON.parse(jsonString);
-            console.log("Loaded team data:", teamData);
-
-            // Charger les héros d'abord, puis l'équipe
-            loadHeroes()
-              .then(() => {
-                loadTeamData(teamData);
-              })
-              .catch((error) => {
-                console.error("Error loading heroes:", error);
-                loadTeamData(teamData); // Essayer quand même
-              });
-          } catch (error) {
-            console.error("Error loading team from URL:", error);
-            alert("Invalid team link! The link may be corrupted or expired.");
-          }
-        }
-      }
-
-      function loadTeamFromCompressedData(compressedData) {
-        try {
-          // Décompresser avec LZString
-          const jsonString = LZString.decompressFromBase64(compressedData);
-          if (!jsonString) {
-            console.error("Invalid team data");
-            return;
-          }
-
-          const teamData = JSON.parse(jsonString);
-          loadTeamData(teamData);
-
-          console.log("Team loaded automatically from URL");
-        } catch (error) {
-          console.error("Error loading team from URL:", error);
-        }
-      }
-
-      function loadTeamFromLink() {
-        const linkInput = document.getElementById("team-link-input");
-        const teamURL = linkInput.value.trim();
-
-        if (!teamURL) {
-          alert("Please paste a team link first!");
-          return;
-        }
-
-        try {
-          let compressedData;
-
-          // Extraire les données de l'URL
-          if (teamURL.includes("/team/")) {
-            const url = new URL(teamURL);
-            const pathParts = url.pathname.split("/");
-            compressedData = pathParts[2]; // Le compressed data est la 3ème partie
-          } else if (teamURL.includes("?team=")) {
-            compressedData = teamURL.split("?team=")[1];
-          } else {
-            // Supposer que c'est déjà le compressed data
-            compressedData = teamURL;
-          }
-
-          loadTeamFromCompressedData(compressedData);
-          closeModal("load-team-modal");
-        } catch (error) {
-          console.error("Error loading team:", error);
-          alert("Invalid team link! Please check the link and try again.");
-        }
-      }
-
-      // Fonction utilitaire pour slugifier le titre
-      function slugify(text) {
-        return text
-          .toString()
-          .toLowerCase()
-          .replace(/\s+/g, "-") // Remplacer les espaces par -
-          .replace(/[^\w\-]+/g, "") // Supprimer les caractères non alphanumériques
-          .replace(/\-\-+/g, "-") // Remplacer les -- multiples par -
-          .replace(/^-+/, "") // Supprimer les - au début
-          .replace(/-+$/, ""); // Supprimer les - à la fin
-      }
-
-      function loadTeamData(teamData) {
-        // Réinitialiser l'équipe actuelle
-        currentTeam = Array(MAX_TEAM_SLOTS).fill(null);
-        currentSubSlots = Array(MAX_TEAM_SLOTS)
-          .fill(null)
-          .map(() => Array(4).fill(null));
-        currentSubStars = Array(MAX_TEAM_SLOTS)
-          .fill(null)
-          .map(() => Array(4).fill(0));
-
-        // Charger le titre
-        if (teamData.title) {
-          currentTeamTitle = teamData.title;
-          document.getElementById("team-title-display").textContent =
-            teamData.title;
-        }
-
-        // Charger les héros
-        if (teamData.heroes) {
-          teamData.heroes.forEach((heroId, index) => {
-            if (heroId) {
-              const hero = allHeroes.find((h) => h.id === heroId);
-              if (hero) {
-                currentTeam[index] = hero;
-                console.log(`Loaded hero: ${hero.name} at slot ${index}`);
-              } else {
-                console.warn(`Hero not found: ${heroId}`);
-              }
-            }
-          });
-        }
-
-        // Charger les sous-slots et étoiles
-        if (teamData.subSlots) {
-          teamData.subSlots.forEach((slot, slotIndex) => {
-            slot.forEach((subItem, subIndex) => {
-              currentSubSlots[slotIndex][subIndex] = subItem;
-            });
-          });
-        }
-
-        if (teamData.subStars) {
-          teamData.subStars.forEach((slot, slotIndex) => {
-            slot.forEach((stars, subIndex) => {
-              currentSubStars[slotIndex][subIndex] = stars;
-            });
-          });
-        }
-
-        // Mettre à jour l'affichage
-        updateTeamDisplay();
-        refreshHeroesDisplay();
-
-        console.log("Team loaded successfully!");
-      }
-
-      //  ========== FIN DES FONCTIONS SAVE LINK / LOAD LINK ==========
+      // ========== FONCTIONS EXISTANTES ==========
 
       function handleSubSlotClick(teamSlotIndex, subSlotIndex) {
         const hero = currentTeam[teamSlotIndex];
@@ -1566,13 +1556,13 @@
           const artifactPath = `/kingsraid-data/assets/artifacts/${artifactName}.png`;
 
           option.innerHTML = `
-      <img src="${artifactPath}" alt="${artifactName}" 
-           class="w-full h-full object-cover rounded"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-      <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded p-1 text-center">
-        ${artifactName}
-      </div>
-    `;
+            <img src="${artifactPath}" alt="${artifactName}" 
+                 class="w-full h-full object-cover rounded"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded p-1 text-center">
+              ${artifactName}
+            </div>
+          `;
 
           option.onclick = () => selectArtifactOption(artifactName);
           container.appendChild(option);
@@ -1865,11 +1855,14 @@
           updateHeroCount(allHeroes.length);
 
           document.getElementById("sort-filter").value = sortType;
+
+          return allHeroes; // Retourner les héros chargés
         } catch (error) {
           console.error("❌ Error loading heroes:", error);
           allHeroes = [];
           displayHeroes([]);
           updateHeroCount(0);
+          throw error; // Propager l'erreur
         }
       }
 
