@@ -654,8 +654,8 @@
       document.addEventListener("DOMContentLoaded", function () {
         console.log("🚀 DOM chargé - Initialisation...");
 
-        // Démarrer le chronomètre
-        const startTime = performance.now();
+        const appStartTime = performance.now();
+        let heroesLoadTime, artifactsLoadTime, teamLoadTime;
 
         // Initialiser l'interface d'abord (synchrone)
         initializeTeamSlots();
@@ -668,41 +668,53 @@
         async function initializeApp() {
           try {
             // Charger les héros en premier
-            console.log("🔄 Chargement des héros, uw et ut...");
+            console.log("🔄 Chargement des héros...");
+            const heroesStartTime = performance.now();
             await loadHeroes();
+            heroesLoadTime = (performance.now() - heroesStartTime).toFixed(2);
+            console.log(`✅ Héros chargés en ${heroesLoadTime}ms`);
 
             // Puis charger les artefacts
             console.log("🔄 Chargement des artefacts...");
+            const artifactsStartTime = performance.now();
             await loadArtifacts();
+            artifactsLoadTime = (
+              performance.now() - artifactsStartTime
+            ).toFixed(2);
+            console.log(`✅ Artefacts chargés en ${artifactsLoadTime}ms`);
 
             // Enfin charger l'équipe depuis l'URL
             console.log("🔄 Chargement de l'équipe depuis l'URL...");
+            const teamStartTime = performance.now();
             await loadTeamFromURL();
+            teamLoadTime = (performance.now() - teamStartTime).toFixed(2);
+            console.log(`✅ Équipe chargée en ${teamLoadTime}ms`);
 
             // Calculer et afficher le temps total
-            const endTime = performance.now();
-            const totalTime = (endTime - startTime).toFixed(2);
-            console.log(`✅ Initialisation complète terminée`);
+            const totalTime = (performance.now() - appStartTime).toFixed(2);
 
-            // Afficher un message plus détaillé
-            console.log(`⏱️  Temps de chargement : ${totalTime}ms`);
-            console.log(`👥 Héros chargés : ${allHeroes.length}`);
-            console.log(`🎨 Artefacts chargés : ${allArtifacts.length}`);
+            console.log(`🎯 CHARGEMENT TERMINÉ en ${totalTime}ms`);
+            console.log(`📊 Détails du timing :`);
+            console.log(`   • Héros : ${heroesLoadTime}ms`);
+            console.log(`   • Artefacts : ${artifactsLoadTime}ms`);
+            console.log(`   • Équipe : ${teamLoadTime}ms`);
+            console.log(`   • Total : ${totalTime}ms`);
 
+            // Statistiques finales
             const heroCount = currentTeam.filter(
               (hero) => hero !== null
             ).length;
-            console.log(`🏆 Équipe chargée : ${heroCount} héros`);
+            console.log(`🏆 La page est maintenant utilisable !`);
           } catch (error) {
-            const errorTime = (performance.now() - startTime).toFixed(2);
-            console.error(`❌ Erreur après ${errorTime}ms:`, error);
+            const errorTime = (performance.now() - appStartTime).toFixed(2);
+            console.error(`💥 ERREUR après ${errorTime}ms:`, error);
           }
         }
 
         // Démarrer le chargement asynchrone
         initializeApp();
 
-        // Vérification des artefacts (garder le timeout pour le warning)
+        // Vérification des artefacts
         setTimeout(() => {
           if (allArtifacts.length === 0) {
             console.warn(
