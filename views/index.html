@@ -11,7 +11,6 @@
       crossorigin="anonymous"
     ></script>
     <style>
-      /* [Garder tous vos styles CSS existants] */
       body {
         background-color: #171717;
       }
@@ -202,14 +201,27 @@
       }
       .stars-text {
         position: absolute;
-        bottom: 0px;
-        left: 0px;
+        bottom: 0;
+        left: 0;
+        right: 0;
         color: #fbbf24;
         font-size: 12px;
         font-weight: bold;
-        background: rgba(0, 0, 0, 0.7);
-        padding: 1px 3px;
-        border-radius: 3px;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.9),
+          rgba(0, 0, 0, 0.6),
+          rgba(0, 0, 0, 0.3),
+          transparent
+        );
+        padding: 2px 4px;
+        text-align: center;
+        height: 40px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        border-bottom-left-radius: 4px;
+        min-width: 40px;
       }
       .team-hero-name {
         position: absolute;
@@ -243,10 +255,32 @@
         display: grid;
         grid-template-columns: repeat(10, 1fr);
         gap: 2px;
-        max-height: none;
-        overflow-y: visible;
+        max-height: 40vh;
+        overflow-y: auto;
         padding: 2px;
         border-radius: 6px;
+      }
+      .artifact-grid::-webkit-scrollbar {
+        width: 10px;
+      }
+      .artifact-grid::-webkit-scrollbar-track {
+        background: #262626;
+        border-radius: 5px;
+        margin: 4px;
+      }
+      .artifact-grid::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #fbbf24, #d97706);
+        border-radius: 5px;
+        border: 2px solid #262626;
+      }
+      .artifact-grid::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #fcd34d, #f59e0b);
+      }
+      .artifact-grid::-webkit-scrollbar-thumb:active {
+        background: linear-gradient(135deg, #fde68a, #eab308);
+      }
+      .artifact-grid::-webkit-scrollbar-corner {
+        background: #1f2937;
       }
       .artifact-option {
         width: 48px;
@@ -364,6 +398,24 @@
         color: #1f2937 !important;
         font-weight: bold;
       }
+      .perk-slot-container {
+        margin-top: 8px;
+        width: 100%;
+      }
+      .perk-main-slot {
+        background: #262626;
+        border: 1px solid #525252;
+        border-radius: 4px;
+        width: 100%;
+        height: 48px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .perk-main-slot.empty:hover {
+        background: #404040;
+      }
     </style>
   </head>
   <body class="text-white min-h-screen">
@@ -389,7 +441,6 @@
           <button id="edit-title-btn" class="edit-title-btn">Edit</button>
         </div>
 
-        <!-- Tous les slots disponibles immédiatement -->
         <div class="flex justify-center gap-6 flex-wrap" id="team-slots">
           <!-- 8 emplacements au total -->
         </div>
@@ -401,7 +452,7 @@
           >
         </div>
 
-        <!-- Bouton de sauvegarde seulement -->
+        <!-- Bouton de sauvegarde -->
         <div class="text-center mt-6">
           <button
             id="save-team"
@@ -426,24 +477,22 @@
       <!-- Available Heroes -->
       <div>
         <div class="flex justify-between items-center mb-4 mt-4">
-    <select
-      id="availability-filter"
-      class="bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
-    >
-      <option value="all">All Heroes</option>
-      <option value="available">Available Heroes</option>
-    </select>
+          <select
+            id="availability-filter"
+            class="bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
+          >
+            <option value="all">All Heroes</option>
+            <option value="available">Available Heroes</option>
+          </select>
           <div class="flex gap-2">
-    <select
-      id="sort-filter"
-      onchange="loadHeroes(this.value)"
-      class="bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
-    >
-      <option value="name">Sort by Name</option>
-      <option value="release">Sort by Release</option>
-      <option value="masang">Sort by Release (masang)</option>
-    </select>
-
+            <select
+              id="sort-filter"
+              class="bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
+            >
+              <option value="name">Sort by Name</option>
+              <option value="release">Sort by Release</option>
+              <option value="masang">Sort by Release (masang)</option>
+            </select>
             <select
               id="role-filter"
               class="bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
@@ -644,7 +693,7 @@
       </div>
     </div>
 
-<script>
+    <script>
       // ========== CONFIGURATION & GLOBAL VARIABLES ==========
       const MAX_TEAM_SLOTS = 8;
 
@@ -658,6 +707,7 @@
       let currentSubStars = Array(MAX_TEAM_SLOTS)
         .fill(null)
         .map(() => Array(4).fill(0));
+      let currentPerks = Array(MAX_TEAM_SLOTS).fill(null);
       let currentModalData = null;
       let pendingRemoveHeroId = null;
       let availableHeroes = [];
@@ -709,7 +759,6 @@
           const masangData = await response.json();
           console.log("🔍 RAW MASANG DATA:", masangData);
           
-          // Extract hero names from the object keys
           masangOrder = Object.keys(masangData);
           
           console.log(`✅ Masang order loaded: ${masangOrder.length} heroes`);
@@ -731,7 +780,6 @@
           allHeroes = data.heroes || [];
           console.log(`📊 ${allHeroes.length} total heroes loaded from API`);
 
-          // Filter available heroes using masangOrder
           availableHeroes = allHeroes.filter(hero => masangOrder.includes(hero.name));
           console.log(`✅ ${availableHeroes.length} available heroes filtered`);
 
@@ -841,7 +889,6 @@
             break;
             
           case 'release':
-            // Sort by original release order
             currentHeroes.sort((a, b) => (a.releaseOrder || 0) - (b.releaseOrder || 0));
             console.log("🔀 Sorted by release order");
             displayHeroes(currentHeroes);
@@ -857,7 +904,6 @@
               break;
             }
             
-            // Sort by masang order using the numbers from masang file
             fetch('/kingsraid-data/hero_release_order_masang.json')
               .then(response => response.json())
               .then(masangData => {
@@ -865,7 +911,6 @@
                   const orderA = parseInt(masangData[a.name] || 999);
                   const orderB = parseInt(masangData[b.name] || 999);
                   
-                  // Heroes not in masang file go to the end
                   if (orderA === 999 && orderB === 999) return a.name.localeCompare(b.name);
                   if (orderA === 999) return 1;
                   if (orderB === 999) return -1;
@@ -937,9 +982,20 @@
           perkPreviewContainer.className = "perk-preview";
           perkPreviewContainer.id = `perk-preview-${i}`;
 
+          const perkSlotContainer = document.createElement("div");
+          perkSlotContainer.className = "perk-slot-container";
+          
+          const perkMainSlot = document.createElement("div");
+          perkMainSlot.className = "perk-main-slot empty";
+          perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">+ Perks</span>';
+          perkMainSlot.onclick = () => handlePerkSlotClick(i);
+          
+          perkSlotContainer.appendChild(perkMainSlot);
+
           slotContainer.appendChild(mainSlot);
           slotContainer.appendChild(subSlotsContainer);
           slotContainer.appendChild(perkPreviewContainer);
+          slotContainer.appendChild(perkSlotContainer);
           teamSlots.appendChild(slotContainer);
         }
 
@@ -1001,6 +1057,8 @@
           const slotContainer = slotContainers[index];
           const mainSlot = slotContainer.children[0];
           const subSlotsContainer = slotContainer.children[1];
+          const perkPreviewContainer = slotContainer.children[2];
+          const perkSlotContainer = slotContainer.children[3];
 
           if (hero) {
             const classIconPath = getClassIconPath(hero.role);
@@ -1035,6 +1093,19 @@
                 subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
               }
             }
+
+            const perks = currentPerks[index];
+            updatePerkPreview(index, perks);
+
+            const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
+            if (perks && perks.length > 0) {
+              perkMainSlot.className = "perk-main-slot perk-slot-active";
+              perkMainSlot.innerHTML = `<div class="w-full h-full flex items-center justify-center text-black text-xs font-bold">Perks (${perks.length})</div>`;
+            } else {
+              perkMainSlot.className = "perk-main-slot empty";
+              perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">+ Perks</span>';
+            }
+
           } else {
             mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
             mainSlot.innerHTML = '<span class="text-gray-400 text-lg">+</span>';
@@ -1044,6 +1115,13 @@
               subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
               subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
             }
+
+            const perkPreviewContainer = slotContainer.children[2];
+            perkPreviewContainer.innerHTML = "";
+
+            const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
+            perkMainSlot.className = "perk-main-slot empty";
+            perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">+ Perks</span>';
           }
         });
 
@@ -1080,7 +1158,8 @@
         const heroIndex = currentTeam.findIndex((slot) => slot && slot.id === heroId);
         if (heroIndex !== -1) {
           const hero = currentTeam[heroIndex];
-          const hasSubItems = currentSubSlots[heroIndex].some((slot) => slot !== null);
+          const hasSubItems = currentSubSlots[heroIndex].some((slot) => slot !== null) || 
+                             (currentPerks[heroIndex] && currentPerks[heroIndex].length > 0);
 
           if (hasSubItems) {
             pendingRemoveHeroId = heroId;
@@ -1095,6 +1174,7 @@
       function performHeroRemoval(heroIndex) {
         currentSubSlots[heroIndex] = Array(4).fill(null);
         currentSubStars[heroIndex] = Array(4).fill(0);
+        currentPerks[heroIndex] = null;
         currentTeam[heroIndex] = null;
         updateTeamDisplay();
         refreshHeroesDisplay();
@@ -1111,7 +1191,6 @@
 
       // ========== MODAL FUNCTIONS ==========
       function setupModals() {
-        // Remove Hero Modal
         const removeHeroModal = document.getElementById("remove-hero-modal");
         const confirmRemoveHeroBtn = document.getElementById("confirm-remove-hero");
         const cancelRemoveHeroBtn = document.getElementById("cancel-remove-hero");
@@ -1122,7 +1201,6 @@
           if (e.target === removeHeroModal) closeModal("remove-hero-modal");
         });
 
-        // UW Modal
         const uwModal = document.getElementById("uw-modal");
         const confirmUwBtn = document.getElementById("confirm-uw");
         const cancelUwBtn = document.getElementById("cancel-uw");
@@ -1133,7 +1211,6 @@
           if (e.target === uwModal) closeModal("uw-modal");
         });
 
-        // UT Modal
         const utModal = document.getElementById("ut-modal");
         const confirmUtBtn = document.getElementById("confirm-ut");
         const cancelUtBtn = document.getElementById("cancel-ut");
@@ -1144,7 +1221,6 @@
           if (e.target === utModal) closeModal("ut-modal");
         });
 
-        // Artifact Modal
         const artifactModal = document.getElementById("artifact-modal");
         const confirmArtifactBtn = document.getElementById("confirm-artifact");
         const cancelArtifactBtn = document.getElementById("cancel-artifact");
@@ -1155,7 +1231,6 @@
           if (e.target === artifactModal) closeModal("artifact-modal");
         });
 
-        // Perk Modal
         const perkModal = document.getElementById("perk-modal");
         const confirmPerkBtn = document.getElementById("confirm-perk");
         const cancelPerkBtn = document.getElementById("cancel-perk");
@@ -1185,8 +1260,19 @@
               openArtifactModal(teamSlotIndex, subSlotIndex);
             }
             break;
-          case 3: openPerkModal(teamSlotIndex, subSlotIndex); break;
+          case 3: 
+            // Sub-slot 3 vide pour future fonctionnalité
+            break;
         }
+      }
+
+      function handlePerkSlotClick(teamSlotIndex) {
+        const hero = currentTeam[teamSlotIndex];
+        if (!hero) {
+          alert("Please add a hero to this slot first!");
+          return;
+        }
+        openPerkModal(teamSlotIndex);
       }
 
       function openUWModal(teamSlotIndex, subSlotIndex, heroName) {
@@ -1204,7 +1290,6 @@
 
         optionsContainer.innerHTML = "";
 
-        // UW Option
         const uwOption = document.createElement("div");
         uwOption.className = `uw-option ${currentModalData.selectedOption === "uw" ? "selected" : ""}`;
         const uwPath = `/kingsraid-data/assets/heroes/${heroName}/uw.png`;
@@ -1212,7 +1297,6 @@
         uwOption.onclick = () => selectUWOption("uw");
         optionsContainer.appendChild(uwOption);
 
-        // Empty option
         const emptyOption = document.createElement("div");
         emptyOption.className = `uw-option ${currentModalData.selectedOption === "empty" ? "selected" : ""}`;
         emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
@@ -1242,7 +1326,6 @@
         optionsContainer.innerHTML = "";
         emptyContainer.innerHTML = "";
 
-        // Create 4 UT options
         for (let i = 1; i <= 4; i++) {
           const option = document.createElement("div");
           option.className = `ut-option ${currentModalData.selectedUT === i ? "selected" : ""}`;
@@ -1252,7 +1335,6 @@
           optionsContainer.appendChild(option);
         }
 
-        // Empty option
         const emptyOption = document.createElement("div");
         emptyOption.className = `ut-option ${currentModalData.selectedUT === 0 ? "selected" : ""}`;
         emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
@@ -1285,7 +1367,6 @@
 
         displayArtifacts(allArtifacts, optionsContainer);
 
-        // Empty option
         emptyContainer.innerHTML = "";
         const emptyOption = document.createElement("div");
         emptyOption.className = `artifact-option ${currentModalData.selectedArtifact === null ? "selected" : ""}`;
@@ -1297,19 +1378,16 @@
         modal.style.display = "flex";
       }
 
-      function openPerkModal(teamSlotIndex, subSlotIndex) {
+      function openPerkModal(teamSlotIndex) {
         currentModalData = {
-          teamSlotIndex,
-          subSlotIndex,
-          selectedPerks: currentSubSlots[teamSlotIndex][subSlotIndex] || [],
+          teamSlotIndex: teamSlotIndex,
+          selectedPerks: currentPerks[teamSlotIndex] || [],
           maxPoints: 95,
           usedPoints: 0,
         };
 
         const modal = document.getElementById("perk-modal");
         const optionsContainer = document.getElementById("perk-options");
-        const pointsUsedElement = document.getElementById("perk-points-used");
-        const pointsDisplay = document.getElementById("perk-points-display");
 
         optionsContainer.innerHTML = "";
         currentModalData.usedPoints = 0;
@@ -1386,25 +1464,25 @@
       }
 
       function confirmPerkSelection() {
-        const { teamSlotIndex, subSlotIndex, selectedPerks } = currentModalData;
-        currentSubSlots[teamSlotIndex][subSlotIndex] = selectedPerks;
-        updatePerkSubSlotDisplay(teamSlotIndex, subSlotIndex, selectedPerks);
+        const { teamSlotIndex, selectedPerks } = currentModalData;
+        currentPerks[teamSlotIndex] = selectedPerks;
+        updatePerkSlotDisplay(teamSlotIndex, selectedPerks);
         updatePerkPreview(teamSlotIndex, selectedPerks);
         closeModal("perk-modal");
       }
 
-      function updatePerkSubSlotDisplay(teamSlotIndex, subSlotIndex, selectedPerks) {
+      function updatePerkSlotDisplay(teamSlotIndex, selectedPerks) {
         const slotContainers = document.getElementById("team-slots").children;
         const slotContainer = slotContainers[teamSlotIndex];
-        const subSlotsContainer = slotContainer.children[1];
-        const subSlot = subSlotsContainer.children[subSlotIndex];
+        const perkSlotContainer = slotContainer.children[3];
+        const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
 
         if (selectedPerks && selectedPerks.length > 0) {
-          subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer perk-slot-active";
-          subSlot.innerHTML = `<div class="w-full h-full flex items-center justify-center text-black text-xs font-bold">Perks</div>`;
+          perkMainSlot.className = "perk-main-slot perk-slot-active";
+          perkMainSlot.innerHTML = `<div class="w-full h-full flex items-center justify-center text-black text-xs font-bold">Perks (${selectedPerks.length})</div>`;
         } else {
-          subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
-          subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
+          perkMainSlot.className = "perk-main-slot empty";
+          perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">+ Perks</span>';
         }
       }
 
@@ -1711,7 +1789,8 @@
               })
             ),
             st: currentSubStars.flat(),
-            v: 1,
+            p: currentPerks,
+            v: 2,
           };
 
           console.log("Saving team data to server:", teamData);
@@ -1775,6 +1854,7 @@
         currentTeam = Array(MAX_TEAM_SLOTS).fill(null);
         currentSubSlots = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(null));
         currentSubStars = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(0));
+        currentPerks = Array(MAX_TEAM_SLOTS).fill(null);
 
         if (teamData.t) {
           currentTeamTitle = teamData.t;
@@ -1831,6 +1911,10 @@
           }
         }
 
+        if (teamData.p && Array.isArray(teamData.p)) {
+          currentPerks = teamData.p;
+        }
+
         updateTeamDisplay();
         refreshHeroesDisplay();
         console.log("✅ Team loaded successfully from server!");
@@ -1847,7 +1931,6 @@
           .replace(/-+$/, "")
           .substring(0, 30);
       }
-
     </script>
   </body>
 </html>
