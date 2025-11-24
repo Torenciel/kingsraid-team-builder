@@ -6,6 +6,10 @@
     <title>KingsRaid Team Builder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/a309c4587d.js"
+      crossorigin="anonymous"
+    ></script>
     <style>
       /* [Garder tous vos styles CSS existants] */
       body {
@@ -421,8 +425,14 @@
 
       <!-- Available Heroes -->
       <div>
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-lg font-semibold">Available Heroes</h2>
+        <div class="flex justify-between items-center mb-4 mt-4">
+          <select
+            id="availableHeroes-filter"
+            class="bg-neutral-800 border border-neutral-600 rounded px-3 py-1 text-sm"
+          >
+            <option value="allHeroes">All Heroes</option>
+            <option value="availableHeroes">Available Heroes (CBT)</option>
+          </select>
           <div class="flex gap-2">
             <select
               id="sort-filter"
