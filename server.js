@@ -1,14 +1,102 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const teamDB = require("./db"); // ← Nouvelle importation
+const teamDB = require("./db");
 
 const app = express();
 const PORT = process.env.PORT || 3002;
 
 // Middleware
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/kingsraid-data', express.static(path.join(__dirname, 'public', 'kingsraid-data')));
 app.use(express.json());
+
+// === ROUTES DE DEBUG COMPLET ===
+app.get("/debug", (req, res) => {
+  const publicPath = path.join(__dirname, 'public');
+  const kingsraidPath = path.join(__dirname, 'public', 'kingsraid-data');
+  const masangPath = path.join(__dirname, 'public', 'kingsraid-data', 'hero_release_order_masang.json');
+  
+  // Vérifier l'existence des dossiers
+  const publicExists = fs.existsSync(publicPath);
+  const kingsraidExists = fs.existsSync(kingsraidPath);
+  const masangExists = fs.existsSync(masangPath);
+  
+  let publicFiles = [];
+  let kingsraidFiles = [];
+  
+  if (publicExists) {
+    try {
+      publicFiles = fs.readdirSync(publicPath);
+    } catch (e) {
+      publicFiles = [`Error: ${e.message}`];
+    }
+  }
+  
+  if (kingsraidExists) {
+    try {
+      kingsraidFiles = fs.readdirSync(kingsraidPath);
+    } catch (e) {
+      kingsraidFiles = [`Error: ${e.message}`];
+    }
+  }
+
+  res.json({
+    // Chemins
+    paths: {
+      __dirname: __dirname,
+      publicPath: publicPath,
+      kingsraidPath: kingsraidPath,
+      masangPath: masangPath
+    },
+    // Existence
+    exists: {
+      public: publicExists,
+      kingsraid: kingsraidExists,
+      masang: masangExists
+    },
+    // Fichiers
+    files: {
+      public: publicFiles,
+      kingsraid: kingsraidFiles
+    },
+    // URLs test
+    testUrls: {
+      masang: 'http://localhost:' + PORT + '/kingsraid-data/hero_release_order_masang.json',
+      debug: 'http://localhost:' + PORT + '/debug'
+    }
+  });
+});
+
+// Route principale pour le fichier masang
+app.get('/kingsraid-data/hero_release_order_masang.json', (req, res) => {
+  const filePath = path.join(__dirname, 'public', 'kingsraid-data', 'hero_release_order_masang.json');
+  
+  console.log(`🔍 Tentative d'accès à: ${filePath}`);
+  
+  // Vérifier si le fichier existe
+  if (fs.existsSync(filePath)) {
+    console.log(`✅ Fichier trouvé: ${filePath}`);
+    res.sendFile(filePath);
+  } else {
+    console.log(`❌ Fichier non trouvé: ${filePath}`);
+    
+    // Créer un fichier de test si nécessaire
+    const testData = ["Kasel", "Frey", "Cleo", "Roi", "Clause"];
+    try {
+      fs.writeFileSync(filePath, JSON.stringify(testData, null, 2));
+      console.log(`📝 Fichier de test créé: ${filePath}`);
+      res.json(testData);
+    } catch (writeError) {
+      res.status(404).json({ 
+        error: 'File not found', 
+        path: filePath,
+        message: 'Could not find or create the file',
+        details: writeError.message
+      });
+    }
+  }
+});
 
 // Routes principales
 app.get("/", (req, res) => {
@@ -169,7 +257,7 @@ function loadReleaseOrder() {
   try {
     const releaseOrderPath = path.join(
       __dirname,
-      "public", // ← CORRIGÉ : chemin vers public
+      "public",
       "kingsraid-data",
       "hero_release_order.json"
     );
@@ -229,7 +317,7 @@ function sortHeroes(heroes, sortType) {
 function getAllHeroesWithDetails() {
   const heroesDataPath = path.join(
     __dirname,
-    "public", // ← CORRIGÉ : chemin vers public
+    "public",
     "kingsraid-data",
     "table-data",
     "heroes"
@@ -325,6 +413,7 @@ teamDB
         `🎮 KingsRaid Team Builder démarré sur http://localhost:${PORT}`
       );
       console.log(`💾 SQLite database enabled - Permanent links!`);
+      console.log(`🐛 Debug URL: http://localhost:${PORT}/debug`);
     });
   })
   .catch((error) => {
