@@ -436,6 +436,103 @@
       .perk-main-slot.empty:hover {
         background: #404040;
       }
+      /* Styles pour les advancements UW */
+      .uw-advancement {
+        position: absolute;
+        top: -6px;
+        right: -3px;
+        width: 20px;
+        height: 20px;
+        z-index: 5;
+        display: none;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      
+      .uw-advancement.visible {
+        display: block;
+      }
+      
+      .uw-advancement.blue {
+        filter: hue-rotate(0deg) saturate(2);
+        /* background-image: url('/kingsraid-data/assets/advancements/blue.png'); */
+      }
+      
+      .uw-advancement.purple {
+        filter: hue-rotate(250deg) saturate(2);
+        /* background-image: url('/kingsraid-data/assets/advancements/purple.png'); */
+      }
+      
+      .uw-advancement.red {
+        filter: hue-rotate(330deg) saturate(2);
+        /* background-image: url('/kingsraid-data/assets/advancements/red.png'); */
+      }
+
+      /* Borders colorés pour les sub-slots UW avec advancement */
+      .sub-slot.uw-advancement-blue {
+        border: 2px solid !important;
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+      }
+
+      .sub-slot.uw-advancement-purple {
+        border: 2px solid !important;
+        border-color: #a855f7 !important;
+        box-shadow: 0 0 5px rgba(168, 85, 247, 0.5);
+      }
+
+      .sub-slot.uw-advancement-red {
+        border: 2px solid !important;
+        border-color: #ef4444 !important;
+        box-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+      }
+
+      /* Styles pour le modal d'advancement UW */
+      .advancement-option {
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+        border-radius: 4px;
+        background: #262626;
+        border: 2px solid #525252;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: white;
+      }
+      
+      .advancement-option:hover {
+        border-color: #64e210;
+      }
+      
+      .advancement-option.selected {
+        border-color: #fbbf24;
+      }
+      
+      .advancement-option.none {
+        background: #404040;
+      }
+      
+      .advancement-option.blue {
+        background: linear-gradient(135deg, #1e40af, #3b82f6);
+      }
+      
+      .advancement-option.purple {
+        background: linear-gradient(135deg, #7e22ce, #a855f7);
+      }
+      
+      .advancement-option.red {
+        background: linear-gradient(135deg, #dc2626, #ef4444);
+      }
+
+      .advancement-options {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 15px 0;
+      }
     </style>
   </head>
   <body class="text-white min-h-screen">
@@ -572,16 +669,43 @@
       </div>
     </div>
 
-    <!-- Modal pour choisir les images UW -->
+    <!-- Modal pour choisir les UW avec advancement -->
     <div id="uw-modal" class="modal">
       <div class="modal-content">
-        <h3 class="text-lg font-bold mb-4 text-center">UW</h3>
+        <h3 class="text-lg font-bold mb-4 text-center">Unique Weapon</h3>
+        
+        
+        <!-- Section UW Options -->
         <div class="flex justify-center gap-4 mb-4" id="uw-options">
           <!-- Les options UW seront ajoutées ici dynamiquement -->
         </div>
-        <div class="stars-container" id="uw-stars">
-          <!-- Les étoiles UW seront ajoutées ici dynamiquement -->
+        
+        <!-- Section Stars -->
+        <div style="margin-bottom: 20px;">
+          <div class="stars-container" id="uw-stars">
+            <!-- Les étoiles UW seront ajoutées ici dynamiquement -->
+          </div>
         </div>
+
+        <!-- Section Advancement -->
+        <div style="margin-bottom: 20px;">
+          <!-- <h4 style="color: white; text-align: center; margin-bottom: 10px;">Advancement</h4> -->
+          <div class="advancement-options">
+            <div class="advancement-option none" data-advancement="none" onclick="selectAdvancement('none')">
+              None
+            </div>
+            <div class="advancement-option blue" data-advancement="blue" onclick="selectAdvancement('blue')">
+              Blue
+            </div>
+            <div class="advancement-option purple" data-advancement="purple" onclick="selectAdvancement('purple')">
+              Purple
+            </div>
+            <div class="advancement-option red" data-advancement="red" onclick="selectAdvancement('red')">
+              Red
+            </div>
+          </div>
+        </div>
+        
         <div class="flex justify-center gap-4 mt-6">
           <button
             id="confirm-uw"
@@ -713,6 +837,13 @@
       </div>
     </div>
 
+    <!-- Icône hexagon pour l'advancement -->
+    <svg style="display: none;">
+      <symbol id="hexagon-icon" viewBox="0 0 24 24">
+        <path d="M12 2L22 7V17L12 22L2 17V7Z" fill="currentColor"/>
+      </symbol>
+    </svg>
+
 <script>
       // ========== CONFIGURATION & GLOBAL VARIABLES ==========
       const MAX_TEAM_SLOTS = 8;
@@ -728,6 +859,7 @@
         .fill(null)
         .map(() => Array(4).fill(0));
       let currentPerks = Array(MAX_TEAM_SLOTS).fill(null);
+      let currentAdvancements = Array(MAX_TEAM_SLOTS).fill("none"); // Nouveau: stockage des advancements
       let currentModalData = null;
       let pendingRemoveHeroId = null;
       let availableHeroes = [];
@@ -751,7 +883,7 @@
           "Excellent Strategy.png", 
           "Battle Cry.png",
           "Shield of Protection.png",
-          "Shift Move.png"
+          "Swift Move.png"
         ],
         Warrior: [
           "Opportune Strike.png",
@@ -1174,10 +1306,18 @@
 
               if (subItem) {
                 const starsDisplay = subStars > 0 ? `<div class="stars-text">${subStars}★</div>` : "";
-                subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer";
+                // Ajouter l'icône d'advancement et la classe de border pour le slot UW (j=0)
+                const advancementIcon = j === 0 && currentAdvancements[index] !== "none" ? 
+                  `<div class="uw-advancement ${currentAdvancements[index]} visible"></div>` : "";
+                
+                const borderClass = j === 0 && currentAdvancements[index] !== "none" ? 
+                  `uw-advancement-${currentAdvancements[index]}` : "";
+                
+                subSlot.className = `sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer ${borderClass}`;
                 subSlot.innerHTML = `
                   <img src="${subItem}" alt="Sub item" class="sub-slot-image">
                   ${starsDisplay}
+                  ${advancementIcon}
                 `;
               } else {
                 subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
@@ -1191,7 +1331,7 @@
             const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
             if (perks && perks.length > 0) {
               perkMainSlot.className = "perk-main-slot perk-slot-active";
-              perkMainSlot.innerHTML = `<div class="w-full h-full flex items-center justify-center text-black text-xs font-bold">Perks (${perks.length})</div>`;
+              perkMainSlot.innerHTML = `<div class="w-full h-full flex items-center justify-center text-black text-xs font-bold">Perks</div>`;
             } else {
               perkMainSlot.className = "perk-main-slot empty";
               perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">Perks</span>';
@@ -1266,6 +1406,7 @@
         currentSubSlots[heroIndex] = Array(4).fill(null);
         currentSubStars[heroIndex] = Array(4).fill(0);
         currentPerks[heroIndex] = null;
+        currentAdvancements[heroIndex] = "none";
         currentTeam[heroIndex] = null;
         updateTeamDisplay();
         refreshHeroesDisplay();
@@ -1366,6 +1507,7 @@
         openPerkModal(teamSlotIndex, hero.role, hero.name);
       }
 
+      // ========== UW MODAL WITH ADVANCEMENT ==========
       function openUWModal(teamSlotIndex, subSlotIndex, heroName) {
         currentModalData = {
           teamSlotIndex,
@@ -1373,6 +1515,7 @@
           heroName,
           selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0,
           selectedOption: currentSubSlots[teamSlotIndex][subSlotIndex] ? "uw" : "empty",
+          selectedAdvancement: currentAdvancements[teamSlotIndex] || "none"
         };
 
         const modal = document.getElementById("uw-modal");
@@ -1394,10 +1537,87 @@
         emptyOption.onclick = () => selectUWOption("empty");
         optionsContainer.appendChild(emptyOption);
 
+        // Mettre à jour l'advancement
+        document.querySelectorAll('.advancement-option').forEach(option => {
+          option.classList.remove('selected');
+          if (option.dataset.advancement === currentModalData.selectedAdvancement) {
+            option.classList.add('selected');
+          }
+        });
+
         createStars(starsContainer, "uw", currentModalData.selectedStars);
         modal.style.display = "flex";
       }
 
+      function selectAdvancement(advancement) {
+        document.querySelectorAll('.advancement-option').forEach(option => {
+          option.classList.remove('selected');
+        });
+        event.target.classList.add('selected');
+        currentModalData.selectedAdvancement = advancement;
+      }
+
+      function selectUWOption(option) {
+        document.querySelectorAll(".uw-option").forEach((opt) => opt.classList.remove("selected"));
+        event.target.closest(".uw-option").classList.add("selected");
+        currentModalData.selectedOption = option;
+      }
+
+      function updateUWStars(starCount) {
+        const stars = document.querySelectorAll('#uw-modal .star');
+        stars.forEach((star, index) => {
+          if (index < starCount) {
+            star.classList.add('filled');
+          } else {
+            star.classList.remove('filled');
+          }
+        });
+        document.getElementById('uw-stars-count').textContent = starCount;
+      }
+
+      function setUWStars(starCount) {
+        updateUWStars(starCount);
+        currentModalData.selectedStars = starCount;
+      }
+
+      function previewUWStars(starCount) {
+        const stars = document.querySelectorAll('#uw-modal .star');
+        stars.forEach((star, index) => {
+          star.classList.remove('hover-preview');
+          if (index < starCount && !star.classList.contains('filled')) {
+            star.classList.add('hover-preview');
+          }
+        });
+      }
+
+      function clearUWStarsPreview() {
+        const stars = document.querySelectorAll('#uw-modal .star');
+        stars.forEach(star => {
+          star.classList.remove('hover-preview');
+        });
+      }
+
+      function confirmUWSelection() {
+        if (!currentModalData) return;
+        const { teamSlotIndex, subSlotIndex, heroName, selectedOption, selectedStars, selectedAdvancement } = currentModalData;
+
+        if (selectedOption === "empty") {
+          currentSubSlots[teamSlotIndex][subSlotIndex] = null;
+          currentSubStars[teamSlotIndex][subSlotIndex] = 0;
+          currentAdvancements[teamSlotIndex] = "none";
+          removeSubItem(teamSlotIndex, subSlotIndex);
+        } else {
+          const uwPath = `/kingsraid-data/assets/heroes/${heroName}/uw.png`;
+          currentSubSlots[teamSlotIndex][subSlotIndex] = uwPath;
+          currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
+          currentAdvancements[teamSlotIndex] = selectedAdvancement;
+          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, uwPath, selectedStars);
+        }
+
+        closeModal("uw-modal");
+      }
+
+      // ========== UT MODAL FUNCTIONS ==========
       function openUTModal(teamSlotIndex, subSlotIndex, heroName) {
         currentModalData = {
           teamSlotIndex,
@@ -1436,6 +1656,13 @@
         modal.style.display = "flex";
       }
 
+      function selectUTOption(utNumber) {
+        document.querySelectorAll(".ut-option").forEach((option) => option.classList.remove("selected"));
+        event.target.closest(".ut-option").classList.add("selected");
+        currentModalData.selectedUT = utNumber;
+      }
+
+      // ========== ARTIFACT MODAL FUNCTIONS ==========
       function openArtifactModal(teamSlotIndex, subSlotIndex) {
         currentModalData = {
           teamSlotIndex,
@@ -1469,170 +1696,179 @@
         modal.style.display = "flex";
       }
 
+      function selectArtifactOption(artifactName) {
+        document.querySelectorAll(".artifact-option").forEach((option) => option.classList.remove("selected"));
+        const selectedElement = event.target.closest(".artifact-option");
+        if (selectedElement) selectedElement.classList.add("selected");
+        currentModalData.selectedArtifact = artifactName;
+      }
+
+      // ========== PERK MODAL FUNCTIONS ==========
       function openPerkModal(teamSlotIndex, heroClass, heroName) {
-  currentModalData = {
-    teamSlotIndex: teamSlotIndex,
-    heroClass: heroClass,
-    heroName: heroName,
-    selectedPerks: currentPerks[teamSlotIndex] || [],
-    maxPoints: 95,
-    usedPoints: 0,
-  };
+        currentModalData = {
+          teamSlotIndex: teamSlotIndex,
+          heroClass: heroClass,
+          heroName: heroName,
+          selectedPerks: currentPerks[teamSlotIndex] || [],
+          maxPoints: 95,
+          usedPoints: 0,
+        };
 
-  const modal = document.getElementById("perk-modal");
-  const optionsContainer = document.getElementById("perk-options");
+        const modal = document.getElementById("perk-modal");
+        const optionsContainer = document.getElementById("perk-options");
 
-  optionsContainer.innerHTML = "";
-  currentModalData.usedPoints = 0;
+        optionsContainer.innerHTML = "";
+        currentModalData.usedPoints = 0;
 
-  const perkLayout = [
-    { count: 5, cost: 10 },
-    { count: 5, cost: 15 },
-    { count: 4, cost: 15 },
-    { count: 4, cost: 15 },
-    { count: 2, cost: 15 },
-  ];
+        const perkLayout = [
+          { count: 5, cost: 10 },
+          { count: 5, cost: 15 },
+          { count: 4, cost: 15 },
+          { count: 4, cost: 15 },
+          { count: 2, cost: 15 },
+        ];
 
-  perkLayout.forEach((row, rowIndex) => {
-    const rowElement = document.createElement("div");
-    rowElement.className = "perk-row";
+        perkLayout.forEach((row, rowIndex) => {
+          const rowElement = document.createElement("div");
+          rowElement.className = "perk-row";
 
-    for (let i = 0; i < row.count; i++) {
-      const perkIndex = rowIndex * 10 + i;
-      const perkOption = document.createElement("div");
-      perkOption.className = "perk-option";
-      
-      const isSelected = currentModalData.selectedPerks.includes(perkIndex);
-      
-      // Ligne 1: Images T1
-      if (rowIndex === 0 && i < T1_PERK_IMAGES.length) {
-        const perkImage = T1_PERK_IMAGES[i];
-        perkOption.innerHTML = `
-          <img src="/kingsraid-data/assets/perks/t1/${perkImage}" 
-               alt="Perk ${perkIndex}" 
-               class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
-            ${row.cost}
-          </div>
-        `;
+          for (let i = 0; i < row.count; i++) {
+            const perkIndex = rowIndex * 10 + i;
+            const perkOption = document.createElement("div");
+            perkOption.className = "perk-option";
+            
+            const isSelected = currentModalData.selectedPerks.includes(perkIndex);
+            
+            // Ligne 1: Images T1
+            if (rowIndex === 0 && i < T1_PERK_IMAGES.length) {
+              const perkImage = T1_PERK_IMAGES[i];
+              perkOption.innerHTML = `
+                <img src="/kingsraid-data/assets/perks/t1/${perkImage}" 
+                     alt="Perk ${perkIndex}" 
+                     class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
+                  ${row.cost}
+                </div>
+              `;
+            }
+            // Ligne 2: Images T2 basées sur la classe
+            else if (rowIndex === 1 && heroClass && T2_PERK_IMAGES_BY_CLASS[heroClass] && i < T2_PERK_IMAGES_BY_CLASS[heroClass].length) {
+              const perkImage = T2_PERK_IMAGES_BY_CLASS[heroClass][i];
+              perkOption.innerHTML = `
+                <img src="/kingsraid-data/assets/perks/t2/${heroClass.toLowerCase()}/${perkImage}" 
+                     alt="Perk ${perkIndex}" 
+                     class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
+                  ${row.cost}
+                </div>
+              `;
+            }
+            // Ligne 3: Perks spécifiques au héros (s1l, s1d, s2l, s2d)
+            else if (rowIndex === 2 && heroName && i < HERO_PERK_IMAGES.row3.length) {
+              const perkImage = HERO_PERK_IMAGES.row3[i];
+              perkOption.innerHTML = `
+                <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+                     alt="Perk ${perkIndex}" 
+                     class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
+                  ${row.cost}
+                </div>
+              `;
+            }
+            // Ligne 4: Perks spécifiques au héros (s3l, s3d, s4l, s4d)
+            else if (rowIndex === 3 && heroName && i < HERO_PERK_IMAGES.row4.length) {
+              const perkImage = HERO_PERK_IMAGES.row4[i];
+              perkOption.innerHTML = `
+                <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+                     alt="Perk ${perkIndex}" 
+                     class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
+                  ${row.cost}
+                </div>
+              `;
+            }
+            // Ligne 5: Perks spécifiques au héros (light, dark)
+            else if (rowIndex === 4 && heroName && i < HERO_PERK_IMAGES.row5.length) {
+              const perkImage = HERO_PERK_IMAGES.row5[i];
+              perkOption.innerHTML = `
+                <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+                     alt="Perk ${perkIndex}" 
+                     class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
+                  ${row.cost}
+                </div>
+              `;
+            }
+            // Autres cas: affichage normal
+            else {
+              perkOption.textContent = row.cost;
+              if (!isSelected) {
+                perkOption.classList.add('opacity-40');
+              }
+            }
+            
+            perkOption.dataset.cost = row.cost;
+            perkOption.dataset.index = perkIndex;
+
+            if (isSelected) {
+              perkOption.classList.add("selected");
+              currentModalData.usedPoints += row.cost;
+            }
+
+            perkOption.onclick = () => togglePerkSelection(perkOption, row.cost, perkIndex);
+            rowElement.appendChild(perkOption);
+          }
+
+          optionsContainer.appendChild(rowElement);
+        });
+
+        updatePerkPointsDisplay();
+        modal.style.display = "flex";
       }
-      // Ligne 2: Images T2 basées sur la classe
-      else if (rowIndex === 1 && heroClass && T2_PERK_IMAGES_BY_CLASS[heroClass] && i < T2_PERK_IMAGES_BY_CLASS[heroClass].length) {
-        const perkImage = T2_PERK_IMAGES_BY_CLASS[heroClass][i];
-        perkOption.innerHTML = `
-          <img src="/kingsraid-data/assets/perks/t2/${heroClass.toLowerCase()}/${perkImage}" 
-               alt="Perk ${perkIndex}" 
-               class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
-            ${row.cost}
-          </div>
-        `;
-      }
-      // Ligne 3: Perks spécifiques au héros (s1l, s1d, s2l, s2d)
-      else if (rowIndex === 2 && heroName && i < HERO_PERK_IMAGES.row3.length) {
-        const perkImage = HERO_PERK_IMAGES.row3[i];
-        perkOption.innerHTML = `
-          <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
-               alt="Perk ${perkIndex}" 
-               class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
-            ${row.cost}
-          </div>
-        `;
-      }
-      // Ligne 4: Perks spécifiques au héros (s3l, s3d, s4l, s4d)
-      else if (rowIndex === 3 && heroName && i < HERO_PERK_IMAGES.row4.length) {
-        const perkImage = HERO_PERK_IMAGES.row4[i];
-        perkOption.innerHTML = `
-          <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
-               alt="Perk ${perkIndex}" 
-               class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
-            ${row.cost}
-          </div>
-        `;
-      }
-      // Ligne 5: Perks spécifiques au héros (light, dark)
-      else if (rowIndex === 4 && heroName && i < HERO_PERK_IMAGES.row5.length) {
-        const perkImage = HERO_PERK_IMAGES.row5[i];
-        perkOption.innerHTML = `
-          <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
-               alt="Perk ${perkIndex}" 
-               class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
-            ${row.cost}
-          </div>
-        `;
-      }
-      // Autres cas: affichage normal
-      else {
-        perkOption.textContent = row.cost;
-        if (!isSelected) {
-          perkOption.classList.add('opacity-40');
+
+      function togglePerkSelection(perkElement, cost, perkIndex) {
+        const isSelected = perkElement.classList.contains("selected");
+        const newPoints = isSelected ? currentModalData.usedPoints - cost : currentModalData.usedPoints + cost;
+
+        if (newPoints > currentModalData.maxPoints && !isSelected) {
+          alert(`Cannot select this perk! You would exceed the ${currentModalData.maxPoints} point limit.`);
+          return;
         }
+
+        if (isSelected) {
+          perkElement.classList.remove("selected");
+          currentModalData.usedPoints -= cost;
+          const index = currentModalData.selectedPerks.indexOf(perkIndex);
+          if (index > -1) currentModalData.selectedPerks.splice(index, 1);
+          
+          // Mettre à jour l'opacité pour les images
+          const img = perkElement.querySelector('img');
+          if (img) {
+            img.classList.add('opacity-40');
+          } else {
+            perkElement.classList.add('opacity-40');
+          }
+        } else {
+          perkElement.classList.add("selected");
+          currentModalData.usedPoints += cost;
+          currentModalData.selectedPerks.push(perkIndex);
+          
+          // Mettre à jour l'opacité pour les images
+          const img = perkElement.querySelector('img');
+          if (img) {
+            img.classList.remove('opacity-40');
+          } else {
+            perkElement.classList.remove('opacity-40');
+          }
+        }
+
+        updatePerkPointsDisplay();
       }
-      
-      perkOption.dataset.cost = row.cost;
-      perkOption.dataset.index = perkIndex;
-
-      if (isSelected) {
-        perkOption.classList.add("selected");
-        currentModalData.usedPoints += row.cost;
-      }
-
-      perkOption.onclick = () => togglePerkSelection(perkOption, row.cost, perkIndex);
-      rowElement.appendChild(perkOption);
-    }
-
-    optionsContainer.appendChild(rowElement);
-  });
-
-  updatePerkPointsDisplay();
-  modal.style.display = "flex";
-}
-function togglePerkSelection(perkElement, cost, perkIndex) {
-  const isSelected = perkElement.classList.contains("selected");
-  const newPoints = isSelected ? currentModalData.usedPoints - cost : currentModalData.usedPoints + cost;
-
-  if (newPoints > currentModalData.maxPoints && !isSelected) {
-    alert(`Cannot select this perk! You would exceed the ${currentModalData.maxPoints} point limit.`);
-    return;
-  }
-
-  if (isSelected) {
-    perkElement.classList.remove("selected");
-    currentModalData.usedPoints -= cost;
-    const index = currentModalData.selectedPerks.indexOf(perkIndex);
-    if (index > -1) currentModalData.selectedPerks.splice(index, 1);
-    
-    // Mettre à jour l'opacité pour les images
-    const img = perkElement.querySelector('img');
-    if (img) {
-      img.classList.add('opacity-40');
-    } else {
-      perkElement.classList.add('opacity-40');
-    }
-  } else {
-    perkElement.classList.add("selected");
-    currentModalData.usedPoints += cost;
-    currentModalData.selectedPerks.push(perkIndex);
-    
-    // Mettre à jour l'opacité pour les images
-    const img = perkElement.querySelector('img');
-    if (img) {
-      img.classList.remove('opacity-40');
-    } else {
-      perkElement.classList.remove('opacity-40');
-    }
-  }
-
-  updatePerkPointsDisplay();
-}
 
       function updatePerkPointsDisplay() {
         const pointsUsedElement = document.getElementById("perk-points-used");
@@ -1666,13 +1902,7 @@ function togglePerkSelection(perkElement, cost, perkIndex) {
         const perkSlotContainer = slotContainer.children[2];  // Maintenant en position 2
         const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
 
-        if (selectedPerks && selectedPerks.length > 0) {
-          perkMainSlot.className = "perk-main-slot perk-slot-active";
-          perkMainSlot.innerHTML = `<div class="w-full h-full flex items-center justify-center text-black text-xs font-bold">Perks (${selectedPerks.length})</div>`;
-        } else {
-          perkMainSlot.className = "perk-main-slot empty";
-          perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">Perks</span>';
-        }
+
       }
 
       function updatePerkPreview(teamSlotIndex, selectedPerks, heroClass, heroName) {
@@ -1869,25 +2099,6 @@ function togglePerkSelection(perkElement, cost, perkIndex) {
         displayArtifacts(filteredArtifacts, optionsContainer);
       }
 
-      function selectUWOption(option) {
-        document.querySelectorAll(".uw-option").forEach((opt) => opt.classList.remove("selected"));
-        event.target.closest(".uw-option").classList.add("selected");
-        currentModalData.selectedOption = option;
-      }
-
-      function selectUTOption(utNumber) {
-        document.querySelectorAll(".ut-option").forEach((option) => option.classList.remove("selected"));
-        event.target.closest(".ut-option").classList.add("selected");
-        currentModalData.selectedUT = utNumber;
-      }
-
-      function selectArtifactOption(artifactName) {
-        document.querySelectorAll(".artifact-option").forEach((option) => option.classList.remove("selected"));
-        const selectedElement = event.target.closest(".artifact-option");
-        if (selectedElement) selectedElement.classList.add("selected");
-        currentModalData.selectedArtifact = artifactName;
-      }
-
       function createStars(container, type, currentStars) {
         container.innerHTML = "";
 
@@ -1954,24 +2165,6 @@ function togglePerkSelection(perkElement, cost, perkIndex) {
         });
       }
 
-      function confirmUWSelection() {
-        if (!currentModalData) return;
-        const { teamSlotIndex, subSlotIndex, heroName, selectedOption, selectedStars } = currentModalData;
-
-        if (selectedOption === "empty") {
-          currentSubSlots[teamSlotIndex][subSlotIndex] = null;
-          currentSubStars[teamSlotIndex][subSlotIndex] = 0;
-          removeSubItem(teamSlotIndex, subSlotIndex);
-        } else {
-          const uwPath = `/kingsraid-data/assets/heroes/${heroName}/uw.png`;
-          currentSubSlots[teamSlotIndex][subSlotIndex] = uwPath;
-          currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
-          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, uwPath, selectedStars);
-        }
-
-        closeModal("uw-modal");
-      }
-
       function confirmUTSelection() {
         if (!currentModalData || currentModalData.selectedUT === null) {
           alert("Please select a UT option!");
@@ -2029,10 +2222,18 @@ function togglePerkSelection(perkElement, cost, perkIndex) {
         const subSlot = subSlotsContainer.children[subSlotIndex];
 
         const starsDisplay = stars > 0 ? `<div class="stars-text">${stars}★</div>` : "";
-        subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer";
+        // Ajouter l'icône d'advancement et la classe de border pour le slot UW (subSlotIndex = 0)
+        const advancementIcon = subSlotIndex === 0 && currentAdvancements[teamSlotIndex] !== "none" ? 
+          `<div class="uw-advancement ${currentAdvancements[teamSlotIndex]} visible"></div>` : "";
+        
+        const borderClass = subSlotIndex === 0 && currentAdvancements[teamSlotIndex] !== "none" ? 
+          `uw-advancement-${currentAdvancements[teamSlotIndex]}` : "";
+        
+        subSlot.className = `sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer ${borderClass}`;
         subSlot.innerHTML = `
           <img src="${imagePath}" alt="Sub item" class="sub-slot-image">
           ${starsDisplay}
+          ${advancementIcon}
         `;
       }
 
@@ -2040,6 +2241,9 @@ function togglePerkSelection(perkElement, cost, perkIndex) {
         event.stopPropagation();
         currentSubSlots[teamSlotIndex][subSlotIndex] = null;
         currentSubStars[teamSlotIndex][subSlotIndex] = 0;
+        if (subSlotIndex === 0) {
+          currentAdvancements[teamSlotIndex] = "none";
+        }
 
         const slotContainers = document.getElementById("team-slots").children;
         const slotContainer = slotContainers[teamSlotIndex];
@@ -2116,7 +2320,8 @@ function togglePerkSelection(perkElement, cost, perkIndex) {
             ),
             st: currentSubStars.flat(),
             p: currentPerks,
-            v: 2,
+            a: currentAdvancements, // Sauvegarde des advancements
+            v: 3, // Version augmentée pour inclure les advancements
           };
 
           console.log("Saving team data to server:", teamData);
@@ -2181,6 +2386,7 @@ function togglePerkSelection(perkElement, cost, perkIndex) {
         currentSubSlots = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(null));
         currentSubStars = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(0));
         currentPerks = Array(MAX_TEAM_SLOTS).fill(null);
+        currentAdvancements = Array(MAX_TEAM_SLOTS).fill("none"); // Initialiser les advancements
 
         if (teamData.t) {
           currentTeamTitle = teamData.t;
@@ -2239,6 +2445,11 @@ function togglePerkSelection(perkElement, cost, perkIndex) {
 
         if (teamData.p && Array.isArray(teamData.p)) {
           currentPerks = teamData.p;
+        }
+
+        // Charger les advancements si disponibles (version 3+)
+        if (teamData.a && Array.isArray(teamData.a)) {
+          currentAdvancements = teamData.a;
         }
 
         updateTeamDisplay();
