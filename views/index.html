@@ -10,7 +10,7 @@
       src="https://kit.fontawesome.com/a309c4587d.js"
       crossorigin="anonymous"
     ></script>
-    <style>
+<style>
       body {
         background-color: #171717;
       }
@@ -354,6 +354,22 @@
         cursor: not-allowed;
         border-color: #6b7280;
       }
+      .perk-option img {
+        opacity: 0.7;
+        filter: grayscale(0.5);
+      }
+      .perk-option {
+        opacity: 0.7;
+        filter: grayscale(0.5);
+      }
+      .perk-option.selected img {
+        opacity: 1;
+        filter: none;
+      }
+      .perk-option.selected {
+        opacity: 1;
+        filter: none;
+      }
       #perk-modal .modal-content {
         max-width: 400px !important;
         width: 90% !important;
@@ -388,10 +404,14 @@
         border-radius: 4px;
         background: #262626;
         border: 1px solid #525252;
+        opacity: 0.7;
+        filter: grayscale(0.7);
       }
       .perk-preview-option.selected {
         background: #fbbf24;
         border-color: #fbbf24;
+        opacity: 1;
+        filter: none;
       }
       .perk-slot-active {
         background: #fbbf24 !important;
@@ -407,7 +427,7 @@
         border: 1px solid #525252;
         border-radius: 4px;
         width: 100%;
-        height: 48px;
+        height: 28px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -693,7 +713,7 @@
       </div>
     </div>
 
-    <script>
+<script>
       // ========== CONFIGURATION & GLOBAL VARIABLES ==========
       const MAX_TEAM_SLOTS = 8;
 
@@ -714,6 +734,75 @@
       let currentHeroes = [];
       let currentFilter = 'all';
       let masangOrder = [];
+
+      // Images T1 pour la première ligne des perks
+      const T1_PERK_IMAGES = [
+        "ATK Up.png",
+        "HP Up.png", 
+        "DEF up.png",
+        "Crit Resist Up.png",
+        "Monster Hunting.png"
+      ];
+
+      // Images T2 par classe
+      const T2_PERK_IMAGES_BY_CLASS = {
+        Knight: [
+          "Experienced Fighter.png",
+          "Excellent Strategy.png", 
+          "Battle Cry.png",
+          "Shield of Protection.png",
+          "Shift Move.png"
+        ],
+        Warrior: [
+          "Opportune Strike.png",
+          "Warlike.png",
+          "Offensive Guard.png", 
+          "Tactical Foresight.png",
+          "Blood Wrath.png"
+        ],
+        Assassin: [
+          "Target Weakness.png",
+          "Swift and Nimble.png",
+          "Tactical Foresight.png",
+          "Opportune Strike.png", 
+          "Vital Detection.png"
+        ],
+        Mechanic: [
+          "Target Weakness.png",
+          "Ready Cannons.png",
+          "Pressure Point.png",
+          "Special Bullet.png",
+          "Amplified Gunpowder.png"
+        ],
+        Archer: [
+          "Precision Shot.png",
+          "Eagle Eye.png", 
+          "Mortal Wound.png",
+          "Opportune Strike.png",
+          "Concentration.png"
+        ],
+        Wizard: [
+          "Deception.png",
+          "Moral Rise.png",
+          "Blessing of Mana.png", 
+          "Circuit Burst.png",
+          "Destruction.png"
+        ],
+        Priest: [
+          "Vengeful Curse.png",
+          "Goddess Blessing.png",
+          "Inner Peace.png",
+          "Blessing of Mana.png",
+          "Swiftness.png"
+        ]
+      };
+
+      // Noms des images pour les lignes 3, 4 et 5 (perks spécifiques au héros)
+      const HERO_PERK_IMAGES = {
+        row3: ["s1l.png", "s1d.png", "s2l.png", "s2d.png"],
+        row4: ["s3l.png", "s3d.png", "s4l.png", "s4d.png"],
+        row5: ["light.png", "dark.png"]
+      };
 
       // ========== INITIALIZATION ==========
       document.addEventListener("DOMContentLoaded", function () {
@@ -978,24 +1067,26 @@
             subSlotsContainer.appendChild(subSlot);
           }
 
-          const perkPreviewContainer = document.createElement("div");
-          perkPreviewContainer.className = "perk-preview";
-          perkPreviewContainer.id = `perk-preview-${i}`;
-
+          // NOUVEL ORDRE : Bouton perks avant la preview
           const perkSlotContainer = document.createElement("div");
           perkSlotContainer.className = "perk-slot-container";
           
           const perkMainSlot = document.createElement("div");
           perkMainSlot.className = "perk-main-slot empty";
-          perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">+ Perks</span>';
+          perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">Perks</span>';
           perkMainSlot.onclick = () => handlePerkSlotClick(i);
           
           perkSlotContainer.appendChild(perkMainSlot);
 
+          const perkPreviewContainer = document.createElement("div");
+          perkPreviewContainer.className = "perk-preview";
+          perkPreviewContainer.id = `perk-preview-${i}`;
+
+          // ORDRE MODIFIÉ : bouton perks en 3ème position, preview en 4ème
           slotContainer.appendChild(mainSlot);
           slotContainer.appendChild(subSlotsContainer);
-          slotContainer.appendChild(perkPreviewContainer);
-          slotContainer.appendChild(perkSlotContainer);
+          slotContainer.appendChild(perkSlotContainer);      // Bouton perks en 3ème
+          slotContainer.appendChild(perkPreviewContainer);   // Preview perks en 4ème
           teamSlots.appendChild(slotContainer);
         }
 
@@ -1057,8 +1148,8 @@
           const slotContainer = slotContainers[index];
           const mainSlot = slotContainer.children[0];
           const subSlotsContainer = slotContainer.children[1];
-          const perkPreviewContainer = slotContainer.children[2];
-          const perkSlotContainer = slotContainer.children[3];
+          const perkSlotContainer = slotContainer.children[2];      // Maintenant en position 2
+          const perkPreviewContainer = slotContainer.children[3];   // Maintenant en position 3
 
           if (hero) {
             const classIconPath = getClassIconPath(hero.role);
@@ -1095,7 +1186,7 @@
             }
 
             const perks = currentPerks[index];
-            updatePerkPreview(index, perks);
+            updatePerkPreview(index, perks, hero.role, hero.name);
 
             const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
             if (perks && perks.length > 0) {
@@ -1103,7 +1194,7 @@
               perkMainSlot.innerHTML = `<div class="w-full h-full flex items-center justify-center text-black text-xs font-bold">Perks (${perks.length})</div>`;
             } else {
               perkMainSlot.className = "perk-main-slot empty";
-              perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">+ Perks</span>';
+              perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">Perks</span>';
             }
 
           } else {
@@ -1116,12 +1207,12 @@
               subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
             }
 
-            const perkPreviewContainer = slotContainer.children[2];
+            const perkPreviewContainer = slotContainer.children[3];
             perkPreviewContainer.innerHTML = "";
 
             const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
             perkMainSlot.className = "perk-main-slot empty";
-            perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">+ Perks</span>';
+            perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">Perks</span>';
           }
         });
 
@@ -1272,7 +1363,7 @@
           alert("Please add a hero to this slot first!");
           return;
         }
-        openPerkModal(teamSlotIndex);
+        openPerkModal(teamSlotIndex, hero.role, hero.name);
       }
 
       function openUWModal(teamSlotIndex, subSlotIndex, heroName) {
@@ -1378,78 +1469,170 @@
         modal.style.display = "flex";
       }
 
-      function openPerkModal(teamSlotIndex) {
-        currentModalData = {
-          teamSlotIndex: teamSlotIndex,
-          selectedPerks: currentPerks[teamSlotIndex] || [],
-          maxPoints: 95,
-          usedPoints: 0,
-        };
+      function openPerkModal(teamSlotIndex, heroClass, heroName) {
+  currentModalData = {
+    teamSlotIndex: teamSlotIndex,
+    heroClass: heroClass,
+    heroName: heroName,
+    selectedPerks: currentPerks[teamSlotIndex] || [],
+    maxPoints: 95,
+    usedPoints: 0,
+  };
 
-        const modal = document.getElementById("perk-modal");
-        const optionsContainer = document.getElementById("perk-options");
+  const modal = document.getElementById("perk-modal");
+  const optionsContainer = document.getElementById("perk-options");
 
-        optionsContainer.innerHTML = "";
-        currentModalData.usedPoints = 0;
+  optionsContainer.innerHTML = "";
+  currentModalData.usedPoints = 0;
 
-        const perkLayout = [
-          { count: 5, cost: 10 },
-          { count: 5, cost: 15 },
-          { count: 4, cost: 15 },
-          { count: 4, cost: 15 },
-          { count: 2, cost: 15 },
-        ];
+  const perkLayout = [
+    { count: 5, cost: 10 },
+    { count: 5, cost: 15 },
+    { count: 4, cost: 15 },
+    { count: 4, cost: 15 },
+    { count: 2, cost: 15 },
+  ];
 
-        perkLayout.forEach((row, rowIndex) => {
-          const rowElement = document.createElement("div");
-          rowElement.className = "perk-row";
+  perkLayout.forEach((row, rowIndex) => {
+    const rowElement = document.createElement("div");
+    rowElement.className = "perk-row";
 
-          for (let i = 0; i < row.count; i++) {
-            const perkIndex = rowIndex * 10 + i;
-            const perkOption = document.createElement("div");
-            perkOption.className = "perk-option";
-            perkOption.textContent = row.cost;
-            perkOption.dataset.cost = row.cost;
-            perkOption.dataset.index = perkIndex;
+    for (let i = 0; i < row.count; i++) {
+      const perkIndex = rowIndex * 10 + i;
+      const perkOption = document.createElement("div");
+      perkOption.className = "perk-option";
+      
+      const isSelected = currentModalData.selectedPerks.includes(perkIndex);
+      
+      // Ligne 1: Images T1
+      if (rowIndex === 0 && i < T1_PERK_IMAGES.length) {
+        const perkImage = T1_PERK_IMAGES[i];
+        perkOption.innerHTML = `
+          <img src="/kingsraid-data/assets/perks/t1/${perkImage}" 
+               alt="Perk ${perkIndex}" 
+               class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
+            ${row.cost}
+          </div>
+        `;
+      }
+      // Ligne 2: Images T2 basées sur la classe
+      else if (rowIndex === 1 && heroClass && T2_PERK_IMAGES_BY_CLASS[heroClass] && i < T2_PERK_IMAGES_BY_CLASS[heroClass].length) {
+        const perkImage = T2_PERK_IMAGES_BY_CLASS[heroClass][i];
+        perkOption.innerHTML = `
+          <img src="/kingsraid-data/assets/perks/t2/${heroClass.toLowerCase()}/${perkImage}" 
+               alt="Perk ${perkIndex}" 
+               class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
+            ${row.cost}
+          </div>
+        `;
+      }
+      // Ligne 3: Perks spécifiques au héros (s1l, s1d, s2l, s2d)
+      else if (rowIndex === 2 && heroName && i < HERO_PERK_IMAGES.row3.length) {
+        const perkImage = HERO_PERK_IMAGES.row3[i];
+        perkOption.innerHTML = `
+          <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+               alt="Perk ${perkIndex}" 
+               class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
+            ${row.cost}
+          </div>
+        `;
+      }
+      // Ligne 4: Perks spécifiques au héros (s3l, s3d, s4l, s4d)
+      else if (rowIndex === 3 && heroName && i < HERO_PERK_IMAGES.row4.length) {
+        const perkImage = HERO_PERK_IMAGES.row4[i];
+        perkOption.innerHTML = `
+          <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+               alt="Perk ${perkIndex}" 
+               class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
+            ${row.cost}
+          </div>
+        `;
+      }
+      // Ligne 5: Perks spécifiques au héros (light, dark)
+      else if (rowIndex === 4 && heroName && i < HERO_PERK_IMAGES.row5.length) {
+        const perkImage = HERO_PERK_IMAGES.row5[i];
+        perkOption.innerHTML = `
+          <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+               alt="Perk ${perkIndex}" 
+               class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
+            ${row.cost}
+          </div>
+        `;
+      }
+      // Autres cas: affichage normal
+      else {
+        perkOption.textContent = row.cost;
+        if (!isSelected) {
+          perkOption.classList.add('opacity-40');
+        }
+      }
+      
+      perkOption.dataset.cost = row.cost;
+      perkOption.dataset.index = perkIndex;
 
-            if (currentModalData.selectedPerks.includes(perkIndex)) {
-              perkOption.classList.add("selected");
-              currentModalData.usedPoints += row.cost;
-            }
-
-            perkOption.onclick = () => togglePerkSelection(perkOption, row.cost, perkIndex);
-            rowElement.appendChild(perkOption);
-          }
-
-          optionsContainer.appendChild(rowElement);
-        });
-
-        updatePerkPointsDisplay();
-        modal.style.display = "flex";
+      if (isSelected) {
+        perkOption.classList.add("selected");
+        currentModalData.usedPoints += row.cost;
       }
 
-      function togglePerkSelection(perkElement, cost, perkIndex) {
-        const isSelected = perkElement.classList.contains("selected");
-        const newPoints = isSelected ? currentModalData.usedPoints - cost : currentModalData.usedPoints + cost;
+      perkOption.onclick = () => togglePerkSelection(perkOption, row.cost, perkIndex);
+      rowElement.appendChild(perkOption);
+    }
 
-        if (newPoints > currentModalData.maxPoints && !isSelected) {
-          alert(`Cannot select this perk! You would exceed the ${currentModalData.maxPoints} point limit.`);
-          return;
-        }
+    optionsContainer.appendChild(rowElement);
+  });
 
-        if (isSelected) {
-          perkElement.classList.remove("selected");
-          currentModalData.usedPoints -= cost;
-          const index = currentModalData.selectedPerks.indexOf(perkIndex);
-          if (index > -1) currentModalData.selectedPerks.splice(index, 1);
-        } else {
-          perkElement.classList.add("selected");
-          currentModalData.usedPoints += cost;
-          currentModalData.selectedPerks.push(perkIndex);
-        }
+  updatePerkPointsDisplay();
+  modal.style.display = "flex";
+}
+function togglePerkSelection(perkElement, cost, perkIndex) {
+  const isSelected = perkElement.classList.contains("selected");
+  const newPoints = isSelected ? currentModalData.usedPoints - cost : currentModalData.usedPoints + cost;
 
-        updatePerkPointsDisplay();
-      }
+  if (newPoints > currentModalData.maxPoints && !isSelected) {
+    alert(`Cannot select this perk! You would exceed the ${currentModalData.maxPoints} point limit.`);
+    return;
+  }
+
+  if (isSelected) {
+    perkElement.classList.remove("selected");
+    currentModalData.usedPoints -= cost;
+    const index = currentModalData.selectedPerks.indexOf(perkIndex);
+    if (index > -1) currentModalData.selectedPerks.splice(index, 1);
+    
+    // Mettre à jour l'opacité pour les images
+    const img = perkElement.querySelector('img');
+    if (img) {
+      img.classList.add('opacity-40');
+    } else {
+      perkElement.classList.add('opacity-40');
+    }
+  } else {
+    perkElement.classList.add("selected");
+    currentModalData.usedPoints += cost;
+    currentModalData.selectedPerks.push(perkIndex);
+    
+    // Mettre à jour l'opacité pour les images
+    const img = perkElement.querySelector('img');
+    if (img) {
+      img.classList.remove('opacity-40');
+    } else {
+      perkElement.classList.remove('opacity-40');
+    }
+  }
+
+  updatePerkPointsDisplay();
+}
 
       function updatePerkPointsDisplay() {
         const pointsUsedElement = document.getElementById("perk-points-used");
@@ -1467,14 +1650,20 @@
         const { teamSlotIndex, selectedPerks } = currentModalData;
         currentPerks[teamSlotIndex] = selectedPerks;
         updatePerkSlotDisplay(teamSlotIndex, selectedPerks);
-        updatePerkPreview(teamSlotIndex, selectedPerks);
+        
+        // Mettre à jour la preview avec la classe et le nom du héros
+        const hero = currentTeam[teamSlotIndex];
+        if (hero) {
+          updatePerkPreview(teamSlotIndex, selectedPerks, hero.role, hero.name);
+        }
+        
         closeModal("perk-modal");
       }
 
       function updatePerkSlotDisplay(teamSlotIndex, selectedPerks) {
         const slotContainers = document.getElementById("team-slots").children;
         const slotContainer = slotContainers[teamSlotIndex];
-        const perkSlotContainer = slotContainer.children[3];
+        const perkSlotContainer = slotContainer.children[2];  // Maintenant en position 2
         const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
 
         if (selectedPerks && selectedPerks.length > 0) {
@@ -1482,11 +1671,11 @@
           perkMainSlot.innerHTML = `<div class="w-full h-full flex items-center justify-center text-black text-xs font-bold">Perks (${selectedPerks.length})</div>`;
         } else {
           perkMainSlot.className = "perk-main-slot empty";
-          perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">+ Perks</span>';
+          perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">Perks</span>';
         }
       }
 
-      function updatePerkPreview(teamSlotIndex, selectedPerks) {
+      function updatePerkPreview(teamSlotIndex, selectedPerks, heroClass, heroName) {
         const previewContainer = document.getElementById(`perk-preview-${teamSlotIndex}`);
         previewContainer.innerHTML = "";
 
@@ -1501,7 +1690,144 @@
             const perkIndex = rowIndex * 10 + i;
             const perkPreview = document.createElement("div");
             perkPreview.className = "perk-preview-option";
-            if (selectedPerks.includes(perkIndex)) perkPreview.classList.add("selected");
+            
+            // Ligne 1: Images T1
+            if (rowIndex === 0 && i < T1_PERK_IMAGES.length) {
+              const perkImage = T1_PERK_IMAGES[i];
+              if (selectedPerks.includes(perkIndex)) {
+                perkPreview.classList.add("selected");
+                perkPreview.innerHTML = `
+                  <img src="/kingsraid-data/assets/perks/t1/${perkImage}" 
+                       alt="Perk ${perkIndex}" 
+                       class="w-full h-full object-cover rounded"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="absolute inset-0 flex items-center justify-center text-yellow-400 text-xs font-bold hidden">
+                    ✓
+                  </div>
+                `;
+              } else {
+                perkPreview.innerHTML = `
+                  <img src="/kingsraid-data/assets/perks/t1/${perkImage}" 
+                       alt="Perk ${perkIndex}" 
+                       class="w-full h-full object-cover rounded opacity-40"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden">
+                    ○
+                  </div>
+                `;
+              }
+            }
+            // Ligne 2: Images T2 basées sur la classe
+            else if (rowIndex === 1 && heroClass && T2_PERK_IMAGES_BY_CLASS[heroClass] && i < T2_PERK_IMAGES_BY_CLASS[heroClass].length) {
+              const perkImage = T2_PERK_IMAGES_BY_CLASS[heroClass][i];
+              if (selectedPerks.includes(perkIndex)) {
+                perkPreview.classList.add("selected");
+                perkPreview.innerHTML = `
+                  <img src="/kingsraid-data/assets/perks/t2/${heroClass.toLowerCase()}/${perkImage}" 
+                       alt="Perk ${perkIndex}" 
+                       class="w-full h-full object-cover rounded"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="absolute inset-0 flex items-center justify-center text-yellow-400 text-xs font-bold hidden">
+                    ✓
+                  </div>
+                `;
+              } else {
+                perkPreview.innerHTML = `
+                  <img src="/kingsraid-data/assets/perks/t2/${heroClass.toLowerCase()}/${perkImage}" 
+                       alt="Perk ${perkIndex}" 
+                       class="w-full h-full object-cover rounded opacity-40"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden">
+                    ○
+                  </div>
+                `;
+              }
+            }
+            // Ligne 3: Perks spécifiques au héros (s1l, s1d, s2l, s2d)
+            else if (rowIndex === 2 && heroName && i < HERO_PERK_IMAGES.row3.length) {
+              const perkImage = HERO_PERK_IMAGES.row3[i];
+              if (selectedPerks.includes(perkIndex)) {
+                perkPreview.classList.add("selected");
+                perkPreview.innerHTML = `
+                  <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+                       alt="Perk ${perkIndex}" 
+                       class="w-full h-full object-cover rounded"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="absolute inset-0 flex items-center justify-center text-yellow-400 text-xs font-bold hidden">
+                    ✓
+                  </div>
+                `;
+              } else {
+                perkPreview.innerHTML = `
+                  <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+                       alt="Perk ${perkIndex}" 
+                       class="w-full h-full object-cover rounded opacity-40"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden">
+                    ○
+                  </div>
+                `;
+              }
+            }
+            // Ligne 4: Perks spécifiques au héros (s3l, s3d, s4l, s4d)
+            else if (rowIndex === 3 && heroName && i < HERO_PERK_IMAGES.row4.length) {
+              const perkImage = HERO_PERK_IMAGES.row4[i];
+              if (selectedPerks.includes(perkIndex)) {
+                perkPreview.classList.add("selected");
+                perkPreview.innerHTML = `
+                  <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+                       alt="Perk ${perkIndex}" 
+                       class="w-full h-full object-cover rounded"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="absolute inset-0 flex items-center justify-center text-yellow-400 text-xs font-bold hidden">
+                    ✓
+                  </div>
+                `;
+              } else {
+                perkPreview.innerHTML = `
+                  <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+                       alt="Perk ${perkIndex}" 
+                       class="w-full h-full object-cover rounded opacity-40"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden">
+                    ○
+                  </div>
+                `;
+              }
+            }
+            // Ligne 5: Perks spécifiques au héros (light, dark)
+            else if (rowIndex === 4 && heroName && i < HERO_PERK_IMAGES.row5.length) {
+              const perkImage = HERO_PERK_IMAGES.row5[i];
+              if (selectedPerks.includes(perkIndex)) {
+                perkPreview.classList.add("selected");
+                perkPreview.innerHTML = `
+                  <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+                       alt="Perk ${perkIndex}" 
+                       class="w-full h-full object-cover rounded"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="absolute inset-0 flex items-center justify-center text-yellow-400 text-xs font-bold hidden">
+                    ✓
+                  </div>
+                `;
+              } else {
+                perkPreview.innerHTML = `
+                  <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
+                       alt="Perk ${perkIndex}" 
+                       class="w-full h-full object-cover rounded opacity-40"
+                       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                  <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden">
+                    ○
+                  </div>
+                `;
+              }
+            }
+            else {
+              // Pour les autres cas, garder l'affichage original
+              if (selectedPerks.includes(perkIndex)) {
+                perkPreview.classList.add("selected");
+              }
+            }
+            
             rowElement.appendChild(perkPreview);
           }
 
