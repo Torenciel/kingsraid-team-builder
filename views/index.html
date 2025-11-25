@@ -10,7 +10,7 @@
       src="https://kit.fontawesome.com/a309c4587d.js"
       crossorigin="anonymous"
     ></script>
-<style>
+    <style>
       body {
         background-color: #171717;
       }
@@ -439,8 +439,8 @@
       /* Styles pour les advancements UW */
       .uw-advancement {
         position: absolute;
-        top: -6px;
-        right: -3px;
+        top: -7.5px;
+        right: -4px;
         width: 20px;
         height: 20px;
         z-index: 5;
@@ -449,82 +449,78 @@
         background-repeat: no-repeat;
         background-position: center;
       }
-      
+
       .uw-advancement.visible {
         display: block;
       }
-      
+
       .uw-advancement.blue {
-        filter: hue-rotate(0deg) saturate(2);
-        /* background-image: url('/kingsraid-data/assets/advancements/blue.png'); */
+        background-image: url("/kingsraid-data/assets/advancements/blue.png");
       }
-      
+
       .uw-advancement.purple {
-        filter: hue-rotate(250deg) saturate(2);
-        /* background-image: url('/kingsraid-data/assets/advancements/purple.png'); */
+        background-image: url("/kingsraid-data/assets/advancements/purple.png");
       }
-      
+
       .uw-advancement.red {
-        filter: hue-rotate(330deg) saturate(2);
-        /* background-image: url('/kingsraid-data/assets/advancements/red.png'); */
+        background-image: url("/kingsraid-data/assets/advancements/red.png");
       }
 
       /* Borders colorés pour les sub-slots UW avec advancement */
       .sub-slot.uw-advancement-blue {
         border: 2px solid !important;
-        border-color: #3b82f6 !important;
+        border-color: #1f7ec2 !important;
         box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
       }
 
       .sub-slot.uw-advancement-purple {
         border: 2px solid !important;
-        border-color: #a855f7 !important;
-        box-shadow: 0 0 5px rgba(168, 85, 247, 0.5);
+        border-color: #bb549b !important;
+        box-shadow: 0 0 5px #97449380;
       }
 
       .sub-slot.uw-advancement-red {
         border: 2px solid !important;
-        border-color: #ef4444 !important;
+        border-color: #cd2b16 !important;
         box-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
       }
 
-      /* Styles pour le modal d'advancement UW */
+      /* Styles pour les options d'advancement avec images */
       .advancement-option {
         width: 60px;
         height: 60px;
         cursor: pointer;
         border-radius: 4px;
-        background: #262626;
-        border: 2px solid #525252;
+        background: transparent;
+        border: none;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
-        color: white;
+        position: relative;
+        overflow: hidden;
       }
-      
-      .advancement-option:hover {
-        border-color: #64e210;
+      /* Border hover */
+      .advancement-option:hover .advancement-image {
+        background-image: url("/kingsraid-data/assets/advancements/border-hover.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
       }
-      
-      .advancement-option.selected {
-        border-color: #fbbf24;
+
+      /* Border selected */
+      .advancement-option.selected .advancement-image {
+        background-image: url("/kingsraid-data/assets/advancements/border-selected.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
       }
-      
-      .advancement-option.none {
-        background: #404040;
-      }
-      
-      .advancement-option.blue {
-        background: linear-gradient(135deg, #1e40af, #3b82f6);
-      }
-      
-      .advancement-option.purple {
-        background: linear-gradient(135deg, #7e22ce, #a855f7);
-      }
-      
-      .advancement-option.red {
-        background: linear-gradient(135deg, #dc2626, #ef4444);
+
+      .advancement-option .advancement-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 4px;
+        background: transparent;
       }
 
       .advancement-options {
@@ -673,39 +669,72 @@
     <div id="uw-modal" class="modal">
       <div class="modal-content">
         <h3 class="text-lg font-bold mb-4 text-center">Unique Weapon</h3>
-        
-        
+
         <!-- Section UW Options -->
         <div class="flex justify-center gap-4 mb-4" id="uw-options">
           <!-- Les options UW seront ajoutées ici dynamiquement -->
         </div>
-        
+
         <!-- Section Stars -->
-        <div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 20px">
           <div class="stars-container" id="uw-stars">
             <!-- Les étoiles UW seront ajoutées ici dynamiquement -->
           </div>
         </div>
 
-        <!-- Section Advancement -->
-        <div style="margin-bottom: 20px;">
-          <!-- <h4 style="color: white; text-align: center; margin-bottom: 10px;">Advancement</h4> -->
+        <!-- Section Advancement avec images -->
+        <div style="margin-bottom: 20px">
+          <h4 style="color: white; text-align: center; margin-bottom: 10px">
+            Advancement
+          </h4>
           <div class="advancement-options">
-            <div class="advancement-option none" data-advancement="none" onclick="selectAdvancement('none')">
-              None
+            <div
+              class="advancement-option"
+              data-advancement="none"
+              onclick="selectAdvancement('none')"
+            >
+              <img
+                src="/kingsraid-data/assets/advancements/none.png"
+                alt="none"
+                class="advancement-image"
+              />
             </div>
-            <div class="advancement-option blue" data-advancement="blue" onclick="selectAdvancement('blue')">
-              Blue
+            <div
+              class="advancement-option"
+              data-advancement="blue"
+              onclick="selectAdvancement('blue')"
+            >
+              <img
+                src="/kingsraid-data/assets/advancements/blue.png"
+                alt="Blue"
+                class="advancement-image"
+              />
             </div>
-            <div class="advancement-option purple" data-advancement="purple" onclick="selectAdvancement('purple')">
-              Purple
+            <div
+              class="advancement-option"
+              data-advancement="purple"
+              onclick="selectAdvancement('purple')"
+            >
+              <img
+                src="/kingsraid-data/assets/advancements/purple.png"
+                alt="Purple"
+                class="advancement-image"
+              />
             </div>
-            <div class="advancement-option red" data-advancement="red" onclick="selectAdvancement('red')">
-              Red
+            <div
+              class="advancement-option"
+              data-advancement="red"
+              onclick="selectAdvancement('red')"
+            >
+              <img
+                src="/kingsraid-data/assets/advancements/red.png"
+                alt="Red"
+                class="advancement-image"
+              />
             </div>
           </div>
         </div>
-        
+
         <div class="flex justify-center gap-4 mt-6">
           <button
             id="confirm-uw"
@@ -837,14 +866,7 @@
       </div>
     </div>
 
-    <!-- Icône hexagon pour l'advancement -->
-    <svg style="display: none;">
-      <symbol id="hexagon-icon" viewBox="0 0 24 24">
-        <path d="M12 2L22 7V17L12 22L2 17V7Z" fill="currentColor"/>
-      </symbol>
-    </svg>
-
-<script>
+    <script>
       // ========== CONFIGURATION & GLOBAL VARIABLES ==========
       const MAX_TEAM_SLOTS = 8;
 
@@ -864,76 +886,76 @@
       let pendingRemoveHeroId = null;
       let availableHeroes = [];
       let currentHeroes = [];
-      let currentFilter = 'all';
+      let currentFilter = "all";
       let masangOrder = [];
 
       // Images T1 pour la première ligne des perks
       const T1_PERK_IMAGES = [
         "ATK Up.png",
-        "HP Up.png", 
+        "HP Up.png",
         "DEF up.png",
         "Crit Resist Up.png",
-        "Monster Hunting.png"
+        "Monster Hunting.png",
       ];
 
       // Images T2 par classe
       const T2_PERK_IMAGES_BY_CLASS = {
         Knight: [
           "Experienced Fighter.png",
-          "Excellent Strategy.png", 
+          "Excellent Strategy.png",
           "Battle Cry.png",
           "Shield of Protection.png",
-          "Swift Move.png"
+          "Swift Move.png",
         ],
         Warrior: [
           "Opportune Strike.png",
           "Warlike.png",
-          "Offensive Guard.png", 
+          "Offensive Guard.png",
           "Tactical Foresight.png",
-          "Blood Wrath.png"
+          "Blood Wrath.png",
         ],
         Assassin: [
           "Target Weakness.png",
           "Swift and Nimble.png",
           "Tactical Foresight.png",
-          "Opportune Strike.png", 
-          "Vital Detection.png"
+          "Opportune Strike.png",
+          "Vital Detection.png",
         ],
         Mechanic: [
           "Target Weakness.png",
           "Ready Cannons.png",
           "Pressure Point.png",
           "Special Bullet.png",
-          "Amplified Gunpowder.png"
+          "Amplified Gunpowder.png",
         ],
         Archer: [
           "Precision Shot.png",
-          "Eagle Eye.png", 
+          "Eagle Eye.png",
           "Mortal Wound.png",
           "Opportune Strike.png",
-          "Concentration.png"
+          "Concentration.png",
         ],
         Wizard: [
           "Deception.png",
           "Moral Rise.png",
-          "Blessing of Mana.png", 
+          "Blessing of Mana.png",
           "Circuit Burst.png",
-          "Destruction.png"
+          "Destruction.png",
         ],
         Priest: [
           "Vengeful Curse.png",
           "Goddess Blessing.png",
           "Inner Peace.png",
           "Blessing of Mana.png",
-          "Swiftness.png"
-        ]
+          "Swiftness.png",
+        ],
       };
 
       // Noms des images pour les lignes 3, 4 et 5 (perks spécifiques au héros)
       const HERO_PERK_IMAGES = {
         row3: ["s1l.png", "s1d.png", "s2l.png", "s2d.png"],
         row4: ["s3l.png", "s3d.png", "s4l.png", "s4d.png"],
-        row5: ["light.png", "dark.png"]
+        row5: ["light.png", "dark.png"],
       };
 
       // ========== INITIALIZATION ==========
@@ -971,20 +993,21 @@
       async function loadMasangOrder() {
         try {
           console.log("📁 Fetching masang file...");
-          const response = await fetch('/kingsraid-data/hero_release_order_masang.json');
-          
+          const response = await fetch(
+            "/kingsraid-data/hero_release_order_masang.json"
+          );
+
           if (!response.ok) {
             throw new Error(`Masang file not found: ${response.status}`);
           }
-          
+
           const masangData = await response.json();
           console.log("🔍 RAW MASANG DATA:", masangData);
-          
+
           masangOrder = Object.keys(masangData);
-          
+
           console.log(`✅ Masang order loaded: ${masangOrder.length} heroes`);
           console.log("📋 Masang heroes:", masangOrder);
-          
         } catch (masangError) {
           console.error("❌ Masang loading error:", masangError);
           masangOrder = [];
@@ -995,13 +1018,16 @@
         try {
           console.log(`🔄 Loading heroes with sort: ${sortType}`);
           const response = await fetch(`/api/heroes?sort=${sortType}`);
-          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-          
+          if (!response.ok)
+            throw new Error(`HTTP error! status: ${response.status}`);
+
           const data = await response.json();
           allHeroes = data.heroes || [];
           console.log(`📊 ${allHeroes.length} total heroes loaded from API`);
 
-          availableHeroes = allHeroes.filter(hero => masangOrder.includes(hero.name));
+          availableHeroes = allHeroes.filter((hero) =>
+            masangOrder.includes(hero.name)
+          );
           console.log(`✅ ${availableHeroes.length} available heroes filtered`);
 
           applyCurrentFilterAndSort(sortType);
@@ -1017,9 +1043,12 @@
 
       async function loadArtifacts() {
         try {
-          const response = await fetch("/kingsraid-data/artifact_release_order.json");
-          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-          
+          const response = await fetch(
+            "/kingsraid-data/artifact_release_order.json"
+          );
+          if (!response.ok)
+            throw new Error(`HTTP error! status: ${response.status}`);
+
           const data = await response.json();
           if (data && typeof data === "object") {
             allArtifacts = Object.keys(data);
@@ -1028,7 +1057,7 @@
             allArtifacts = [];
             console.warn("❌ Unrecognized artifact data format");
           }
-          
+
           await verifyArtifactImages();
           return allArtifacts;
         } catch (error) {
@@ -1062,12 +1091,14 @@
       function setupFilters() {
         const roleFilter = document.getElementById("role-filter");
         const searchInput = document.getElementById("search-input");
-        const availabilityFilter = document.getElementById("availability-filter");
+        const availabilityFilter = document.getElementById(
+          "availability-filter"
+        );
         const sortFilter = document.getElementById("sort-filter");
 
         roleFilter.addEventListener("change", filterHeroes);
         searchInput.addEventListener("input", filterHeroes);
-        
+
         availabilityFilter.addEventListener("change", (e) => {
           currentFilter = e.target.value;
           console.log(`🎯 Availability filter changed to: ${currentFilter}`);
@@ -1086,8 +1117,8 @@
 
       function applyCurrentFilterAndSort(sortType = "name") {
         console.log(`🔍 Applying filter: ${currentFilter}, sort: ${sortType}`);
-        
-        if (currentFilter === 'available') {
+
+        if (currentFilter === "available") {
           currentHeroes = [...availableHeroes];
           console.log(`📊 Displaying ${currentHeroes.length} available heroes`);
         } else {
@@ -1100,57 +1131,64 @@
 
       function applySorting(sortType) {
         console.log(`🔀 Applying sort: ${sortType}`);
-        
-        switch(sortType) {
-          case 'name':
+
+        switch (sortType) {
+          case "name":
             currentHeroes.sort((a, b) => a.name.localeCompare(b.name));
             console.log("🔀 Sorted by name");
             displayHeroes(currentHeroes);
             updateHeroCount(currentHeroes.length);
             break;
-            
-          case 'release':
-            currentHeroes.sort((a, b) => (a.releaseOrder || 0) - (b.releaseOrder || 0));
+
+          case "release":
+            currentHeroes.sort(
+              (a, b) => (a.releaseOrder || 0) - (b.releaseOrder || 0)
+            );
             console.log("🔀 Sorted by release order");
             displayHeroes(currentHeroes);
             updateHeroCount(currentHeroes.length);
             break;
-            
-          case 'masang':
+
+          case "masang":
             if (masangOrder.length === 0) {
-              console.warn("⚠️ No masang order available, falling back to name sort");
+              console.warn(
+                "⚠️ No masang order available, falling back to name sort"
+              );
               currentHeroes.sort((a, b) => a.name.localeCompare(b.name));
               displayHeroes(currentHeroes);
               updateHeroCount(currentHeroes.length);
               break;
             }
-            
-            fetch('/kingsraid-data/hero_release_order_masang.json')
-              .then(response => response.json())
-              .then(masangData => {
+
+            fetch("/kingsraid-data/hero_release_order_masang.json")
+              .then((response) => response.json())
+              .then((masangData) => {
                 currentHeroes.sort((a, b) => {
                   const orderA = parseInt(masangData[a.name] || 999);
                   const orderB = parseInt(masangData[b.name] || 999);
-                  
-                  if (orderA === 999 && orderB === 999) return a.name.localeCompare(b.name);
+
+                  if (orderA === 999 && orderB === 999)
+                    return a.name.localeCompare(b.name);
                   if (orderA === 999) return 1;
                   if (orderB === 999) return -1;
-                  
+
                   return orderA - orderB;
                 });
-                
-                console.log(`🔀 Sorted ${currentHeroes.length} heroes by masang order`);
+
+                console.log(
+                  `🔀 Sorted ${currentHeroes.length} heroes by masang order`
+                );
                 displayHeroes(currentHeroes);
                 updateHeroCount(currentHeroes.length);
               })
-              .catch(error => {
+              .catch((error) => {
                 console.error("❌ Error loading masang for sorting:", error);
                 currentHeroes.sort((a, b) => a.name.localeCompare(b.name));
                 displayHeroes(currentHeroes);
                 updateHeroCount(currentHeroes.length);
               });
             break;
-            
+
           default:
             currentHeroes.sort((a, b) => a.name.localeCompare(b.name));
             displayHeroes(currentHeroes);
@@ -1160,17 +1198,25 @@
 
       function filterHeroes() {
         const roleFilter = document.getElementById("role-filter").value;
-        const searchTerm = document.getElementById("search-input").value.toLowerCase();
+        const searchTerm = document
+          .getElementById("search-input")
+          .value.toLowerCase();
 
         let filteredHeroes = currentHeroes;
         if (roleFilter !== "all") {
-          filteredHeroes = filteredHeroes.filter((hero) => hero.role === roleFilter);
+          filteredHeroes = filteredHeroes.filter(
+            (hero) => hero.role === roleFilter
+          );
         }
         if (searchTerm) {
-          filteredHeroes = filteredHeroes.filter((hero) => hero.name.toLowerCase().includes(searchTerm));
+          filteredHeroes = filteredHeroes.filter((hero) =>
+            hero.name.toLowerCase().includes(searchTerm)
+          );
         }
 
-        console.log(`🔍 Filtering: ${filteredHeroes.length} heroes after filters`);
+        console.log(
+          `🔍 Filtering: ${filteredHeroes.length} heroes after filters`
+        );
         displayHeroes(filteredHeroes);
         updateHeroCount(filteredHeroes.length);
       }
@@ -1185,7 +1231,8 @@
           slotContainer.className = "flex flex-col items-center gap-2";
 
           const mainSlot = document.createElement("div");
-          mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
+          mainSlot.className =
+            "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
           mainSlot.innerHTML = '<span class="text-gray-400 text-lg">+</span>';
 
           const subSlotsContainer = document.createElement("div");
@@ -1193,7 +1240,8 @@
 
           for (let j = 0; j < 4; j++) {
             const subSlot = document.createElement("div");
-            subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+            subSlot.className =
+              "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
             subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
             subSlot.onclick = () => handleSubSlotClick(i, j);
             subSlotsContainer.appendChild(subSlot);
@@ -1202,12 +1250,13 @@
           // NOUVEL ORDRE : Bouton perks avant la preview
           const perkSlotContainer = document.createElement("div");
           perkSlotContainer.className = "perk-slot-container";
-          
+
           const perkMainSlot = document.createElement("div");
           perkMainSlot.className = "perk-main-slot empty";
-          perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">Perks</span>';
+          perkMainSlot.innerHTML =
+            '<span class="text-gray-400 text-xs">Perks</span>';
           perkMainSlot.onclick = () => handlePerkSlotClick(i);
-          
+
           perkSlotContainer.appendChild(perkMainSlot);
 
           const perkPreviewContainer = document.createElement("div");
@@ -1217,8 +1266,8 @@
           // ORDRE MODIFIÉ : bouton perks en 3ème position, preview en 4ème
           slotContainer.appendChild(mainSlot);
           slotContainer.appendChild(subSlotsContainer);
-          slotContainer.appendChild(perkSlotContainer);      // Bouton perks en 3ème
-          slotContainer.appendChild(perkPreviewContainer);   // Preview perks en 4ème
+          slotContainer.appendChild(perkSlotContainer); // Bouton perks en 3ème
+          slotContainer.appendChild(perkPreviewContainer); // Preview perks en 4ème
           teamSlots.appendChild(slotContainer);
         }
 
@@ -1237,11 +1286,17 @@
 
         heroes.forEach((hero) => {
           const heroCard = document.createElement("div");
-          const isInTeam = currentTeam.some((slot) => slot && slot.id === hero.id);
+          const isInTeam = currentTeam.some(
+            (slot) => slot && slot.id === hero.id
+          );
 
-          heroCard.className = `hero-card rounded cursor-pointer ${isInTeam ? "in-team" : ""}`;
+          heroCard.className = `hero-card rounded cursor-pointer ${
+            isInTeam ? "in-team" : ""
+          }`;
           const classIconPath = getClassIconPath(hero.role);
-          const classIconHTML = classIconPath ? `<img src="${classIconPath}" alt="${hero.role}" class="class-icon">` : "";
+          const classIconHTML = classIconPath
+            ? `<img src="${classIconPath}" alt="${hero.role}" class="class-icon">`
+            : "";
 
           heroCard.innerHTML = `
             <img src="${hero.image}" alt="${hero.name}" class="hero-image rounded">
@@ -1280,14 +1335,17 @@
           const slotContainer = slotContainers[index];
           const mainSlot = slotContainer.children[0];
           const subSlotsContainer = slotContainer.children[1];
-          const perkSlotContainer = slotContainer.children[2];      // Maintenant en position 2
-          const perkPreviewContainer = slotContainer.children[3];   // Maintenant en position 3
+          const perkSlotContainer = slotContainer.children[2]; // Maintenant en position 2
+          const perkPreviewContainer = slotContainer.children[3]; // Maintenant en position 3
 
           if (hero) {
             const classIconPath = getClassIconPath(hero.role);
-            const classIconHTML = classIconPath ? `<img src="${classIconPath}" alt="${hero.role}" class="class-icon">` : "";
+            const classIconHTML = classIconPath
+              ? `<img src="${classIconPath}" alt="${hero.role}" class="class-icon">`
+              : "";
 
-            mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer";
+            mainSlot.className =
+              "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer";
             mainSlot.innerHTML = `
               <img src="${hero.image}" alt="${hero.name}" class="w-full h-full rounded object-cover">
               <div class="team-hero-name">${hero.name}</div>
@@ -1305,14 +1363,21 @@
               const subStars = currentSubStars[index][j];
 
               if (subItem) {
-                const starsDisplay = subStars > 0 ? `<div class="stars-text">${subStars}★</div>` : "";
+                const starsDisplay =
+                  subStars > 0
+                    ? `<div class="stars-text">${subStars}★</div>`
+                    : "";
                 // Ajouter l'icône d'advancement et la classe de border pour le slot UW (j=0)
-                const advancementIcon = j === 0 && currentAdvancements[index] !== "none" ? 
-                  `<div class="uw-advancement ${currentAdvancements[index]} visible"></div>` : "";
-                
-                const borderClass = j === 0 && currentAdvancements[index] !== "none" ? 
-                  `uw-advancement-${currentAdvancements[index]}` : "";
-                
+                const advancementIcon =
+                  j === 0 && currentAdvancements[index] !== "none"
+                    ? `<div class="uw-advancement ${currentAdvancements[index]} visible"></div>`
+                    : "";
+
+                const borderClass =
+                  j === 0 && currentAdvancements[index] !== "none"
+                    ? `uw-advancement-${currentAdvancements[index]}`
+                    : "";
+
                 subSlot.className = `sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer ${borderClass}`;
                 subSlot.innerHTML = `
                   <img src="${subItem}" alt="Sub item" class="sub-slot-image">
@@ -1320,39 +1385,47 @@
                   ${advancementIcon}
                 `;
               } else {
-                subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
-                subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
+                subSlot.className =
+                  "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+                subSlot.innerHTML =
+                  '<span class="text-gray-400 text-xs">+</span>';
               }
             }
 
             const perks = currentPerks[index];
             updatePerkPreview(index, perks, hero.role, hero.name);
 
-            const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
+            const perkMainSlot =
+              perkSlotContainer.querySelector(".perk-main-slot");
             if (perks && perks.length > 0) {
               perkMainSlot.className = "perk-main-slot perk-slot-active";
               perkMainSlot.innerHTML = `<div class="w-full h-full flex items-center justify-center text-black text-xs font-bold">Perks</div>`;
             } else {
               perkMainSlot.className = "perk-main-slot empty";
-              perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">Perks</span>';
+              perkMainSlot.innerHTML =
+                '<span class="text-gray-400 text-xs">Perks</span>';
             }
-
           } else {
-            mainSlot.className = "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
+            mainSlot.className =
+              "character-slot w-[100px] h-[100px] rounded flex items-center justify-center cursor-pointer empty";
             mainSlot.innerHTML = '<span class="text-gray-400 text-lg">+</span>';
 
             for (let j = 0; j < 4; j++) {
               const subSlot = subSlotsContainer.children[j];
-              subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
-              subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
+              subSlot.className =
+                "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+              subSlot.innerHTML =
+                '<span class="text-gray-400 text-xs">+</span>';
             }
 
             const perkPreviewContainer = slotContainer.children[3];
             perkPreviewContainer.innerHTML = "";
 
-            const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
+            const perkMainSlot =
+              perkSlotContainer.querySelector(".perk-main-slot");
             perkMainSlot.className = "perk-main-slot empty";
-            perkMainSlot.innerHTML = '<span class="text-gray-400 text-xs">Perks</span>';
+            perkMainSlot.innerHTML =
+              '<span class="text-gray-400 text-xs">Perks</span>';
           }
         });
 
@@ -1386,15 +1459,20 @@
       }
 
       function removeHeroFromTeam(heroId) {
-        const heroIndex = currentTeam.findIndex((slot) => slot && slot.id === heroId);
+        const heroIndex = currentTeam.findIndex(
+          (slot) => slot && slot.id === heroId
+        );
         if (heroIndex !== -1) {
           const hero = currentTeam[heroIndex];
-          const hasSubItems = currentSubSlots[heroIndex].some((slot) => slot !== null) || 
-                             (currentPerks[heroIndex] && currentPerks[heroIndex].length > 0);
+          const hasSubItems =
+            currentSubSlots[heroIndex].some((slot) => slot !== null) ||
+            (currentPerks[heroIndex] && currentPerks[heroIndex].length > 0);
 
           if (hasSubItems) {
             pendingRemoveHeroId = heroId;
-            document.getElementById("remove-hero-message").textContent = `Are you sure you want to remove "${hero.name}" from the team?`;
+            document.getElementById(
+              "remove-hero-message"
+            ).textContent = `Are you sure you want to remove "${hero.name}" from the team?`;
             document.getElementById("remove-hero-modal").style.display = "flex";
           } else {
             performHeroRemoval(heroIndex);
@@ -1414,7 +1492,9 @@
 
       function confirmRemoveHero() {
         if (pendingRemoveHeroId) {
-          const heroIndex = currentTeam.findIndex((slot) => slot && slot.id === pendingRemoveHeroId);
+          const heroIndex = currentTeam.findIndex(
+            (slot) => slot && slot.id === pendingRemoveHeroId
+          );
           if (heroIndex !== -1) performHeroRemoval(heroIndex);
           pendingRemoveHeroId = null;
           closeModal("remove-hero-modal");
@@ -1424,11 +1504,16 @@
       // ========== MODAL FUNCTIONS ==========
       function setupModals() {
         const removeHeroModal = document.getElementById("remove-hero-modal");
-        const confirmRemoveHeroBtn = document.getElementById("confirm-remove-hero");
-        const cancelRemoveHeroBtn = document.getElementById("cancel-remove-hero");
+        const confirmRemoveHeroBtn = document.getElementById(
+          "confirm-remove-hero"
+        );
+        const cancelRemoveHeroBtn =
+          document.getElementById("cancel-remove-hero");
 
         confirmRemoveHeroBtn.addEventListener("click", confirmRemoveHero);
-        cancelRemoveHeroBtn.addEventListener("click", () => closeModal("remove-hero-modal"));
+        cancelRemoveHeroBtn.addEventListener("click", () =>
+          closeModal("remove-hero-modal")
+        );
         removeHeroModal.addEventListener("click", (e) => {
           if (e.target === removeHeroModal) closeModal("remove-hero-modal");
         });
@@ -1458,7 +1543,9 @@
         const cancelArtifactBtn = document.getElementById("cancel-artifact");
 
         confirmArtifactBtn.addEventListener("click", confirmArtifactSelection);
-        cancelArtifactBtn.addEventListener("click", () => closeModal("artifact-modal"));
+        cancelArtifactBtn.addEventListener("click", () =>
+          closeModal("artifact-modal")
+        );
         artifactModal.addEventListener("click", (e) => {
           if (e.target === artifactModal) closeModal("artifact-modal");
         });
@@ -1481,18 +1568,24 @@
           return;
         }
 
-        switch(subSlotIndex) {
-          case 0: openUWModal(teamSlotIndex, subSlotIndex, hero.name); break;
-          case 1: openUTModal(teamSlotIndex, subSlotIndex, hero.name); break;
-          case 2: 
+        switch (subSlotIndex) {
+          case 0:
+            openUWModal(teamSlotIndex, subSlotIndex, hero.name);
+            break;
+          case 1:
+            openUTModal(teamSlotIndex, subSlotIndex, hero.name);
+            break;
+          case 2:
             if (allArtifacts.length === 0) {
               alert("Artifacts are still loading, please wait...");
-              loadArtifacts().then(() => openArtifactModal(teamSlotIndex, subSlotIndex));
+              loadArtifacts().then(() =>
+                openArtifactModal(teamSlotIndex, subSlotIndex)
+              );
             } else {
               openArtifactModal(teamSlotIndex, subSlotIndex);
             }
             break;
-          case 3: 
+          case 3:
             // Sub-slot 3 vide pour future fonctionnalité
             break;
         }
@@ -1514,8 +1607,10 @@
           subSlotIndex,
           heroName,
           selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0,
-          selectedOption: currentSubSlots[teamSlotIndex][subSlotIndex] ? "uw" : "empty",
-          selectedAdvancement: currentAdvancements[teamSlotIndex] || "none"
+          selectedOption: currentSubSlots[teamSlotIndex][subSlotIndex]
+            ? "uw"
+            : "empty",
+          selectedAdvancement: currentAdvancements[teamSlotIndex] || "none",
         };
 
         const modal = document.getElementById("uw-modal");
@@ -1524,24 +1619,33 @@
 
         optionsContainer.innerHTML = "";
 
+        // AJOUTER EMPTY EN PREMIER (À GAUCHE)
+        const emptyOption = document.createElement("div");
+        emptyOption.className = `uw-option ${
+          currentModalData.selectedOption === "empty" ? "selected" : ""
+        }`;
+        emptyOption.innerHTML =
+          '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
+        emptyOption.onclick = () => selectUWOption("empty");
+        optionsContainer.appendChild(emptyOption);
+
+        // AJOUTER UW EN SECOND (À DROITE)
         const uwOption = document.createElement("div");
-        uwOption.className = `uw-option ${currentModalData.selectedOption === "uw" ? "selected" : ""}`;
+        uwOption.className = `uw-option ${
+          currentModalData.selectedOption === "uw" ? "selected" : ""
+        }`;
         const uwPath = `/kingsraid-data/assets/heroes/${heroName}/uw.png`;
         uwOption.innerHTML = `<img src="${uwPath}" alt="UW" class="w-full h-full object-cover rounded">`;
         uwOption.onclick = () => selectUWOption("uw");
         optionsContainer.appendChild(uwOption);
 
-        const emptyOption = document.createElement("div");
-        emptyOption.className = `uw-option ${currentModalData.selectedOption === "empty" ? "selected" : ""}`;
-        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
-        emptyOption.onclick = () => selectUWOption("empty");
-        optionsContainer.appendChild(emptyOption);
-
         // Mettre à jour l'advancement
-        document.querySelectorAll('.advancement-option').forEach(option => {
-          option.classList.remove('selected');
-          if (option.dataset.advancement === currentModalData.selectedAdvancement) {
-            option.classList.add('selected');
+        document.querySelectorAll(".advancement-option").forEach((option) => {
+          option.classList.remove("selected");
+          if (
+            option.dataset.advancement === currentModalData.selectedAdvancement
+          ) {
+            option.classList.add("selected");
           }
         });
 
@@ -1550,29 +1654,36 @@
       }
 
       function selectAdvancement(advancement) {
-        document.querySelectorAll('.advancement-option').forEach(option => {
-          option.classList.remove('selected');
+        // Retirer la classe selected de toutes les options
+        document.querySelectorAll(".advancement-option").forEach((option) => {
+          option.classList.remove("selected");
         });
-        event.target.classList.add('selected');
+
+        // Ajouter la classe selected à l'option cliquée
+        event.target.closest(".advancement-option").classList.add("selected");
+
+        // Mettre à jour les données
         currentModalData.selectedAdvancement = advancement;
       }
 
       function selectUWOption(option) {
-        document.querySelectorAll(".uw-option").forEach((opt) => opt.classList.remove("selected"));
+        document
+          .querySelectorAll(".uw-option")
+          .forEach((opt) => opt.classList.remove("selected"));
         event.target.closest(".uw-option").classList.add("selected");
         currentModalData.selectedOption = option;
       }
 
       function updateUWStars(starCount) {
-        const stars = document.querySelectorAll('#uw-modal .star');
+        const stars = document.querySelectorAll("#uw-modal .star");
         stars.forEach((star, index) => {
           if (index < starCount) {
-            star.classList.add('filled');
+            star.classList.add("filled");
           } else {
-            star.classList.remove('filled');
+            star.classList.remove("filled");
           }
         });
-        document.getElementById('uw-stars-count').textContent = starCount;
+        document.getElementById("uw-stars-count").textContent = starCount;
       }
 
       function setUWStars(starCount) {
@@ -1581,25 +1692,32 @@
       }
 
       function previewUWStars(starCount) {
-        const stars = document.querySelectorAll('#uw-modal .star');
+        const stars = document.querySelectorAll("#uw-modal .star");
         stars.forEach((star, index) => {
-          star.classList.remove('hover-preview');
-          if (index < starCount && !star.classList.contains('filled')) {
-            star.classList.add('hover-preview');
+          star.classList.remove("hover-preview");
+          if (index < starCount && !star.classList.contains("filled")) {
+            star.classList.add("hover-preview");
           }
         });
       }
 
       function clearUWStarsPreview() {
-        const stars = document.querySelectorAll('#uw-modal .star');
-        stars.forEach(star => {
-          star.classList.remove('hover-preview');
+        const stars = document.querySelectorAll("#uw-modal .star");
+        stars.forEach((star) => {
+          star.classList.remove("hover-preview");
         });
       }
 
       function confirmUWSelection() {
         if (!currentModalData) return;
-        const { teamSlotIndex, subSlotIndex, heroName, selectedOption, selectedStars, selectedAdvancement } = currentModalData;
+        const {
+          teamSlotIndex,
+          subSlotIndex,
+          heroName,
+          selectedOption,
+          selectedStars,
+          selectedAdvancement,
+        } = currentModalData;
 
         if (selectedOption === "empty") {
           currentSubSlots[teamSlotIndex][subSlotIndex] = null;
@@ -1611,7 +1729,12 @@
           currentSubSlots[teamSlotIndex][subSlotIndex] = uwPath;
           currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
           currentAdvancements[teamSlotIndex] = selectedAdvancement;
-          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, uwPath, selectedStars);
+          updateSubSlotDisplay(
+            teamSlotIndex,
+            subSlotIndex,
+            uwPath,
+            selectedStars
+          );
         }
 
         closeModal("uw-modal");
@@ -1624,7 +1747,11 @@
           subSlotIndex,
           heroName,
           selectedUT: currentSubSlots[teamSlotIndex][subSlotIndex]
-            ? parseInt(currentSubSlots[teamSlotIndex][subSlotIndex].split("/ut/")[1].split(".")[0])
+            ? parseInt(
+                currentSubSlots[teamSlotIndex][subSlotIndex]
+                  .split("/ut/")[1]
+                  .split(".")[0]
+              )
             : 0,
           selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0,
         };
@@ -1639,7 +1766,9 @@
 
         for (let i = 1; i <= 4; i++) {
           const option = document.createElement("div");
-          option.className = `ut-option ${currentModalData.selectedUT === i ? "selected" : ""}`;
+          option.className = `ut-option ${
+            currentModalData.selectedUT === i ? "selected" : ""
+          }`;
           const utPath = `/kingsraid-data/assets/heroes/${heroName}/ut/${i}.png`;
           option.innerHTML = `<img src="${utPath}" alt="UT ${i}" class="w-full h-full object-cover rounded">`;
           option.onclick = () => selectUTOption(i);
@@ -1647,8 +1776,11 @@
         }
 
         const emptyOption = document.createElement("div");
-        emptyOption.className = `ut-option ${currentModalData.selectedUT === 0 ? "selected" : ""}`;
-        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
+        emptyOption.className = `ut-option ${
+          currentModalData.selectedUT === 0 ? "selected" : ""
+        }`;
+        emptyOption.innerHTML =
+          '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
         emptyOption.onclick = () => selectUTOption(0);
         emptyContainer.appendChild(emptyOption);
 
@@ -1657,7 +1789,9 @@
       }
 
       function selectUTOption(utNumber) {
-        document.querySelectorAll(".ut-option").forEach((option) => option.classList.remove("selected"));
+        document
+          .querySelectorAll(".ut-option")
+          .forEach((option) => option.classList.remove("selected"));
         event.target.closest(".ut-option").classList.add("selected");
         currentModalData.selectedUT = utNumber;
       }
@@ -1668,7 +1802,9 @@
           teamSlotIndex,
           subSlotIndex,
           selectedArtifact: currentSubSlots[teamSlotIndex][subSlotIndex]
-            ? currentSubSlots[teamSlotIndex][subSlotIndex].split("/artifacts/")[1].split(".")[0]
+            ? currentSubSlots[teamSlotIndex][subSlotIndex]
+                .split("/artifacts/")[1]
+                .split(".")[0]
             : null,
           selectedStars: currentSubStars[teamSlotIndex][subSlotIndex] || 0,
           allArtifacts: [...allArtifacts],
@@ -1681,14 +1817,18 @@
         const searchInput = document.getElementById("artifact-search");
 
         searchInput.value = "";
-        searchInput.oninput = (e) => filterArtifacts(e.target.value.toLowerCase());
+        searchInput.oninput = (e) =>
+          filterArtifacts(e.target.value.toLowerCase());
 
         displayArtifacts(allArtifacts, optionsContainer);
 
         emptyContainer.innerHTML = "";
         const emptyOption = document.createElement("div");
-        emptyOption.className = `artifact-option ${currentModalData.selectedArtifact === null ? "selected" : ""}`;
-        emptyOption.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
+        emptyOption.className = `artifact-option ${
+          currentModalData.selectedArtifact === null ? "selected" : ""
+        }`;
+        emptyOption.innerHTML =
+          '<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm">Empty</div>';
         emptyOption.onclick = () => selectArtifactOption(null);
         emptyContainer.appendChild(emptyOption);
 
@@ -1697,7 +1837,9 @@
       }
 
       function selectArtifactOption(artifactName) {
-        document.querySelectorAll(".artifact-option").forEach((option) => option.classList.remove("selected"));
+        document
+          .querySelectorAll(".artifact-option")
+          .forEach((option) => option.classList.remove("selected"));
         const selectedElement = event.target.closest(".artifact-option");
         if (selectedElement) selectedElement.classList.add("selected");
         currentModalData.selectedArtifact = artifactName;
@@ -1736,16 +1878,19 @@
             const perkIndex = rowIndex * 10 + i;
             const perkOption = document.createElement("div");
             perkOption.className = "perk-option";
-            
-            const isSelected = currentModalData.selectedPerks.includes(perkIndex);
-            
+
+            const isSelected =
+              currentModalData.selectedPerks.includes(perkIndex);
+
             // Ligne 1: Images T1
             if (rowIndex === 0 && i < T1_PERK_IMAGES.length) {
               const perkImage = T1_PERK_IMAGES[i];
               perkOption.innerHTML = `
                 <img src="/kingsraid-data/assets/perks/t1/${perkImage}" 
                      alt="Perk ${perkIndex}" 
-                     class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+                     class="w-full h-full object-cover rounded ${
+                       !isSelected ? "opacity-40" : ""
+                     }"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                 <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
                   ${row.cost}
@@ -1753,12 +1898,19 @@
               `;
             }
             // Ligne 2: Images T2 basées sur la classe
-            else if (rowIndex === 1 && heroClass && T2_PERK_IMAGES_BY_CLASS[heroClass] && i < T2_PERK_IMAGES_BY_CLASS[heroClass].length) {
+            else if (
+              rowIndex === 1 &&
+              heroClass &&
+              T2_PERK_IMAGES_BY_CLASS[heroClass] &&
+              i < T2_PERK_IMAGES_BY_CLASS[heroClass].length
+            ) {
               const perkImage = T2_PERK_IMAGES_BY_CLASS[heroClass][i];
               perkOption.innerHTML = `
                 <img src="/kingsraid-data/assets/perks/t2/${heroClass.toLowerCase()}/${perkImage}" 
                      alt="Perk ${perkIndex}" 
-                     class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+                     class="w-full h-full object-cover rounded ${
+                       !isSelected ? "opacity-40" : ""
+                     }"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                 <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
                   ${row.cost}
@@ -1766,12 +1918,18 @@
               `;
             }
             // Ligne 3: Perks spécifiques au héros (s1l, s1d, s2l, s2d)
-            else if (rowIndex === 2 && heroName && i < HERO_PERK_IMAGES.row3.length) {
+            else if (
+              rowIndex === 2 &&
+              heroName &&
+              i < HERO_PERK_IMAGES.row3.length
+            ) {
               const perkImage = HERO_PERK_IMAGES.row3[i];
               perkOption.innerHTML = `
                 <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
                      alt="Perk ${perkIndex}" 
-                     class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+                     class="w-full h-full object-cover rounded ${
+                       !isSelected ? "opacity-40" : ""
+                     }"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                 <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
                   ${row.cost}
@@ -1779,12 +1937,18 @@
               `;
             }
             // Ligne 4: Perks spécifiques au héros (s3l, s3d, s4l, s4d)
-            else if (rowIndex === 3 && heroName && i < HERO_PERK_IMAGES.row4.length) {
+            else if (
+              rowIndex === 3 &&
+              heroName &&
+              i < HERO_PERK_IMAGES.row4.length
+            ) {
               const perkImage = HERO_PERK_IMAGES.row4[i];
               perkOption.innerHTML = `
                 <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
                      alt="Perk ${perkIndex}" 
-                     class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+                     class="w-full h-full object-cover rounded ${
+                       !isSelected ? "opacity-40" : ""
+                     }"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                 <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
                   ${row.cost}
@@ -1792,12 +1956,18 @@
               `;
             }
             // Ligne 5: Perks spécifiques au héros (light, dark)
-            else if (rowIndex === 4 && heroName && i < HERO_PERK_IMAGES.row5.length) {
+            else if (
+              rowIndex === 4 &&
+              heroName &&
+              i < HERO_PERK_IMAGES.row5.length
+            ) {
               const perkImage = HERO_PERK_IMAGES.row5[i];
               perkOption.innerHTML = `
                 <img src="/kingsraid-data/assets/heroes/${heroName}/perks/${perkImage}" 
                      alt="Perk ${perkIndex}" 
-                     class="w-full h-full object-cover rounded ${!isSelected ? 'opacity-40' : ''}"
+                     class="w-full h-full object-cover rounded ${
+                       !isSelected ? "opacity-40" : ""
+                     }"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                 <div class="absolute inset-0 flex items-center justify-center text-gray-400 text-xs hidden bg-gray-800 rounded">
                   ${row.cost}
@@ -1808,10 +1978,10 @@
             else {
               perkOption.textContent = row.cost;
               if (!isSelected) {
-                perkOption.classList.add('opacity-40');
+                perkOption.classList.add("opacity-40");
               }
             }
-            
+
             perkOption.dataset.cost = row.cost;
             perkOption.dataset.index = perkIndex;
 
@@ -1820,7 +1990,8 @@
               currentModalData.usedPoints += row.cost;
             }
 
-            perkOption.onclick = () => togglePerkSelection(perkOption, row.cost, perkIndex);
+            perkOption.onclick = () =>
+              togglePerkSelection(perkOption, row.cost, perkIndex);
             rowElement.appendChild(perkOption);
           }
 
@@ -1833,10 +2004,14 @@
 
       function togglePerkSelection(perkElement, cost, perkIndex) {
         const isSelected = perkElement.classList.contains("selected");
-        const newPoints = isSelected ? currentModalData.usedPoints - cost : currentModalData.usedPoints + cost;
+        const newPoints = isSelected
+          ? currentModalData.usedPoints - cost
+          : currentModalData.usedPoints + cost;
 
         if (newPoints > currentModalData.maxPoints && !isSelected) {
-          alert(`Cannot select this perk! You would exceed the ${currentModalData.maxPoints} point limit.`);
+          alert(
+            `Cannot select this perk! You would exceed the ${currentModalData.maxPoints} point limit.`
+          );
           return;
         }
 
@@ -1845,25 +2020,25 @@
           currentModalData.usedPoints -= cost;
           const index = currentModalData.selectedPerks.indexOf(perkIndex);
           if (index > -1) currentModalData.selectedPerks.splice(index, 1);
-          
+
           // Mettre à jour l'opacité pour les images
-          const img = perkElement.querySelector('img');
+          const img = perkElement.querySelector("img");
           if (img) {
-            img.classList.add('opacity-40');
+            img.classList.add("opacity-40");
           } else {
-            perkElement.classList.add('opacity-40');
+            perkElement.classList.add("opacity-40");
           }
         } else {
           perkElement.classList.add("selected");
           currentModalData.usedPoints += cost;
           currentModalData.selectedPerks.push(perkIndex);
-          
+
           // Mettre à jour l'opacité pour les images
-          const img = perkElement.querySelector('img');
+          const img = perkElement.querySelector("img");
           if (img) {
-            img.classList.remove('opacity-40');
+            img.classList.remove("opacity-40");
           } else {
-            perkElement.classList.remove('opacity-40');
+            perkElement.classList.remove("opacity-40");
           }
         }
 
@@ -1886,27 +2061,32 @@
         const { teamSlotIndex, selectedPerks } = currentModalData;
         currentPerks[teamSlotIndex] = selectedPerks;
         updatePerkSlotDisplay(teamSlotIndex, selectedPerks);
-        
+
         // Mettre à jour la preview avec la classe et le nom du héros
         const hero = currentTeam[teamSlotIndex];
         if (hero) {
           updatePerkPreview(teamSlotIndex, selectedPerks, hero.role, hero.name);
         }
-        
+
         closeModal("perk-modal");
       }
 
       function updatePerkSlotDisplay(teamSlotIndex, selectedPerks) {
         const slotContainers = document.getElementById("team-slots").children;
         const slotContainer = slotContainers[teamSlotIndex];
-        const perkSlotContainer = slotContainer.children[2];  // Maintenant en position 2
-        const perkMainSlot = perkSlotContainer.querySelector('.perk-main-slot');
-
-
+        const perkSlotContainer = slotContainer.children[2]; // Maintenant en position 2
+        const perkMainSlot = perkSlotContainer.querySelector(".perk-main-slot");
       }
 
-      function updatePerkPreview(teamSlotIndex, selectedPerks, heroClass, heroName) {
-        const previewContainer = document.getElementById(`perk-preview-${teamSlotIndex}`);
+      function updatePerkPreview(
+        teamSlotIndex,
+        selectedPerks,
+        heroClass,
+        heroName
+      ) {
+        const previewContainer = document.getElementById(
+          `perk-preview-${teamSlotIndex}`
+        );
         previewContainer.innerHTML = "";
 
         if (!selectedPerks || selectedPerks.length === 0) return;
@@ -1920,7 +2100,7 @@
             const perkIndex = rowIndex * 10 + i;
             const perkPreview = document.createElement("div");
             perkPreview.className = "perk-preview-option";
-            
+
             // Ligne 1: Images T1
             if (rowIndex === 0 && i < T1_PERK_IMAGES.length) {
               const perkImage = T1_PERK_IMAGES[i];
@@ -1948,7 +2128,12 @@
               }
             }
             // Ligne 2: Images T2 basées sur la classe
-            else if (rowIndex === 1 && heroClass && T2_PERK_IMAGES_BY_CLASS[heroClass] && i < T2_PERK_IMAGES_BY_CLASS[heroClass].length) {
+            else if (
+              rowIndex === 1 &&
+              heroClass &&
+              T2_PERK_IMAGES_BY_CLASS[heroClass] &&
+              i < T2_PERK_IMAGES_BY_CLASS[heroClass].length
+            ) {
               const perkImage = T2_PERK_IMAGES_BY_CLASS[heroClass][i];
               if (selectedPerks.includes(perkIndex)) {
                 perkPreview.classList.add("selected");
@@ -1974,7 +2159,11 @@
               }
             }
             // Ligne 3: Perks spécifiques au héros (s1l, s1d, s2l, s2d)
-            else if (rowIndex === 2 && heroName && i < HERO_PERK_IMAGES.row3.length) {
+            else if (
+              rowIndex === 2 &&
+              heroName &&
+              i < HERO_PERK_IMAGES.row3.length
+            ) {
               const perkImage = HERO_PERK_IMAGES.row3[i];
               if (selectedPerks.includes(perkIndex)) {
                 perkPreview.classList.add("selected");
@@ -2000,7 +2189,11 @@
               }
             }
             // Ligne 4: Perks spécifiques au héros (s3l, s3d, s4l, s4d)
-            else if (rowIndex === 3 && heroName && i < HERO_PERK_IMAGES.row4.length) {
+            else if (
+              rowIndex === 3 &&
+              heroName &&
+              i < HERO_PERK_IMAGES.row4.length
+            ) {
               const perkImage = HERO_PERK_IMAGES.row4[i];
               if (selectedPerks.includes(perkIndex)) {
                 perkPreview.classList.add("selected");
@@ -2026,7 +2219,11 @@
               }
             }
             // Ligne 5: Perks spécifiques au héros (light, dark)
-            else if (rowIndex === 4 && heroName && i < HERO_PERK_IMAGES.row5.length) {
+            else if (
+              rowIndex === 4 &&
+              heroName &&
+              i < HERO_PERK_IMAGES.row5.length
+            ) {
               const perkImage = HERO_PERK_IMAGES.row5[i];
               if (selectedPerks.includes(perkIndex)) {
                 perkPreview.classList.add("selected");
@@ -2050,14 +2247,13 @@
                   </div>
                 `;
               }
-            }
-            else {
+            } else {
               // Pour les autres cas, garder l'affichage original
               if (selectedPerks.includes(perkIndex)) {
                 perkPreview.classList.add("selected");
               }
             }
-            
+
             rowElement.appendChild(perkPreview);
           }
 
@@ -2069,7 +2265,9 @@
         container.innerHTML = "";
         artifacts.forEach((artifactName) => {
           const option = document.createElement("div");
-          option.className = `artifact-option ${currentModalData.selectedArtifact === artifactName ? "selected" : ""}`;
+          option.className = `artifact-option ${
+            currentModalData.selectedArtifact === artifactName ? "selected" : ""
+          }`;
           const artifactPath = `/kingsraid-data/assets/artifacts/${artifactName}.png`;
 
           option.innerHTML = `
@@ -2115,8 +2313,12 @@
           star.innerHTML = i <= currentStars ? "★" : "☆";
           star.dataset.value = i;
 
-          star.addEventListener("mouseover", () => showHoverPreview(i, type, currentStars));
-          star.addEventListener("mouseout", () => clearHoverPreview(type, currentStars));
+          star.addEventListener("mouseover", () =>
+            showHoverPreview(i, type, currentStars)
+          );
+          star.addEventListener("mouseout", () =>
+            clearHoverPreview(type, currentStars)
+          );
           star.addEventListener("click", () => selectStars(i, type));
 
           container.appendChild(star);
@@ -2171,7 +2373,13 @@
           return;
         }
 
-        const { teamSlotIndex, subSlotIndex, heroName, selectedUT, selectedStars } = currentModalData;
+        const {
+          teamSlotIndex,
+          subSlotIndex,
+          heroName,
+          selectedUT,
+          selectedStars,
+        } = currentModalData;
 
         if (selectedUT === 0) {
           currentSubSlots[teamSlotIndex][subSlotIndex] = null;
@@ -2181,19 +2389,28 @@
           const utPath = `/kingsraid-data/assets/heroes/${heroName}/ut/${selectedUT}.png`;
           currentSubSlots[teamSlotIndex][subSlotIndex] = utPath;
           currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
-          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, utPath, selectedStars);
+          updateSubSlotDisplay(
+            teamSlotIndex,
+            subSlotIndex,
+            utPath,
+            selectedStars
+          );
         }
 
         closeModal("ut-modal");
       }
 
       function confirmArtifactSelection() {
-        if (!currentModalData || currentModalData.selectedArtifact === undefined) {
+        if (
+          !currentModalData ||
+          currentModalData.selectedArtifact === undefined
+        ) {
           alert("Please select an artifact option!");
           return;
         }
 
-        const { teamSlotIndex, subSlotIndex, selectedArtifact, selectedStars } = currentModalData;
+        const { teamSlotIndex, subSlotIndex, selectedArtifact, selectedStars } =
+          currentModalData;
 
         if (selectedArtifact === null) {
           currentSubSlots[teamSlotIndex][subSlotIndex] = null;
@@ -2203,7 +2420,12 @@
           const artifactPath = `/kingsraid-data/assets/artifacts/${selectedArtifact}.png`;
           currentSubSlots[teamSlotIndex][subSlotIndex] = artifactPath;
           currentSubStars[teamSlotIndex][subSlotIndex] = selectedStars;
-          updateSubSlotDisplay(teamSlotIndex, subSlotIndex, artifactPath, selectedStars);
+          updateSubSlotDisplay(
+            teamSlotIndex,
+            subSlotIndex,
+            artifactPath,
+            selectedStars
+          );
         }
 
         closeModal("artifact-modal");
@@ -2215,20 +2437,30 @@
         currentModalData = null;
       }
 
-      function updateSubSlotDisplay(teamSlotIndex, subSlotIndex, imagePath, stars) {
+      function updateSubSlotDisplay(
+        teamSlotIndex,
+        subSlotIndex,
+        imagePath,
+        stars
+      ) {
         const slotContainers = document.getElementById("team-slots").children;
         const slotContainer = slotContainers[teamSlotIndex];
         const subSlotsContainer = slotContainer.children[1];
         const subSlot = subSlotsContainer.children[subSlotIndex];
 
-        const starsDisplay = stars > 0 ? `<div class="stars-text">${stars}★</div>` : "";
+        const starsDisplay =
+          stars > 0 ? `<div class="stars-text">${stars}★</div>` : "";
         // Ajouter l'icône d'advancement et la classe de border pour le slot UW (subSlotIndex = 0)
-        const advancementIcon = subSlotIndex === 0 && currentAdvancements[teamSlotIndex] !== "none" ? 
-          `<div class="uw-advancement ${currentAdvancements[teamSlotIndex]} visible"></div>` : "";
-        
-        const borderClass = subSlotIndex === 0 && currentAdvancements[teamSlotIndex] !== "none" ? 
-          `uw-advancement-${currentAdvancements[teamSlotIndex]}` : "";
-        
+        const advancementIcon =
+          subSlotIndex === 0 && currentAdvancements[teamSlotIndex] !== "none"
+            ? `<div class="uw-advancement ${currentAdvancements[teamSlotIndex]} visible"></div>`
+            : "";
+
+        const borderClass =
+          subSlotIndex === 0 && currentAdvancements[teamSlotIndex] !== "none"
+            ? `uw-advancement-${currentAdvancements[teamSlotIndex]}`
+            : "";
+
         subSlot.className = `sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer ${borderClass}`;
         subSlot.innerHTML = `
           <img src="${imagePath}" alt="Sub item" class="sub-slot-image">
@@ -2250,7 +2482,8 @@
         const subSlotsContainer = slotContainer.children[1];
         const subSlot = subSlotsContainer.children[subSlotIndex];
 
-        subSlot.className = "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
+        subSlot.className =
+          "sub-slot w-[48px] h-[48px] rounded flex items-center justify-center cursor-pointer empty";
         subSlot.innerHTML = '<span class="text-gray-400 text-xs">+</span>';
       }
 
@@ -2338,11 +2571,16 @@
             const teamURL = `${window.location.origin}${window.location.pathname}team/${teamId}/${titleSlug}`;
 
             document.getElementById("team-link-display").value = teamURL;
-            navigator.clipboard.writeText(teamURL).then(() => {
-              alert(`✅ Team saved!\n\nShort link copied to clipboard (${teamURL.length} characters):\n${teamURL}`);
-            }).catch(() => {
-              prompt("Copy this short link to share your team:", teamURL);
-            });
+            navigator.clipboard
+              .writeText(teamURL)
+              .then(() => {
+                alert(
+                  `✅ Team saved!\n\nShort link copied to clipboard (${teamURL.length} characters):\n${teamURL}`
+                );
+              })
+              .catch(() => {
+                prompt("Copy this short link to share your team:", teamURL);
+              });
           } else {
             throw new Error(result.error || "Failed to save team");
           }
@@ -2383,14 +2621,19 @@
 
       function loadTeamDataFromServer(teamData) {
         currentTeam = Array(MAX_TEAM_SLOTS).fill(null);
-        currentSubSlots = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(null));
-        currentSubStars = Array(MAX_TEAM_SLOTS).fill(null).map(() => Array(4).fill(0));
+        currentSubSlots = Array(MAX_TEAM_SLOTS)
+          .fill(null)
+          .map(() => Array(4).fill(null));
+        currentSubStars = Array(MAX_TEAM_SLOTS)
+          .fill(null)
+          .map(() => Array(4).fill(0));
         currentPerks = Array(MAX_TEAM_SLOTS).fill(null);
         currentAdvancements = Array(MAX_TEAM_SLOTS).fill("none"); // Initialiser les advancements
 
         if (teamData.t) {
           currentTeamTitle = teamData.t;
-          document.getElementById("team-title-display").textContent = teamData.t;
+          document.getElementById("team-title-display").textContent =
+            teamData.t;
         }
 
         if (teamData.h) {
@@ -2416,17 +2659,28 @@
               const hero = currentTeam[slotIndex];
               if (optimizedItem === "uw") {
                 if (hero) {
-                  currentSubSlots[slotIndex][subIndex] = `/kingsraid-data/assets/heroes/${hero.name}/uw.png`;
+                  currentSubSlots[slotIndex][
+                    subIndex
+                  ] = `/kingsraid-data/assets/heroes/${hero.name}/uw.png`;
                 }
               } else if (optimizedItem.startsWith("ut")) {
                 const utNum = optimizedItem.replace("ut", "");
                 if (hero) {
-                  currentSubSlots[slotIndex][subIndex] = `/kingsraid-data/assets/heroes/${hero.name}/ut/${utNum}.png`;
+                  currentSubSlots[slotIndex][
+                    subIndex
+                  ] = `/kingsraid-data/assets/heroes/${hero.name}/ut/${utNum}.png`;
                 }
-              } else if (typeof optimizedItem === "string" && optimizedItem.includes(",")) {
-                currentSubSlots[slotIndex][subIndex] = optimizedItem.split(",").map(Number);
+              } else if (
+                typeof optimizedItem === "string" &&
+                optimizedItem.includes(",")
+              ) {
+                currentSubSlots[slotIndex][subIndex] = optimizedItem
+                  .split(",")
+                  .map(Number);
               } else {
-                currentSubSlots[slotIndex][subIndex] = `/kingsraid-data/assets/artifacts/${optimizedItem}.png`;
+                currentSubSlots[slotIndex][
+                  subIndex
+                ] = `/kingsraid-data/assets/artifacts/${optimizedItem}.png`;
               }
             });
           });
